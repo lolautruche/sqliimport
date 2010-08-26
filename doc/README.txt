@@ -6,7 +6,13 @@
 
 *Version 1.0 - 2010 Jerome Vieilledent for SQLi*
 
+:Date: 2010/08/26
 
+.. contents:: Table of contents
+
+--------------
+ PRESENTATION
+--------------
 SQLIImport is an extension allowing to import external content in eZ Publish.
 It provides a framework for content manipulation and a simple interface for developing import handlers, 
 so as a GUI to administrate your imports in the admin interface
