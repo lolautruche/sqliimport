@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<software>
+	<metadata>
+		<name>SQLI Import</name>
+		<version>@@@VERSION@@@</version>
+		<copyright>Copyright © 2010 @@@AUTHORS@@@ - SQLi Agency</copyright>
+		<license>GNU General Public License v2.0</license>
+		<info_url>http://projects.ez.no/sqliimport</info_url>
+	</metadata>
+</software>

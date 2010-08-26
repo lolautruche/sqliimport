@@ -1,0 +1,33 @@
+=========================
+ SQLIImport Installation
+=========================
+
+1. Install *sqlimport* folder in *extension/*
+2. Activate the extension in an override of **site.ini**
+3. Install the SQL schema (only mysql is currently supported) : *sql/mysql/schema.sql*
+4. Regenerate autoloads for classes
+
+::
+  php bin/php/ezpgenerateautoloads.php -e -p
+
+5. Clear all Caches
+
+::
+  php bin/php/ezcache.php --clear-tag=ini
+  php bin/php/ezcache.php --clear-all
+
+
+6. Schedule the cronjob to run every 5 minutes (not less, but you can increase the delay)
+
+::
+  # Run import cronjob every 5min or more
+  # $EZPUBLISHROOT stands for your eZ Publish installation directory
+  # $PHP stands for the full path of your PHP binary
+  */5 * * * * cd $EZPUBLISHROOT && $PHP runcronjobs.php sqliimport_run 2>&1
+
+
+7. You are now ready to use SQLIImport. 
+   You will need to develop an import handler that *understands* the source to import (see README file).
+   You might want to set policy limitations for users, like limiting the launch of an import by type.
+
+

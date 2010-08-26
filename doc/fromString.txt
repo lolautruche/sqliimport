@@ -1,0 +1,229 @@
+.. image:: images/sqli_logo.jpg
+
+====================================
+ SQLIImport - fromString() Appendix
+====================================
+
+*Note : This appendix is greatly inspired by the* `fromString.txt data_import documentation <http://svn.projects.ez.no/data_import/doc/fromString.txt>`_
+
+**fromString()** / **toString()** methods have been introduced in eZ Publish 3.9 for datatypes in order to simplify content manipulation.
+
+
+ezauthor
+========
+To separate one author from another '&' char is used, to separate parts of author data
+'|' is used. The system escapes '|','&','\' with the '\' char.
+
+Example of toString result :
+
+::
+
+  Administrator User|sp@ez.no|0&Sergiy|bla@fooo.tt|1&SP|sp@ez.od.ua|2
+
+toTmake it easy to parse such kind of strings the class *eSStringUtils* is added under 
+*lib/ezutils/*. It has 2 functions as a members :
+
+  - explodeStr( $str, $delimiter = '|' ) 
+  - implodeStr( $str, $delimiter = '|' )
+
+
+ezbinaryfile
+============
+*toString()* function of this datatype returns string of next format :
+
+::
+
+  /path/to/my/file|original_filename
+
+*filepath* is the path to a file so you can copy this file in a place you want,
+original_filename is the original  filename of uploaded files. This might be needed for export 
+since it is not nice to have file name as md5 of something.
+
+If you want to import binary file to the attribute you need to supply it with full path 
+to the image argument.
+
+
+ezboolean
+=========
+Returns and accepts 1 or 0 for true and false.
+
+
+ezcountry
+=========
+Returns coma-separated list of selected countries locale strings like for ex.:
+
+::
+
+  rus-RU,eng-GB,nor-NO
+
+
+ezdate
+======
+Returns/accepts unix timestamp.
+
+
+ezdatetime
+==========
+Returns/accepts unix timestamp.
+
+
+ezemail
+=======
+Returns/accepts email address.
+
+ezenum
+======
+Not supported
+
+
+ezfloat
+=======
+Returns/accepts floats.
+
+
+ezidentifier
+============
+Returns|accepts identifier value 
+
+
+ezimage
+=======
+Returns path to original alias of an image. Accepts full path to the image you want to upload.
+
+
+ezinisetting
+============
+Returns/accepts value of an inisetting.
+
+
+ezinteger
+=========
+Just integer value both ways.
+
+
+ezisbn
+======
+ISBN number as a string
+
+
+ezkeyword
+=========
+Comma separated list of keywords
+
+
+ezmatrix
+========
+Uses similar format to ezauthor datatype. The columns are sparated with '|' and rows are separated with '&'
+
+
+ezmedia
+=======
+toString function of this datatype return string of next format:
+
+::
+
+  filepath|original_filename
+
+If you want to import media file to the attribute you need to supply it with full path 
+to the media file.
+
+
+ezmultioption
+=============
+The first '&' separated value is the name of multioption set, then each '&' separated string represents 
+each option in multioption set. This string it self is '|' separated value, consist of inorder:
+_name_ of the option and the _id_ of option item which should be selected by default. After these to 
+values we have option_value and additional price for the option item.
+
+
+ezmultiprice
+============
+The structure of a data handled by this data type is
+
+::
+
+  currency_name_1|value_1|type_of_price_1|currency_name_2|value_2|type_of_price_2|......currency_name_n|value_n|type_of_price_n|
+
+Where currency_name is thre char currency name like EUR,USD and so on,
+value is the price in this currency, 
+and type can be AUTO or CUSTOM dependin on if the price in this currency 
+has been inserted by user or calculated automaticaly.
+
+
+ezobjectrelation
+================
+ID of related object both ways.
+
+
+ezobjectrelationlist
+====================
+'-' separated list of related object ID'd.
+
+
+ezoption
+========
+'|' separated list of option name of the option and then | sparated list of option_item|additional item price values.
+
+
+ezpackage
+=========
+Not supported.
+
+
+ezprice
+=======
+'|' separated list of price, VAT id, and flag wether VAT is included to the price or not.
+
+
+ezproductcategory
+=================
+'|' separated string with product category name and category id, though you can call fromString method with just category 
+name as a parameter.
+
+
+ezrangeoption
+=============
+'|' separated string contains name of the option, start,stop and step values for the option.
+
+
+ezselection
+===========
+'|' separated list of selected election item names.
+
+ezstring
+========
+Just a string
+
+
+eztext
+======
+the data text from the attribute.
+
+
+eztime
+======
+String with the time of the day like HH:MM in 24h format
+
+
+ezurl
+=====
+String containing the url
+
+
+ezuser
+======
+'|' separated string with user login, email, password hash, and password hash type
+
+
+ezxmltext
+=========
+Valid ez publish xml. You can use **SQLIXMLInputParser** (which is basically a copy of *eZOEInputParser*).
+
+::
+
+  $htmlMessage = '<p>My <strong>HTML</strong> content</p>';
+  $parser = new SQLIXMLInputParser();
+  $parser->setParseLineBreaks( true );
+  $document = $parser->process( $htmlMessage ); // Result is a DOM Document
+  $eZXMLString = eZXMLTextType::domString( $document );
+
