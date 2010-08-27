@@ -179,7 +179,7 @@ class SQLIContentPublisher
     public function contentIsModified( SQLIContent $content, $language = null )
     {
         if( !$language )
-            $language = $content->getActiveLanguage();
+            $language = $content->fields->getActiveLanguage();
         
         eZDebug::accumulatorStart( 'sqlicontentpublisher_checkmodification', 'sqlicontentpublisher', 'Checking content real modification' );
         $contentIsModified = false;
