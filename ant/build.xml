@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Export SVN" default="default" basedir=".">
+
+	<!-- Conf loading -->
+	<property file="build.properties"/>
+	<property name="svn.url.export" value="${svn.url}${svn.path.new}"/>
+	
+	<!-- Default target (mini-doc) -->
+	<target name="default">
+		<echo>List of common ant commands to launch : 
+		- ant package		=> Make a SVN export and builds the final package</echo>
+		
+		<echo>Configure all SVN settings and other stuffs in build.properties</echo>
+	</target>
+	
+	<target name="package" depends="init,export,phpdoc" description="Builds the package">
+		<replace dir="${build.dir.dist}" token="@@@VERSION@@@" value="${build.version}">
+			<include name="**/*.php"/>
+			<include name="**/extension.xml"/>
+		</replace>
+		<replace dir="${build.dir.dist}" token="@@@AUTHORS@@@" value="${build.authors}">
+			<include name="**/*.php"/>
+			<include name="**/extension.xml"/>
+		</replace>
+		<zip destfile="${build.dir}/${build.dir.dist.extension}.zip" basedir="${build.dir.dist}" excludes="${build.dir.dist.extension}/ant/**,${build.dir.dist.extension}/tests/**"/>
+	</target>
+
+	<target name="export" description="Exports the extension via SVN">
+		<!-- Export via SVN -->
+        <exec executable="${svn.exec}" failonerror="true">
+			<arg value="export"/>
+			<arg value="${svn.url.export}"/>
+			<arg value="${build.dir.dist}/${build.dir.dist.extension}"/>
+        	<arg value="--force"/>
+		</exec>
+	</target>
+	
+	<target name="init" depends="clean" description="Initialization">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir.dist}"/>
+		<mkdir dir="${build.dir.dist}/${build.dir.dist.extension}"/>
+	</target>
+	
+	<target name="clean" description="Build cleaning">
+		<echo>Cleaning...</echo>
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	<target name="phpdoc" description="Generates PHPDoc">
+        <mkdir dir="${build.dir.dist}/${build.dir.dist.extension}/doc/phpdoc"/>
+        <exec executable="phpdoc" failonerror="false">
+			<arg line="
+				-d ${build.dir.dist}/${build.dir.dist.extension}
+				-t ${build.dir.dist}/${build.dir.dist.extension}/doc/phpdoc
+				-ti 'SQLI Import API Doc'
+				-ric ${build.dir.dist}/${build.dir.dist.extension}/doc/README.txt,${build.dir.dist}/${build.dir.dist.extension}/doc/INSTALL.txt,${build.dir.dist}/${build.dir.dist.extension}/doc/CHANGELOG
+				-o HTML:Smarty:PHP"/>
+		</exec>
+	</target>
+	
+</project>
