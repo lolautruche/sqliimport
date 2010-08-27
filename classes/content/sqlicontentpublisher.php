@@ -53,7 +53,7 @@ class SQLIContentPublisher
      * Singleton
      * @return SQLIContentPublisher
      */
-    public function getInstance()
+    public static function getInstance()
     {
         if( !self::$instance instanceof SQLIContentPublisher )
             self::$instance = new SQLIContentPublisher();
