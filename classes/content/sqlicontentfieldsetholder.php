@@ -158,15 +158,17 @@ class SQLIContentFieldsetHolder implements ArrayAccess, Iterator
      */
     public static function fromContentObject( eZContentObject $object )
     {
+        eZDebug::accumulatorStart( 'fieldset_holder_create', 'sqlicontent' );
         $setHolder = new self;
-        $languages = $object->availableLanguages();
+        $languages = $object->allLanguages();
         $setHolder->contentObject = $object;
         
         foreach ( $languages as $lang )
         {
-            $set = SQLIContentFieldset::fromDataMap( $object->fetchDataMap( false, $lang ) );
-            $set->setLanguage( $lang );
-            $setHolder->fieldsets[$lang] = $set;
+            $locale = $lang->attribute( 'locale' );
+            $set = SQLIContentFieldset::fromDataMap( $object->fetchDataMap( false, $locale ) );
+            $set->setLanguage( $locale );
+            $setHolder->fieldsets[$locale] = $set;
         }
         
         // Set default language
@@ -174,6 +176,7 @@ class SQLIContentFieldsetHolder implements ArrayAccess, Iterator
         
         // Init internal iterator
         $setHolder->initIterator();
+        eZDebug::accumulatorStop( 'fieldset_holder_create' );
         
         return $setHolder;
     }
