@@ -371,6 +371,8 @@ class SQLIContent
         {
             $fieldset->resetInputData();
         }
+        
+        $this->refreshLocations();
     }
     
     /**
@@ -420,6 +422,14 @@ class SQLIContent
                 }
                 
                 $ret = $this->currentLocations;
+                break;
+            case 'defaultLocation':
+                if ( !$this->currentLocations instanceof SQLILocationSet )
+                {
+                    $this->refreshLocations();
+                }
+                
+                $ret = $this->currentLocations[$this->contentObject->mainNodeID()];
                 break;
             default:
                 if ( $this->contentObject->hasAttribute( $name ) )

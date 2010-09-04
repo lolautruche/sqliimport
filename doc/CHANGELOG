@@ -1,6 +1,8 @@
 1.0.1
 -----------------
 Fix issue : Content creation with non-default language - http://bit.ly/9iNxyb
+Fix issue : Parent location doesn't update in publisher
+Implemented "defaultLocation" in SQLIContent. You can now get the default location, corresponding to content 'main_node' : $defaultLocation = $sqliContent->defaultLocation; // returns SQLILocation
 
 1.0
 -----------------

@@ -166,6 +166,9 @@ class SQLIContentPublisher
         {
             $version->removeThis();
         }
+        
+        // Now cleaning internal options
+        $this->options['parent_node_id'] = null;
     }
     
     /**
