@@ -117,9 +117,9 @@ final class SQLIImportFactory
      */
     private function setLoggedInUser()
     {
-        $robotUserID = $this->importINI->variable( 'ImportSettings', 'RobotUserID' );
+        $robotUserID = (int)$this->importINI->variable( 'ImportSettings', 'RobotUserID' );
         $anonymousUserID = eZINI::instance( 'site.ini' )->variable( 'UserSettings', 'AnonymousUserID' );
-        if( $robotUserID == '' ) // If no user id provided, take AnonymousUserID as a default value
+        if( !$robotUserID ) // If no user id provided, take AnonymousUserID as a default value
         {
             $robotUserID = $anonymousUserID;
         }
