@@ -303,16 +303,20 @@ final class SQLIImportFactory
         $this->restorePerformanceSettings();
         
         // Update scheduled imports
-        foreach( $this->scheduledImports as $scheduledImport )
+        if( is_array( $this->scheduledImports ) )
         {
-            if ( !$scheduledImport instanceof SQLIScheduledImport )
+            foreach( $this->scheduledImports as $scheduledImport )
             {
-                SQLIImportLogger::logError( __METHOD__.'$scheduledImport is not an instance of SQLIScheduledImport !' );
-                continue;
+                if ( !$scheduledImport instanceof SQLIScheduledImport )
+                {
+                    SQLIImportLogger::logError( __METHOD__.'$scheduledImport is not an instance of SQLIScheduledImport !' );
+                    continue;
+                }
+                
+                $scheduledImport->updateNextImport();
             }
-            
-            $scheduledImport->updateNextImport();
         }
+        
         unset( $this->scheduledImports );
     }
     

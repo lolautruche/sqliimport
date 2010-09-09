@@ -1,3 +1,7 @@
+1.0.3
+-----------------
+Fixed a notice in SQLIImportFactory::cleanup()
+
 1.0.2
 -----------------
 Fixed issue : Exception thrown when setting a RobotUserID
