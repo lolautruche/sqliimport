@@ -20,7 +20,7 @@ class SQLIContentOptions extends SQLIImportOptions
         // Define some default values
         $this->properties = array(
             'remote_id'         => null,
-            'section_id'        => 1,
+            'section_id'        => 0,
             'creator_id'        => false,
             'language'          => eZContentObject::defaultLanguage(),
             'class_identifier'  => null
