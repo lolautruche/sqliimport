@@ -2,6 +2,7 @@
 -----------------
 Fixed a notice in SQLIImportFactory::cleanup()
 Fixed issue with section assignement on new sqli content object - http://bit.ly/aD8O61
+Implemented shorthand method to easily handle HTML in content API
 
 1.0.2
 -----------------

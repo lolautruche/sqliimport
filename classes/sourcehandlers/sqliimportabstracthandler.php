@@ -100,4 +100,16 @@ abstract class SQLIImportAbstractHandler
     {
         return SQLIContentUtils::getRemoteFile( $url, $httpAuth, $this->debug );
     }
+    
+    /**
+     * Returns eZXML content to insert into XML blocks (ezxmltext datatype)
+     * eZXML is generated from HTML content provided as argument
+     * @param string $htmlContent Input HTML string
+     * @return string Generated eZXML string
+     * @see SQLIContentUtils::getRichContent()
+     */
+    protected function getRichContent( $htmlContent )
+    {
+        return SQLIContentUtils::getRichContent( $htmlContent );
+    }
 }

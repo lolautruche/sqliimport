@@ -636,7 +636,7 @@ endobj
  /Dest [ 60 0 R
  /XYZ
  62.69291
- 343.8774
+ 212.6774
  0 ]
  /Rect [ 102.6929
  258.5936
@@ -654,7 +654,7 @@ endobj
  /Dest [ 60 0 R
  /XYZ
  62.69291
- 343.8774
+ 212.6774
  0 ]
  /Rect [ 527.0227
  258.5936
@@ -1147,7 +1147,7 @@ endobj
 % 'R66': class PDFInfo 
 66 0 obj
 << /Author ()
- /CreationDate (D:20100826163920-01'00')
+ /CreationDate (D:20100918182101-01'00')
  /Keywords ()
  /Producer (ReportLab http://www.reportlab.com)
  /Subject (\(unspecified\))
@@ -1363,7 +1363,7 @@ endobj
 << /Dest [ 60 0 R
  /XYZ
  62.69291
- 343.8774
+ 212.6774
  0 ]
  /Parent 82 0 R
  /Prev 83 0 R
@@ -2537,37 +2537,70 @@ endobj
 % 'R92': class PDFStream 
 92 0 obj
 % page stream
-<< /Length 1944 >>
+<< /Length 2896 >>
 stream
 1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
 q
 1 0 0 1 62.69291 753.0236 cm
 q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F2 10 Tf 12 TL (Note about HTML content :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 723.0236 cm
+q
+BT 1 0 0 1 0 16.82 Tm 1.26561 Tw 12 TL /F1 10 Tf 0 0 0 rg (A shorthand method is available to handle HTML content import. It is available in ) Tj /F3 10 Tf (Import Handlers ) Tj /F1 10 Tf (and) Tj T* 0 Tw (outside import handlers :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 641.8236 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 72 re B*
+Q
+q
+BT 1 0 0 1 0 53.71 Tm 12 TL /F5 10 Tf 0 0 0 rg (// Code below is available in an import handler) Tj T* ($content-) Tj (>) Tj (fields-) Tj (>) Tj (intro = $this-) Tj (>) Tj (getRichContent\( $myHTMLContent \);) Tj T*  T* (// Code below is available everywhere) Tj T* ($eZXMLContent = SQLIContentUtils::getRicheContent\( $myHTMLContent \);) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 621.8236 cm
+q
 BT 1 0 0 1 0 4.82 Tm 12 TL /F1 10 Tf 0 0 0 rg (For more examples, please check scripts located in the ) Tj /F3 10 Tf (stubs/ ) Tj /F1 10 Tf (directory.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 735.0236 cm
+1 0 0 1 62.69291 603.8236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (You can also have a look at the UML diagram below.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 355.8774 cm
+1 0 0 1 62.69291 224.6774 cm
 q
 469.8898 0 0 379.1462 0 0 cm
 /FormXob.a1cde0050f3b045eb6dbcdcd9c3bdb05 Do
 Q
 Q
 q
-1 0 0 1 62.69291 328.8774 cm
+1 0 0 1 62.69291 197.6774 cm
 q
 BT 1 0 0 1 0 6.025 Tm 15 TL /F4 12.5 Tf 0 0 0 rg (Source Handlers) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 238.8774 cm
+1 0 0 1 62.69291 107.6774 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2959,25 +2992,25 @@ xref
 0000928192 00000 n
 0000932625 00000 n
 0000940874 00000 n
-0000942919 00000 n
-0000945402 00000 n
-0000945755 00000 n
-0000945943 00000 n
-0000946020 00000 n
-0000946097 00000 n
-0000946174 00000 n
-0000946252 00000 n
-0000946331 00000 n
-0000946410 00000 n
-0000946489 00000 n
+0000943871 00000 n
+0000946354 00000 n
+0000946707 00000 n
+0000946895 00000 n
+0000946972 00000 n
+0000947049 00000 n
+0000947126 00000 n
+0000947204 00000 n
+0000947283 00000 n
+0000947362 00000 n
+0000947441 00000 n
 trailer
 << /ID 
  % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
- [(\007\241\221j\367\307\275\005.\374}\003V\241iG) (\007\241\221j\367\307\275\005.\374}\003V\241iG)] 
+ [(\242\344\210~\353_\276\263\021\330\323\241\374o>\032) (\242\344\210~\353_\276\263\021\330\323\241\374o>\032)] 
 
  /Info 66 0 R
  /Root 65 0 R
  /Size 104 >>
 startxref
-946537
+947489
 %%EOF

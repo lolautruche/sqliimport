@@ -87,4 +87,20 @@ class SQLIContentUtils
             
         return trim($localPath);
     }
+    
+    /**
+     * Returns eZXML content to insert into XML blocks (ezxmltext datatype)
+     * eZXML is generated from HTML content provided as argument
+     * @param string $htmlContent Input HTML string
+     * @return string Generated eZXML string
+     */
+    public static function getRichContent( $htmlContent )
+    {
+        $htmlParser = new SQLIXMLInputParser();
+        $htmlParser->setParseLineBreaks( true );
+        $document = $htmlParser->process( $htmlContent );
+        $richContent = eZXMLTextType::domString( $document );
+        
+        return $richContent;
+    }
 }

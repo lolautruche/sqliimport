@@ -205,6 +205,19 @@ the framework will use *data_text* instead.
 
 For more information about string representation of kernel datatypes, please read **fromString.txt** appendix.
 
+**Note about HTML content :**
+
+A shorthand method is available to handle HTML content import. It is available in *Import Handlers* and outside import handlers :
+
+::
+
+  // Code below is available in an import handler
+  $content->fields->intro = $this->getRichContent( $myHTMLContent );
+  
+  // Code below is available everywhere
+  $eZXMLContent = SQLIContentUtils::getRicheContent( $myHTMLContent );
+
+
 For more examples, please check scripts located in the *stubs/* directory.
 
 You can also have a look at the UML diagram below.

@@ -91,11 +91,7 @@ class SQLIRSSImportHandler extends SQLIImportAbstractHandler implements ISQLIImp
         $content->fields->author = (string)$row->author.'|noreply@sqli.com|-1'; // @see eZAuthorType::fromString()
         
         // Handle HTML content
-        $htmlMessage = (string)$row->description;
-        $parser = new SQLIXMLInputParser();
-        $parser->setParseLineBreaks( true );
-        $document = $parser->process( $htmlMessage ); // Result is a DOM Document
-        $content->fields->intro = eZXMLTextType::domString( $document );
+        $content->fields->intro = $this->getRichContent( (string)$row->description ); // Proxy method to SQLIContentUtils::getRichContent()
         
         // Now publish content
         $content->addLocation( SQLILocation::fromNodeID( $this->handlerConfArray['DefaultParentNodeID'] ) );
