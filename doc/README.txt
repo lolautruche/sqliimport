@@ -215,7 +215,7 @@ A shorthand method is available to handle HTML content import. It is available i
   $content->fields->intro = $this->getRichContent( $myHTMLContent );
   
   // Code below is available everywhere
-  $eZXMLContent = SQLIContentUtils::getRicheContent( $myHTMLContent );
+  $content->fields->intro = SQLIContentUtils::getRichContent( $myHTMLContent );
 
 
 For more examples, please check scripts located in the *stubs/* directory.
