@@ -34,3 +34,25 @@ function SQLIImportErrorCleanup()
     $script->shutdown( 1 );
 }
 eZExecution::addFatalErrorHandler( 'SQLIImportErrorCleanup' ); // Registering Fatal Error handler
+
+/**
+ * Cleanup handler, in case of a non caught DB transaction error
+ * @return void
+ */
+function SQLIImportCleanupHandler()
+{
+    // Check if an error has occurred and report it if necessary
+    $db = eZDB::instance();
+    if( $db->errorNumber() > 0 )
+    {
+        SQLIImportToken::cleanAll();
+        $factory = SQLIImportFactory::instance();
+        $currentItem = $factory->getCurrentImportItem();
+        $currentItem->setAttribute( 'status', SQLIImportItem::STATUS_FAILED );
+        $currentItem->store();
+        
+        SQLIImportLogger::logError( 'A DB transaction error occurred : #'.$db->errorNumber().' - "'.$db->errorMessage().'"' );
+        SQLIImportLogger::logError( 'An error has occurred during import process. The import status has been updated.' );
+    }
+}
+eZExecution::addCleanupHandler( 'SQLIImportCleanupHandler' );
