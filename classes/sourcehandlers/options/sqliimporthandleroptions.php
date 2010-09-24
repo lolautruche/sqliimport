@@ -39,9 +39,12 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     public function __toString()
     {
         $aReturn = array();
-        foreach( $this->properties as $name => $value )
+        if( is_array( $this->properties ) )
         {
-            $aReturn[] = $name.' : '.(string)$value;
+            foreach( $this->properties as $name => $value )
+            {
+                $aReturn[] = $name.' : '.(string)$value;
+            }
         }
         
         return implode( "\n", $aReturn );
