@@ -61,6 +61,7 @@
                             <th>{"Status"|i18n( 'extension/sqliimport' )}</th>
                             <th>{"Progress"|i18n( 'extension/sqliimport' )}</th>
                             <th>{"Progression notes"|i18n( 'extension/sqliimport' )}</th>
+                            <th>{"Duration"|i18n( 'extension/sqliimport' )}</th>
                         </tr>
                     </thead>
 
@@ -73,7 +74,7 @@
                             <td>{$import.requested_time|l10n( 'shortdatetime' )}</td>
                             <td>{$import.type_string|i18n( 'extension/sqliimport/type' )}</td>
                             <td>
-                                {$import.status_string|i18n( 'extension/sqliimport/status' )}
+                                {$import.status_string|i18n( 'extension/sqliimport/type' )}
                             {if $import.user_has_access}
                                 {switch match=$import.status}
                                     {case match=0}{* Pending *}
@@ -92,6 +93,7 @@
                             </td>
                             <td>{$import.percentage}%</td>
                             <td>{$import.progression_notes}</td>
+                            <td>{$import.process_time_formated.hour}h {$import.process_time_formated.minute}min {$import.process_time_formated.second}sec</td>
                         </tr>
                         {/foreach}
                     </tbody>

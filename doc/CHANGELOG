@@ -1,3 +1,11 @@
+1.1.0
+-----------------
+Added manual frequency support for scheduled imports (not less than every 5 minutes)
+Added import duration monitor
+Fixed issue : Imports are blocked after a transaction error
+Fixed some i18n issues
+Fixed a notice in SQLIImportHandlerOptions::__toString()
+
 1.0.3
 -----------------
 Fixed a notice in SQLIImportFactory::cleanup()

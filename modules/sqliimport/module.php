@@ -51,14 +51,15 @@ $ViewList['addscheduled'] = array(
     'unordered_params'          =>  array(),
     'single_post_actions'       =>  array( 'RequestScheduledImportButton' => 'RequestScheduledImport' ),
     'post_action_parameters'    =>  array( 'RequestScheduledImport' => array(
-                                                'ImportHandler'         => 'ImportHandler',
-                                                'ImportOptions'         => 'ImportOptions',
-                                                'ScheduledDate'         => 'ScheduledDate',
-                                                'ScheduledHour'         => 'ScheduledHour',
-                                                'ScheduledMinute'       => 'ScheduledMinute',
-                                                'ScheduledFrequency'    => 'ScheduledFrequency',
-                                                'ScheduledLabel'        => 'ScheduledLabel',
-                                                'ScheduledActive'       => 'ScheduledActive'
+                                                'ImportHandler'             => 'ImportHandler',
+                                                'ImportOptions'             => 'ImportOptions',
+                                                'ScheduledDate'             => 'ScheduledDate',
+                                                'ScheduledHour'             => 'ScheduledHour',
+                                                'ScheduledMinute'           => 'ScheduledMinute',
+                                                'ScheduledFrequency'        => 'ScheduledFrequency',
+                                                'ManualScheduledFrequency'  => 'ManualScheduledFrequency',
+                                                'ScheduledLabel'            => 'ScheduledLabel',
+                                                'ScheduledActive'           => 'ScheduledActive'
                                             ) ),
     'default_navigation_part'   => 'sqliimportnavigationpart',
     'functions'                 => array( 'manageimports' )

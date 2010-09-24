@@ -91,19 +91,25 @@ class SQLIImportItem extends eZPersistentObject
                                                                                'datatype' => 'string',
                                                                                'default'  => null,
                                                                                'required' => false ),
+        
+                                               'process_time'        => array( 'name'     => 'process_time',
+                                                                               'datatype' => 'integer',
+                                                                               'default'  => 0,
+                                                                               'required' => true ),
                                             ),
                                             
                       'keys'                 => array( 'id' ),
                       'increment_key'        => 'id',
                       'class_name'           => 'SQLIImportItem',
                       'name'                 => 'sqliimport_item',
-                      'function_attributes'  => array( 'options'            => 'getOptions',
-                                                       'user'               => 'getUser',
-                                                       'handler_name'       => 'getHandlerName',
-                                                       'status_string'      => 'getStatusString',
-                                                       'percentage'         => 'getPercentage',
-                                                       'type_string'        => 'getTypeString',
-                                                       'user_has_access'    => 'userHasAccess' ),
+                      'function_attributes'  => array( 'options'                    => 'getOptions',
+                                                       'user'                       => 'getUser',
+                                                       'handler_name'               => 'getHandlerName',
+                                                       'status_string'              => 'getStatusString',
+                                                       'percentage'                 => 'getPercentage',
+                                                       'type_string'                => 'getTypeString',
+                                                       'user_has_access'            => 'userHasAccess',
+                                                       'process_time_formated'      => 'getFormatedProcessTime' ),
                       'set_functions'        => array( 'options'        => 'setOptions',
                                                        'user'           => 'setUser',
                                                        'percentage'     => 'setPercentage' )
@@ -416,5 +422,15 @@ class SQLIImportItem extends eZPersistentObject
         $userHasAccess = SQLIImportUtils::hasAccessToLimitation( 'sqliimport', 'manageimports', $aLimitation );
         
         return $userHasAccess;
+    }
+    
+    public function getFormatedProcessTime()
+    {
+        $aTime = array(
+            'hour'      => (int)( $this->attribute( 'process_time' ) / eZTime::SECONDS_AN_HOUR ),
+            'minute'    => (int)( ( $this->attribute( 'process_time' ) % eZTime::SECONDS_AN_HOUR ) / eZTime::SECONDS_A_MINUTE ),
+            'second'    => (int)( $this->attribute( 'process_time' ) % eZTime::SECONDS_A_MINUTE )
+        );
+        return $aTime;
     }
 }

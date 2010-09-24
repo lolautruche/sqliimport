@@ -40,30 +40,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hourly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Daily</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weekly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Monthly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to import list</source>
         <translation type="unfinished"></translation>
     </message>
@@ -105,6 +81,10 @@
     </message>
     <message>
         <source>Progression notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -188,6 +168,45 @@
         <source>javascript/lang/en.js</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Activate import</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>extension/sqliimport/schedulefrequency</name>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hourly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Daily</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monthly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Every</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minutes (not less than 5min)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>extension/sqliimport/error</name>
@@ -200,7 +219,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please chose a correct date</source>
+        <source>Please choose a correct date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -209,6 +228,10 @@
     </message>
     <message>
         <source>Unknown alter import action '%action'</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a frequency greater than 5min</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

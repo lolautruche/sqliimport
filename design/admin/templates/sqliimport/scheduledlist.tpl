@@ -58,7 +58,7 @@
                             <th>{"Import type"|i18n( 'extension/sqliimport' )}</th>
                             <th>{"Params"|i18n( 'extension/sqliimport' )}</th>
                             <th>{"User"|i18n( 'extension/sqliimport' )}</th>
-                            <th>{"Frequency"|i18n( 'extension/sqliimport' )}</th>
+                            <th>{"Frequency"|i18n( 'schedulefrequency' )}</th>
                             <th>{"Next import"|i18n( 'extension/sqliimport' )}</th>
                             <th class="tight">{"Active"|i18n( 'extension/sqliimport' )}</th>
                             <th class="tight">{'Edit'|i18n( 'extension/sqliimport' )}</th>
@@ -73,7 +73,7 @@
                             <td>{$import.handler_name}</td>
                             <td>{$import.options|nl2br}</td>
                             <td>{$import.user.login}</td>
-                            <td>{$import.frequency}</td>
+                            <td>{$import.full_frequency}</td>
                             <td>{$import.next|l10n( 'shortdatetime' )}</td>
                             <td><input type="checkbox" disabled="disabled"{if $import.is_active} checked="checked"{/if}/></td>
                             <td>

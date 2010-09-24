@@ -242,6 +242,7 @@ final class SQLIImportFactory
                     try
                     {
                         $progressBar->advance();
+                        $startTime = time();
                         $importHandler->process( $row );
                     }
                     catch( Exception $e )
@@ -250,6 +251,13 @@ final class SQLIImportFactory
                     }
                     
                     $aImportItems[$i]->updateProgress( $percentageAdvancementStep, $importHandler->getProgressionNotes() );
+                    
+                    // Now calculate process time for this iteration
+                    $endTime = time();
+                    $diffTime = $endTime - $startTime;
+                    $oldProcessTime = $aImportItems[$i]->attribute( 'process_time' );
+                    $aImportItems[$i]->setAttribute( 'process_time', $oldProcessTime + $diffTime );
+                    $aImportItems[$i]->store( array( 'process_time' ) );
                     
                     // Interruption handling
                     if( $aImportItems[$i]->isInterrupted() )
@@ -265,6 +273,7 @@ final class SQLIImportFactory
                 $progressBar->finish();
                 $this->cli->notice();
                 unset( $importHandler );
+                
                 
                 if( !$isInterrupted )
                 {

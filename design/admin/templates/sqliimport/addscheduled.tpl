@@ -73,17 +73,22 @@
 			</p>
 			<p>&nbsp;</p>
 			
-			<h4>{'Frequency'|i18n( 'extension/sqliimport' )}</h4>
+			<h4>{'Frequency'|i18n( 'schedulefrequency' )}</h4>
 			<p>
-			    <input type="radio" name="ScheduledFrequency" value="none"    {if or( is_unset( $import_frequency ), $import_frequency|eq( 'none' ) )} checked="checked"{/if}/>{'None'|i18n( 'extension/sqliimport' )}
-			    <input type="radio" name="ScheduledFrequency" value="hourly"  {if and( is_set( $import_frequency ), $import_frequency|eq( 'hourly' ) )} checked="checked"{/if}/>{'Hourly'|i18n( 'extension/sqliimport' )}
-			    <input type="radio" name="ScheduledFrequency" value="daily"   {if and( is_set( $import_frequency ), $import_frequency|eq( 'daily' ) )} checked="checked"{/if}/>{'Daily'|i18n( 'extension/sqliimport' )}
-			    <input type="radio" name="ScheduledFrequency" value="weekly"  {if and( is_set( $import_frequency ), $import_frequency|eq( 'weekly' ) )} checked="checked"{/if}/>{'Weekly'|i18n( 'extension/sqliimport' )}
-			    <input type="radio" name="ScheduledFrequency" value="monthly" {if and( is_set( $import_frequency ), $import_frequency|eq( 'monthly' ) )} checked="checked"{/if}/>{'Monthly'|i18n( 'extension/sqliimport' )}
+			    <input type="radio" name="ScheduledFrequency" value="none"    {if or( is_unset( $import_frequency ), $import_frequency|eq( 'none' ) )} checked="checked"{/if}/>{'None'|i18n( 'schedulefrequency' )}
+			    <input type="radio" name="ScheduledFrequency" value="hourly"  {if and( is_set( $import_frequency ), $import_frequency|eq( 'hourly' ) )} checked="checked"{/if}/>{'Hourly'|i18n( 'schedulefrequency' )}
+			    <input type="radio" name="ScheduledFrequency" value="daily"   {if and( is_set( $import_frequency ), $import_frequency|eq( 'daily' ) )} checked="checked"{/if}/>{'Daily'|i18n( 'schedulefrequency' )}
+			    <input type="radio" name="ScheduledFrequency" value="weekly"  {if and( is_set( $import_frequency ), $import_frequency|eq( 'weekly' ) )} checked="checked"{/if}/>{'Weekly'|i18n( 'schedulefrequency' )}
+			    <input type="radio" name="ScheduledFrequency" value="monthly" {if and( is_set( $import_frequency ), $import_frequency|eq( 'monthly' ) )} checked="checked"{/if}/>{'Monthly'|i18n( 'schedulefrequency' )}
+			    
+			    {* Manual frequency *}
+			    <br />
+			    <input type="radio" name="ScheduledFrequency" value="manual"  {if and( is_set( $import_frequency ), $import_frequency|eq( 'manual' ) )} checked="checked"{/if} onclick="document.getElementById('ManualScheduledFrequency').removeAttribute('disabled')" />{'Every'|i18n( 'schedulefrequency' )} :
+			    <input type="text" id="ManualScheduledFrequency" name="ManualScheduledFrequency" size="5" value="{cond( is_set( $manual_frequency ), $manual_frequency, 0 )}" {if or( is_unset( $import_frequency ), $import_frequency|ne( 'manual' ) )} disabled="disabled"{/if} /> {'minutes (not less than 5min)'|i18n( 'schedulefrequency' )}
 			</p>
 			<p>&nbsp;</p>
 			
-			<h4>{'Activate import'}</h4>
+			<h4>{'Activate import'|i18n( 'extension/sqliimport' )}</h4>
 			<p>
 			 <input type="checkbox" name="ScheduledActive"{if $import_is_active} checked="checked"{/if} />
 			</p>

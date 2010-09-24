@@ -28,6 +28,7 @@ try
     $importFrequency = 'none';
     $importLabel = null;
     $importIsActive = true;
+    $manualFrequency = 0;
     
     if( $Module->isCurrentAction( 'RequestScheduledImport' ) )
     {
@@ -44,12 +45,12 @@ try
         $importLabel = $Module->actionParameter( 'ScheduledLabel' );
         $importIsActive = $Module->actionParameter( 'ScheduledActive' ) ? 1 : 0;
         
-        $importDate = explode( '-', $Module->actionParameter( 'ScheduledDate' ) );
+        $aImportDate = explode( '-', $Module->actionParameter( 'ScheduledDate' ) );
         $importHour = (int)$Module->actionParameter( 'ScheduledHour' );
         $importMinute = (int)$Module->actionParameter( 'ScheduledMinute' );
-        $nextDate = mktime( $importHour, $importMinute, 0, $importDate[1], $importDate[2], $importDate[0] );
+        $nextDate = mktime( $importHour, $importMinute, 0, $aImportDate[1], $aImportDate[2], $aImportDate[0] );
         if( $nextDate == -1 ) // Bad date entered
-            throw new SQLIImportBaseException( SQLIImportUtils::translate( 'extension/sqliimport/error', 'Please chose a correct date' ) );
+            throw new SQLIImportBaseException( SQLIImportUtils::translate( 'extension/sqliimport/error', 'Please choose a correct date' ) );
         
         $row = array(
             'handler'               => $currentImportHandler,
@@ -59,6 +60,17 @@ try
             'next'                  => $nextDate,
             'is_active'             => $importIsActive
         );
+        
+        // Handle frequency
+        if( $importFrequency == SQLIScheduledImport::FREQUENCY_MANUAL )
+        {
+            $manualFrequency = (int)$Module->actionParameter( 'ManualScheduledFrequency' );
+            if( $manualFrequency < 5 )
+                throw new SQLIImportBaseException( SQLIImportUtils::translate( 'extension/sqliimport/error', 'Please choose a frequency greater than 5min' ) );
+                
+            $row['manual_frequency'] = $manualFrequency;
+        }
+            
         $scheduledImport = SQLIScheduledImport::fetch( $importID );
         if ( !$scheduledImport instanceof SQLIScheduledImport )
             $scheduledImport = new SQLIScheduledImport( $row );
@@ -93,46 +105,49 @@ try
         $importFrequency = $scheduledImport->attribute( 'frequency' );
         $importLabel = $scheduledImport->attribute( 'label' );
         $importIsActive = $scheduledImport->attribute( 'is_active' );
+        $manualFrequency = $scheduledImport->attribute( 'manual_frequency' );
     }
     
-    $tpl->setVariable( 'import_id', $importID );
-    $tpl->setVariable( 'current_import_handler', $currentImportHandler );
-    $tpl->setVariable( 'import_options', $importOptions );
-    $tpl->setVariable( 'import_date', $importDate );
-    $tpl->setVariable( 'import_hour', $importHour );
-    $tpl->setVariable( 'import_minute', $importMinute );
-    $tpl->setVariable( 'import_frequency', $importFrequency );
-    $tpl->setVariable( 'import_label', $importLabel );
-    $tpl->setVariable( 'import_is_active', $importIsActive );
-    
-    $importHandlers = $importINI->variable( 'ImportSettings', 'AvailableSourceHandlers' );
-    $aValidHandlers = array();
-    // Check if import handlers are enabled
-    foreach( $importHandlers as $handler )
-    {
-        $handlerSection = $handler.'-HandlerSettings';
-        if( $importINI->variable( $handlerSection, 'Enabled' ) === 'true' )
-        {
-            $handlerName = $importINI->hasVariable( $handlerSection, 'Name' ) ? $importINI->variable( $handlerSection, 'Name' ) : $handler;
-            /*
-             * Policy limitations check.
-             * User has access to handler if it appears in $simplifiedLimitations['SQLIImport_Type']
-             * or if $simplifiedLimitations['SQLIImport_Type'] is not set (no limitations)
-             */
-            if( ( isset( $simplifiedLimitations['SQLIImport_Type'] ) && in_array ($handler, $simplifiedLimitations['SQLIImport_Type'] ) )
-                || !isset( $simplifiedLimitations['SQLIImport_Type'] ) )
-                $aValidHandlers[$handlerName] = $handler;
-        }
-    }
-    
-    $tpl->setVariable( 'importHandlers', $aValidHandlers );
 }
 catch( Exception $e )
 {
     $errMsg = $e->getMessage();
-    SQLIImportLogger::writeError( $errMsg );
+    eZDebug::writeError( $errMsg );
     $tpl->setVariable( 'error_message', $errMsg );
 }
+
+$tpl->setVariable( 'import_id', $importID );
+$tpl->setVariable( 'current_import_handler', $currentImportHandler );
+$tpl->setVariable( 'import_options', $importOptions );
+$tpl->setVariable( 'import_date', $importDate );
+$tpl->setVariable( 'import_hour', $importHour );
+$tpl->setVariable( 'import_minute', $importMinute );
+$tpl->setVariable( 'import_frequency', $importFrequency );
+$tpl->setVariable( 'import_label', $importLabel );
+$tpl->setVariable( 'import_is_active', $importIsActive );
+$tpl->setVariable( 'manual_frequency', $manualFrequency );
+
+$importHandlers = $importINI->variable( 'ImportSettings', 'AvailableSourceHandlers' );
+$aValidHandlers = array();
+// Check if import handlers are enabled
+foreach( $importHandlers as $handler )
+{
+    $handlerSection = $handler.'-HandlerSettings';
+    if( $importINI->variable( $handlerSection, 'Enabled' ) === 'true' )
+    {
+        $handlerName = $importINI->hasVariable( $handlerSection, 'Name' ) ? $importINI->variable( $handlerSection, 'Name' ) : $handler;
+        /*
+         * Policy limitations check.
+         * User has access to handler if it appears in $simplifiedLimitations['SQLIImport_Type']
+         * or if $simplifiedLimitations['SQLIImport_Type'] is not set (no limitations)
+         */
+        if( ( isset( $simplifiedLimitations['SQLIImport_Type'] ) && in_array ($handler, $simplifiedLimitations['SQLIImport_Type'] ) )
+            || !isset( $simplifiedLimitations['SQLIImport_Type'] ) )
+            $aValidHandlers[$handlerName] = $handler;
+    }
+}
+
+$tpl->setVariable( 'importHandlers', $aValidHandlers );
 
 $Result['path'] = array(
     array(

@@ -14,7 +14,8 @@ class SQLIScheduledImport extends eZPersistentObject
           FREQUENCY_HOURLY = 'hourly',
           FREQUENCY_DAILY = 'daily',
           FREQUENCY_WEEKLY = 'weekly',
-          FREQUENCY_MONTHLY = 'monthly';
+          FREQUENCY_MONTHLY = 'monthly',
+          FREQUENCY_MANUAL = 'manual';
     
     /**
      * Options for import
@@ -89,6 +90,11 @@ class SQLIScheduledImport extends eZPersistentObject
                                                                                'datatype' => 'integer',
                                                                                'default'  => 0,
                                                                                'required' => false ),
+        
+                                               'manual_frequency'    => array( 'name'     => 'manual_frequency',
+                                                                               'datatype' => 'integer',
+                                                                               'default'  => 0,
+                                                                               'required' => true ),
                                             ),
                                             
                       'keys'                 => array( 'id' ),
@@ -99,7 +105,8 @@ class SQLIScheduledImport extends eZPersistentObject
                                                        'user'               => 'getUser',
                                                        'handler_name'       => 'getHandlerName',
                                                        'status_string'      => 'getStatusString',
-                                                       'user_has_access'    => 'userHasAccess' ),
+                                                       'user_has_access'    => 'userHasAccess',
+                                                       'full_frequency'     => 'getFullFrequency' ),
                       'set_functions'        => array( 'options'        => 'setOptions',
                                                        'user'           => 'setUser' )
         );
@@ -258,6 +265,10 @@ class SQLIScheduledImport extends eZPersistentObject
                 case self::FREQUENCY_MONTHLY :
                     $nextTime = '+1 month';
                     break;
+                    
+                case self::FREQUENCY_MANUAL : // Manual frequency value is in minutes
+                    $nextTime = '+'.$this->attribute( 'manual_frequency' ).' minutes';
+                    break;
     
                 default :
                     return false;
@@ -283,5 +294,25 @@ class SQLIScheduledImport extends eZPersistentObject
         $userHasAccess = SQLIImportUtils::hasAccessToLimitation( 'sqliimport', 'manageimports', $aLimitation );
         
         return $userHasAccess;
+    }
+    
+    /**
+     * Returns "full" frequency
+     * @return string
+     */
+    public function getFullFrequency()
+    {
+        $freq = null;
+        switch( $this->attribute( 'frequency' ) )
+        {
+            case self::FREQUENCY_MANUAL :
+                $freq = $this->attribute( 'frequency' ) . ' ('.$this->attribute( 'manual_frequency' ).' '.SQLIImportUtils::translate( 'extension/sqliimport', 'Minutes' ).')';
+                break;
+                
+            default:
+                $freq = $this->attribute( 'frequency' );
+        }
+        
+        return $freq;
     }
 }

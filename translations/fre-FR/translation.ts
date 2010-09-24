@@ -40,30 +40,6 @@
         <translation>Minutes</translation>
     </message>
     <message>
-        <source>Frequency</source>
-        <translation>Fréquence</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Aucune</translation>
-    </message>
-    <message>
-        <source>Hourly</source>
-        <translation>Toutes les heures</translation>
-    </message>
-    <message>
-        <source>Daily</source>
-        <translation>Tous les jours</translation>
-    </message>
-    <message>
-        <source>Weekly</source>
-        <translation>Toutes les semaines</translation>
-    </message>
-    <message>
-        <source>Monthly</source>
-        <translation>Tous les mois</translation>
-    </message>
-    <message>
         <source>Back to import list</source>
         <translation>Revenir à la liste des imports</translation>
     </message>
@@ -106,6 +82,10 @@
     <message>
         <source>Progression notes</source>
         <translation>Notes de progression</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation>Durée</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this import ?</source>
@@ -188,6 +168,45 @@
         <source>javascript/lang/en.js</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Activate import</source>
+        <translation>Activer l'import</translation>
+    </message>
+</context>
+<context>
+    <name>extension/sqliimport/schedulefrequency</name>
+    <message>
+        <source>Frequency</source>
+        <translation>Fréquence</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucune</translation>
+    </message>
+    <message>
+        <source>Hourly</source>
+        <translation>Toutes les heures</translation>
+    </message>
+    <message>
+        <source>Daily</source>
+        <translation>Tous les jours</translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation>Toutes les semaines</translation>
+    </message>
+    <message>
+        <source>Monthly</source>
+        <translation>Tous les mois</translation>
+    </message>
+    <message>
+        <source>Every</source>
+        <translation>Toutes les</translation>
+    </message>
+    <message>
+        <source>minutes (not less than 5min)</source>
+        <translation>minutes (pas moins de 5min)</translation>
+    </message>
 </context>
 <context>
     <name>extension/sqliimport/error</name>
@@ -200,7 +219,7 @@
         <translation>SQLIPendingImport : Attribut inconnu &quot;%attribute&quot;</translation>
     </message>
     <message>
-        <source>Please chose a correct date</source>
+        <source>Please choose a correct date</source>
         <translation>Merci de choisir une date valide</translation>
     </message>
     <message>
@@ -210,6 +229,10 @@
     <message>
         <source>Unknown alter import action &apos;%action&apos;</source>
         <translation>Action d&apos;altération inconnue &apos;%action&apos;</translation>
+    </message>
+    <message>
+        <source>Please choose a frequency greater than 5min</source>
+        <translation>Merci de choisir une fréquence supérieure à 5min</translation>
     </message>
 </context>
 <context>
