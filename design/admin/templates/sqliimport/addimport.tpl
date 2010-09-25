@@ -59,7 +59,7 @@
                         <div class="box-bl">
                             <div class="box-br">
                                 <div class="block">
-                                    <input class="button" type="submit" name="RequestImportButton" value="{'Request Import'i18n( 'extension/sqliimport' )}" />
+                                    <input class="button" type="submit" name="RequestImportButton" value="{'Request a new immediate import'|i18n( 'extension/sqliimport' )}" />
                                 </div>
                             {* DESIGN: Control bar END *}
                             </div>
