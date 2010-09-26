@@ -32,6 +32,7 @@ $options = $script->getOptions(
 $script->initialize();
 $script->setUseDebugAccumulators( true );
 
+include_once 'extension/sqliimport/modules/sqliimport/sigtermhandler.php';
 include_once 'extension/sqliimport/modules/sqliimport/fatalerrorhandler.php';
 
 try

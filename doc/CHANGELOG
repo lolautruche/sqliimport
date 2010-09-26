@@ -1,3 +1,7 @@
+1.2.0
+-----------------
+Implemented feature : SIGTERM and SIGINT calls are now caught and import is smoothly and safely interrupted (PCNTL extension needed)
+
 1.1.0
 -----------------
 Added manual frequency support for scheduled imports (not less than every 5 minutes)

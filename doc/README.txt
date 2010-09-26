@@ -4,9 +4,9 @@
  SQLIImport eZ Publish extension
 =================================
 
-*Version 1.0 - 2010 Jerome Vieilledent for SQLi*
+*Version 1.2 - 2010 Jerome Vieilledent for SQLi*
 
-:Date: 2010/08/26
+:Date: 2010/09/26
 
 .. contents:: Table of contents
 
@@ -45,7 +45,6 @@ There are two types of imports :
   - Scheduled
 
 Each import is stored in the database as pending and awaits for the cronjob to process it.
-Running imports are safely interruptable from the admin interface.
 Pending imports can be cancelled while the cronjob has not processed it.
 
 Immediate
@@ -72,6 +71,30 @@ Runtime Options
 If your import handler supports **Runtime options** (see `Handler Development`_ section), you can add them from the admin interface.
 You can only add one option per line with format **optionName=optionValue**.
 Options will be passed to the import handler at runtime (in the handler constructor).
+
+
+Import Interruption
+===================
+Running imports are safely interruptable from the admin interface or from the CLI.
+
+From admin interface
+~~~~~~~~~~~~~~~~~~~~
+From the import list, you can interrupt a running import by clicking the **Interrupt** link of the import.
+Please note that you will need to have access to the *manageimports* policy function for the current import handler.
+
+From CLI
+~~~~~~~~
+From version 1.2.0, SQLI Import catches *SIGTERM* and *SIGINT* signals.
+This is made possible thanks to `PCNTL extension <http://php.net/pcntl>`_ (won't work on Windows).
+You can thus safely interrupt a running import with **kill** command :
+
+::
+
+  kill -2 <import_script_pid>
+  kill -15 <import_script_pid>
+
+Please note that **kill -9** (*SIGKILL*) signal cannot be caught, so always prefer using SIGTERM (**kill -15**) or SIGINT (**kill -2**). 
+You can also ask for import interruption by pressing **Ctrl+C**, which sends a *SIGINT* signal.
 
 
 ------------

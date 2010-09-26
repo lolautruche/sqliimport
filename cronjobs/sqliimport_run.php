@@ -8,6 +8,7 @@
  * @package sqliimport
  */
 
+include_once 'extension/sqliimport/modules/sqliimport/sigtermhandler.php';
 include_once 'extension/sqliimport/modules/sqliimport/fatalerrorhandler.php';
 
 try
