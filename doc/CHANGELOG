@@ -1,6 +1,7 @@
 1.2.0
 -----------------
 Implemented feature : SIGTERM and SIGINT calls are now caught and import is smoothly and safely interrupted (PCNTL extension needed)
+Fixed issue : Scheduled imports - schedule is shifting - http://bit.ly/cJPe5F
 
 1.1.0
 -----------------

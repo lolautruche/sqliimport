@@ -246,28 +246,28 @@ class SQLIScheduledImport extends eZPersistentObject
         }
         else
         {
-            $nextTime = null;
+            $nextTimeInterval = null;
             // Determine next import interval
             switch( $this->attribute( 'frequency' ) )
             {
                 case self::FREQUENCY_HOURLY :
-                    $nextTime = '+1 hour';
+                    $nextTimeInterval = '+1 hour';
                     break;
                 
                 case self::FREQUENCY_DAILY :
-                    $nextTime = '+1 day';
+                    $nextTimeInterval = '+1 day';
                     break;
     
                 case self::FREQUENCY_WEEKLY :
-                    $nextTime = '+1 week';
+                    $nextTimeInterval = '+1 week';
                     break;
     
                 case self::FREQUENCY_MONTHLY :
-                    $nextTime = '+1 month';
+                    $nextTimeInterval = '+1 month';
                     break;
                     
                 case self::FREQUENCY_MANUAL : // Manual frequency value is in minutes
-                    $nextTime = '+'.$this->attribute( 'manual_frequency' ).' minutes';
+                    $nextTimeInterval = '+'.$this->attribute( 'manual_frequency' ).' minutes';
                     break;
     
                 default :
@@ -275,8 +275,14 @@ class SQLIScheduledImport extends eZPersistentObject
                     break;
             }
             
-            $nextDate = strtotime( $nextTime, time() );
-            $this->setAttribute( 'next', $nextDate );
+            $currentTime = time();
+            $nextTime = $this->attribute( 'next' );
+            while( $nextTime <= $currentTime )
+            {
+                $nextTime = strtotime( $nextTimeInterval, $nextTime );
+            }
+            
+            $this->setAttribute( 'next', $nextTime );
             $this->store( array( 'next' ) );
         }
         
