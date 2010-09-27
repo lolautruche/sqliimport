@@ -82,6 +82,7 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
             $text .= $optionName.'='.$optionValue."\n";
         }
         
+        $text = trim( $text );
         return $text;
     }
     
