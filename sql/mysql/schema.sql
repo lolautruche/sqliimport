@@ -25,8 +25,10 @@ CREATE TABLE `sqliimport_item` (
   `type` tinyint(4) DEFAULT '1',
   `progression_notes` longtext,
   `process_time` int(11) unsigned DEFAULT '0',
+  `scheduled_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `import_item_handler` (`handler`),
   KEY `import_item_user` (`user_id`),
-  KEY `import_item_status` (`status`)
+  KEY `import_item_status` (`status`),
+  KEY `import_scheduled_id` (`scheduled_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

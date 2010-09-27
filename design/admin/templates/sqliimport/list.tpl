@@ -72,7 +72,13 @@
                             <td>{$import.options|nl2br}</td>
                             <td>{$import.user.login}</td>
                             <td>{$import.requested_time|l10n( 'shortdatetime' )}</td>
-                            <td>{$import.type_string|i18n( 'extension/sqliimport/type' )}</td>
+                            <td>
+                            {if and( $import.type|eq( 2 ), $import.scheduled_import, $import.user_has_access )}{* 2 = scheduled, sorry for the hardcoded value :-/ *}
+                                <a href={concat( 'sqliimport/addscheduled/', $import.scheduled_id )|ezurl}>{$import.type_string|i18n( 'extension/sqliimport/type' )}</a>
+                            {else}
+                                {$import.type_string|i18n( 'extension/sqliimport/type' )}
+                            {/if}
+                            </td>
                             <td>
                                 {$import.status_string|i18n( 'extension/sqliimport/type' )}
                             {if $import.user_has_access}

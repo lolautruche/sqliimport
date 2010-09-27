@@ -96,6 +96,11 @@ class SQLIImportItem extends eZPersistentObject
                                                                                'datatype' => 'integer',
                                                                                'default'  => 0,
                                                                                'required' => true ),
+        
+                                               'scheduled_id'        => array( 'name'     => 'scheduled_id',
+                                                                               'datatype' => 'integer',
+                                                                               'default'  => null,
+                                                                               'required' => false )
                                             ),
                                             
                       'keys'                 => array( 'id' ),
@@ -109,7 +114,8 @@ class SQLIImportItem extends eZPersistentObject
                                                        'percentage'                 => 'getPercentage',
                                                        'type_string'                => 'getTypeString',
                                                        'user_has_access'            => 'userHasAccess',
-                                                       'process_time_formated'      => 'getFormatedProcessTime' ),
+                                                       'process_time_formated'      => 'getFormatedProcessTime',
+                                                       'scheduled_import'			=> 'getScheduledImport' ),
                       'set_functions'        => array( 'options'        => 'setOptions',
                                                        'user'           => 'setUser',
                                                        'percentage'     => 'setPercentage' )
@@ -432,5 +438,20 @@ class SQLIImportItem extends eZPersistentObject
             'second'    => (int)( $this->attribute( 'process_time' ) % eZTime::SECONDS_A_MINUTE )
         );
         return $aTime;
+    }
+    
+    /**
+     * Returns related scheduled import if it exists, or null if not
+     * @return SQLIScheduledImport
+     */
+    public function getScheduledImport()
+    {
+        $scheduledImport = null;
+        if( $this->attribute( 'scheduled_id' ) )
+        {
+            $scheduledImport = SQLIScheduledImport::fetch( $this->attribute( 'scheduled_id' ) );
+        }
+        
+        return $scheduledImport;
     }
 }
