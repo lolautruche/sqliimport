@@ -1,7 +1,7 @@
 <?php /* #?ini charset="utf-8"?
 
 [NavigationPart]
-Part[sqliimportnavigationpart]=SQLi Import
+Part[sqliimportnavigationpart]=Import management
 
 [TopAdminMenu]
 Tabs[]=sqliimport

@@ -160,6 +160,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Are you sure you want purge to import history ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Edit a scheduled import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -170,6 +174,10 @@
     </message>
     <message>
         <source>Activate import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import management list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -267,6 +275,14 @@
     </message>
     <message>
         <source>Interrupted</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>kernel/navigationpart</name>
+    <message>
+        <source>Import management</source>
+        <comment>Navigation part</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

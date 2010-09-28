@@ -160,6 +160,10 @@
         <translation>Êtes-vous sûr(e) de vouloir supprimer cet import programmé ?</translation>
     </message>
     <message>
+        <source>Are you sure you want purge to import history ?</source>
+        <translation>Êtes-vous sûr(e) de vouloir purger l'historique des imports ?</translation>
+    </message>
+    <message>
         <source>Edit a scheduled import</source>
         <translation>Éditer un import programmé</translation>
     </message>
@@ -171,6 +175,10 @@
     <message>
         <source>Activate import</source>
         <translation>Activer l'import</translation>
+    </message>
+    <message>
+        <source>Import management list</source>
+        <translation>Liste des imports</translation>
     </message>
 </context>
 <context>
@@ -268,6 +276,14 @@
     <message>
         <source>Interrupted</source>
         <translation>Interrompu</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/navigationpart</name>
+    <message>
+        <source>Import management</source>
+        <comment>Navigation part</comment>
+        <translation>Gestion des imports</translation>
     </message>
 </context>
 </TS>
