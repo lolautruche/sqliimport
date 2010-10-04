@@ -53,7 +53,7 @@ class SQLICSVDoc
     /**
      * Parses CSV File
      * @throws SQLICSVException
-     * @return void
+     * @return SQLICSVDoc
      */
     public function parse()
     {
@@ -64,5 +64,7 @@ class SQLICSVDoc
         
         $this->rows = SQLICSVRowSet::fromCSVFile( $this->csvFile, $this->options );
         eZDebug::accumulatorStop( 'sqlicsvdoc_loading' );
+        
+        return $this;
     }
 }

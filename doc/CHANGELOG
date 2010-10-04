@@ -1,3 +1,7 @@
+1.2.1
+-----------------
+Fixed issue with SQLICSVDoc::parse() : Didn't return csv doc object - http://bit.ly/dbphvq
+
 1.2.0
 -----------------
 Implemented feature : SIGTERM and SIGINT calls are now caught and import is smoothly and safely interrupted (PCNTL extension needed)
