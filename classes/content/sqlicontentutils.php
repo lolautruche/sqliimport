@@ -24,10 +24,11 @@ class SQLIContentUtils
      *                          - First element is username.
      *                          - Second element is password.
      * @param bool $debug Flag indicating whether to activate cURL debug or not
+     * @param bool $allowProxyUse Flag indicating whether to allow proxy use or not, allowing to override proxy settings from site.ini
      * @return string
      * @throws SQLIContentException
      */
-    public static function getRemoteFile( $url, array $httpAuth = null, $debug = false )
+    public static function getRemoteFile( $url, array $httpAuth = null, $debug = false, $allowProxyUse = true )
     {
         $url = trim( $url );
         $ini = eZINI::instance();
@@ -50,7 +51,7 @@ class SQLIContentUtils
 
         // Should we use proxy ?
         $proxy = $ini->variable( 'ProxySettings', 'ProxyServer' );
-        if ( $proxy )
+        if ( $proxy && $allowProxyUse )
         {
             curl_setopt( $ch, CURLOPT_PROXY, $proxy );
             $userName = $ini->variable( 'ProxySettings', 'User' );

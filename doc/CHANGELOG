@@ -1,6 +1,7 @@
 1.2.1
 -----------------
 Fixed issue with SQLICSVDoc::parse() : Didn't return csv doc object - http://bit.ly/dbphvq
+SQLIContentUtils::getRemoteFile() : Added a parameter indicating whether to allow proxy use or not, allowing to override proxy settings from site.ini
 
 1.2.0
 -----------------

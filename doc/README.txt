@@ -1,18 +1,32 @@
+=========================================
+ SQLIImport for eZ Publish documentation
+=========================================
+
 .. image:: images/sqli_logo.jpg
 
-=================================
- SQLIImport eZ Publish extension
-=================================
-
-*Version 1.2 - 2010 Jerome Vieilledent for SQLi*
-
+:author: Jérôme Vieilledent for SQLi
+:version: 1.2
 :Date: 2010/09/26
+
+.. header:: ###Title### - ###Section###
+
+.. footer:: Page ###Page### / ###Total###
+
+.. raw:: pdf
+
+   PageBreak
 
 .. contents:: Table of contents
 
---------------
- PRESENTATION
---------------
+.. section-numbering::
+
+.. raw:: pdf
+
+   PageBreak oneColumn
+
+
+PRESENTATION
+============
 SQLIImport is an extension allowing to import external content in eZ Publish.
 It provides a framework for content manipulation and a simple interface for developing import handlers, 
 so as a GUI to administrate your imports in the admin interface
@@ -20,26 +34,31 @@ Import handlers are classes you need to develop in order to process external dat
 and import it into eZ Publish (see `Handler Development`_ section).
 
 
----------
- LICENCE
----------
+
+LICENCE
+-------
 This eZ Publish extension is provided *as is*, in GPL v2 (see LICENCE).
 
+.. raw:: pdf
 
--------
- USAGE
--------
+   PageBreak oneColumn
+
+
+USAGE
+=====
 
 You can manage your imports via the admin interface. After installing *SQLIImport*, a new **Import Management** tab appears 
 (you'll need to have access to *sqliimport* module or to simply be administrator to be able to see it from eZ Publish 4.3).
 Click on it to start managing your imports :
 
-.. image:: images/admin_importlist.jpg
+.. figure:: images/admin_importlist.jpg
    :width: 2000
+   
+   Imports list
 
 
 Immediate & Scheduled
-=====================
+---------------------
 There are two types of imports :
   - Immediate
   - Scheduled
@@ -59,22 +78,24 @@ Scheduled imports will be launched at chosen *start date*.
 They can be one-shot (Frequency = none) or recurring.
 You can add a label to the scheduled import and deactivate it :
 
-.. image:: images/admin_addscheduled.jpg
+.. figure:: images/admin_addscheduled.jpg
    :width: 1000
+   
+   Add scheduled import form
 
 To add a scheduled import, go to *Scheduled import(s)* by clicking the link in the left menu, and click *Add a scheduled import*.
 Choose your import handler and eventually add options (see `Runtime Options`_ section below).
 
 
 Runtime Options
-===============
+---------------
 If your import handler supports **Runtime options** (see `Handler Development`_ section), you can add them from the admin interface.
 You can only add one option per line with format **optionName=optionValue**.
 Options will be passed to the import handler at runtime (in the handler constructor).
 
 
 Import Interruption
-===================
+-------------------
 Running imports are safely interruptable from the admin interface or from the CLI.
 
 From admin interface
@@ -88,7 +109,7 @@ From version 1.2.0, SQLI Import catches *SIGTERM* and *SIGINT* signals.
 This is made possible thanks to `PCNTL extension <http://php.net/pcntl>`_ (won't work on Windows).
 You can thus safely interrupt a running import with **kill** command :
 
-::
+.. code-block:: sh
 
   kill -2 <import_script_pid>
   kill -15 <import_script_pid>
@@ -96,10 +117,13 @@ You can thus safely interrupt a running import with **kill** command :
 Please note that **kill -9** (*SIGKILL*) signal cannot be caught, so always prefer using SIGTERM (**kill -15**) or SIGINT (**kill -2**). 
 You can also ask for import interruption by pressing **Ctrl+C**, which sends a *SIGINT* signal.
 
+.. raw:: pdf
 
-------------
- CLI SCRIPT
-------------
+   PageBreak oneColumn
+
+
+CLI SCRIPT
+==========
 
 SQLIImport provides both a cronjob and a *regular* CLI script.
 The cronjob is used to process imports added from the admin interface (immediate and scheduled).
@@ -112,28 +136,31 @@ The regular CLI script can be used to trigger a quick one shot import, without h
   --list-source-handlers   Lists all available handlers
   --options=VALUE          Options for import handlers. Should be something like --options="handler1::foo=bar,foo2=baz|handler2::someoption=biz"
 
+.. raw:: pdf
 
-----------------------
- PERFORMANCE SETTINGS
-----------------------
+   PageBreak oneColumn
+
+
+PERFORMANCE SETTINGS
+====================
 
 Several *performance settings* are set in **sqliimport.ini** configuration file.
 For more details, read the inline comments in the INI file.
 
 ViewCaching
-===========
+-----------
 View caching is disabled by default for performance reasons.
 It's disabled only for the import script. ViewCache is cleared once import has been done, 
 via *sqliimport_cleanup* cronjob (launched after *sqliimport_run*)
 
 ObjectIndexing
-==============
+--------------
 Same as for ViewCaching above. Import will be much faster with ObjectIndexing set to disabled.
 Will just activate site.ini SearchSettings.DelayedIndexing for current import script.
 Content objects will be indexed once import has been done, via *sqliimport_cleanup* cronjob.
 
 Content objects update
-======================
+----------------------
 If bundled content manipulation framework is used, the system will do comparisons in order to check if
 it is really necessary to create a new content object version.
 By default it compares the string representation of each attribute content, but the diff system is extendable.
@@ -146,10 +173,13 @@ Datatypes for which a specific diff handler is provided :
   - ezimage
   - ezbinaryfile
 
+.. raw:: pdf
 
----------------------
- HANDLER DEVELOPMENT
----------------------
+   PageBreak oneColumn
+
+
+HANDLER DEVELOPMENT
+===================
 
 To import external content into eZ Publish with SQLIImport, you need to develop a handler that *understands*
 the external source (whatever it is) and maps it with your eZ Publish content structure.
@@ -158,10 +188,10 @@ Developing an import handler is fairly easy. You just need to create a PHP class
 and implements **ISQLIImportHandler**. You will also need to declare it in an override of **sqliimport.ini** by creating 
 a dedicated section (please read inline INI comments for further details).
 
-Here's the UML diagram for import handlers :
-
-.. image:: uml/ImportHandlers.png
+.. figure:: uml/ImportHandlers.png
    :width: 2000
+   
+   UML diagram for import handlers
 
 **Handler method call order :**
   - *__construct()* - You'll need to call the parent constructor in it
@@ -179,11 +209,12 @@ A full working example is provided (**SQLIRSSImportHandler**). Check it to under
 Note that all configuration set in your INI handler block in *sqliimport.ini* will be available in your handler in **$this->handlerConfArray**.
 
 Simplified content API
-======================
+----------------------
 A framework is provided to manage eZ Publish content without hassle (please read examples in the API doc) :
 
-::
+.. code-block:: php
 
+  <?php
     $cli->notice( 'Creation of a new "comment" object' );
     $options = new SQLIContentOptions( array(
         'class_identifier'      => 'comment',
@@ -213,13 +244,15 @@ A framework is provided to manage eZ Publish content without hassle (please read
     foreach( $comment->locations as $nodeID => $location )
     {
         // Regular node attributes are available as virtual properties
-        $cli->notice( $nodeID.' => '.$location->path_string.' ('.$comment->locations[$nodeID]->path_identification_string.')' );
+        $cli->notice( $nodeID.' => '.$location->path_string.
+                      ' ('.$comment->locations[$nodeID]->path_identification_string.')' );
     }
     
     // Now free memory. 
     // unset() on SQLIContent triggers eZContentObject::clearCache() 
     // and eZContentObject::resetDataMap()
     unset( $comment );
+  ?>
 
 **SQLIContent** framework relies on string representation of content attributes. It makes use
 of datatypes *fromString()* / *toString()* methods, implemented in every kernel datatypes since eZ Publish 3.9.
@@ -232,35 +265,44 @@ For more information about string representation of kernel datatypes, please rea
 
 A shorthand method is available to handle HTML content import. It is available in *Import Handlers* and outside import handlers :
 
-::
+.. code-block:: php
 
+  <?php
   // Code below is available in an import handler
   $content->fields->intro = $this->getRichContent( $myHTMLContent );
   
   // Code below is available everywhere
   $content->fields->intro = SQLIContentUtils::getRichContent( $myHTMLContent );
+  ?>
 
 
 For more examples, please check scripts located in the *stubs/* directory.
 
 You can also have a look at the UML diagram below.
 
-.. image:: uml/SQLIContent.png
+.. figure:: uml/SQLIContent.png
    :width: 2000
+   
+   UML diagram for SQLIContent framework
 
 Source Handlers
-===============
+---------------
 2 source handlers are provided :
   - **SQLIXMLParser** - Catches parse errors and fetches XML string. Transforms PHP errors into exceptions. Works with DOM or SimpleXML (example in *stubs/xml.php*).
   - **SQLICSVDoc** - Set of classes to manage CSV structures as easily as with SimpleXML (example in *stubs/csv.php*).
 
-.. image:: uml/CSVDoc.png
+.. figure:: uml/CSVDoc.png
    :width: 2000
+   
+   UML diagram for CSVDoc classes
+
+.. raw:: pdf
+
+   PageBreak oneColumn
 
 
---------------------------
- DIFF HANDLER DEVELOPMENT
---------------------------
+DIFF HANDLER DEVELOPMENT
+========================
 
 When updating a content, **SQLIContentPublisher** only publishes really modified content by default. It makes a diff between already stored content
 and new content. This is done via diff handlers.
@@ -273,3 +315,4 @@ and new content. This is done via diff handlers.
 You can develop your own diff handler for your datatypes by creating a class implementing **ISQLIDiffHandler** interface.
 Only one static method is needed : **contentIsModified()**. Please read interface PHPDoc for further information. You can also
 check the code of provided handlers for examples.
+
