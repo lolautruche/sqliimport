@@ -53,7 +53,7 @@ class SQLILocation
     {
         $node = eZContentObjectTreeNode::fetch( $nodeID );
         if ( !$node instanceof eZContentObjectTreeNode )
-            throw new SQLILocationException( "Unable to find eZContentObjectTreeNode with NodeID #$this->nodeID" );
+            throw new SQLILocationException( "Unable to find eZContentObjectTreeNode with NodeID #$nodeID" );
         
         $location = self::fromNode( $node );
         return $location;
