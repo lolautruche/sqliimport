@@ -285,6 +285,29 @@ You can also have a look at the UML diagram below.
    
    UML diagram for SQLIContent framework
 
+Options
+~~~~~~~
+When manipulating **SQLIContent** framework, you can tweak several options.
+All of these options are packaged into objects, usually passed to a constructor/singleton (*SQLIContent*, *SQLIContentPublisher*).
+
+SQLIContentOptions
+''''''''''''''''''
+These options are used when instantiating an **SQLIContent** object :
+  - **remote_id** => RemoteID of your content. Use it to retrieve/update your content later. Default is **NULL**.
+  - **section_id** => SectionID of your content. Default is **0** (let the eZ Publish decide regarding tree inheritance).
+  - **creator_id** => CreatorID of your content. Default is **false** (currently logged in user).
+  - **language** => Content language. Default is your default language (cf *eZContentObject::defaultLanguage()*.
+  - **class_identifier** => Class identifier of your content. Default is **NULL**. **Mandatory**
+
+SQLIContentPublishOptions
+'''''''''''''''''''''''''
+These options are used when instantiating an **SQLIContentPublisher** object.
+As the publisher is a singleton object, you can alter its options with its **setOptions()** method.
+
+  - **parent_node_id** => DEPRECATED, use content locations instead. Defines ParentNodeID for content.
+  - **modification_check** => If true, makes the publisher to do check if at least one attribute has been modified before publishing. If not, the content is not published. Default is **true**.
+  - **update_null_field** => If true, will update all attributes in DB, even if data is not set (null), and set it to null. Default is **false**.
+
 Source Handlers
 ---------------
 2 source handlers are provided :

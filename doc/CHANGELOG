@@ -1,5 +1,6 @@
 1.2.1
 -----------------
+Updated doc about content options and publish options - http://bit.ly/f3f2RI
 Fixed issue : Datatypes fromString() / toString() always appear consistent, even if they are not implemented - http://bit.ly/f3f2RI
 Fixed "Using $this in a non object context in sqlilocation" - http://bit.ly/fzJN8G
 Fixed issue with SQLICSVDoc::parse() : Didn't return csv doc object - http://bit.ly/dbphvq
