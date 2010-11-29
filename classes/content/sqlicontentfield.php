@@ -31,6 +31,34 @@ class SQLIContentField
      * @var string
      */
     protected $data;
+    
+    /**
+     * Array of eZ datatypes implementing fromString() method
+     * Only data_type_string is stored
+     * @var array
+     */
+    protected static $datatypesFromStringImpl = array();
+    
+    /**
+     * Array of eZ datatypes NOT implementing fromString() method
+     * Only data_type_string is stored
+     * @var array
+     */
+    protected static $datatypesFromStringNotImpl = array();
+    
+    /**
+     * Array of eZ datatypes implementing toString() method
+     * Only data_type_string is stored
+     * @var array
+     */
+    protected static $datatypesToStringImpl = array();
+    
+    /**
+     * Array of eZ datatypes NOT implementing toString() method
+     * Only data_type_string is stored
+     * @var array
+     */
+    protected static $datatypesToStringNotImpl = array();
 
     /**
      * Initializes an SQLIContentField from an eZContentObjectAttribute
@@ -229,5 +257,116 @@ class SQLIContentField
         }
         
         return $isModified;
+    }
+    
+    /**
+     * Generic method wrapping datatype's fromString() method if implemented
+     * Checks if fromString() is implemented in the field's datatype
+     * If not, data_text will be used by default
+     * @see http://projects.ez.no/sqliimport/forum/issues/two_little_thing
+     * @param string $data String representation of data to inject
+     * @return void
+     */
+    public function fromString( $data )
+    {
+        $datatype = $this->attribute->attribute( 'data_type_string' );
+        $fromStringImplemented = null;
+        
+        // First check if datatype is already known as implementing fromString() or not
+        // (Better performance as the check is made through Reflection API)
+        if( in_array( $datatype, self::$datatypesFromStringImpl ) ) // Already known as implementing it
+        {
+            $fromStringImplemented = true;
+        }
+        else if( in_array( $datatype, self::$datatypesFromStringNotImpl ) ) // Already known as NOT implementing it
+        {
+            $fromStringImplemented = false;
+        }
+        else
+        {
+            $reflector = new ReflectionObject( $this->attribute->dataType() );
+            $callerClass = $reflector->getMethod( 'fromString' )->class;
+            if( $callerClass == 'eZDataType' ) // Caller class is the original eZDataType class => fromString() is not implemented
+            {
+                self::$datatypesFromStringNotImpl[] = $datatype;
+                $fromStringImplemented = false;
+            }
+            else // Caller class is the datatype itself, so we consider that fromString() is implemented
+            {
+                self::$datatypesFromStringImpl[] = $datatype;
+                $fromStringImplemented = true;
+            }
+        }
+        
+        // Now insert data through the appropriate way
+        if( $fromStringImplemented )
+        {
+            $this->attribute->fromString( $data );
+        }
+        else
+        {
+            $this->attribute->setAttribute( 'data_text', $data );
+        }
+    }
+    
+    /**
+     * Generic method emulating datatype's toString() method
+     * @see SQLIContentField::convertAttributeToString()
+     * @return string
+     */
+    public function toString()
+    {
+        return self::convertAttributeToString( $this->attribute );
+    }
+    
+    /**
+     * Generic method wrapping datatype's toString() method if implemented
+     * Checks if toString() is implemented in the field's datatype
+     * If not, data_text will be used by default
+     * @return string
+     */
+    public static function convertAttributeToString( eZContentObjectAttribute $attribute )
+    {
+        $datatype = $attribute->attribute( 'data_type_string' );
+        $toStringImplemented = null;
+        $ret = null;
+        
+        // First check if datatype is already known as implementing fromString() or not
+        // (Better performance as the check is made through Reflection API)
+        if( in_array( $datatype, self::$datatypesToStringImpl ) ) // Already known as implementing it
+        {
+            $toStringImplemented = true;
+        }
+        else if( in_array( $datatype, self::$datatypesToStringNotImpl ) ) // Already known as NOT implementing it
+        {
+            $toStringImplemented = false;
+        }
+        else
+        {
+            $reflector = new ReflectionObject( $attribute->dataType() );
+            $callerClass = $reflector->getMethod( 'toString' )->class;
+            if( $callerClass == 'eZDataType' ) // Caller class is the original eZDataType class => fromString() is not implemented
+            {
+                self::$datatypesToStringNotImpl[] = $datatype;
+                $toStringImplemented = false;
+            }
+            else // Caller class is the datatype itself, so we consider that fromString() is implemented
+            {
+                self::$datatypesToStringImpl[] = $datatype;
+                $toStringImplemented = true;
+            }
+        }
+        
+        // Now insert data through the appropriate way
+        if( $toStringImplemented )
+        {
+            $ret = $attribute->toString();
+        }
+        else
+        {
+            $ret = $attribute->attribute( 'data_text' );
+        }
+        
+        return $ret;
     }
 }

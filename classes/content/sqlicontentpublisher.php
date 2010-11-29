@@ -123,16 +123,7 @@ class SQLIContentPublisher
                 if( $this->options['update_null_field'] === false && is_null( $data ) )
                     continue;
                 
-                // Use fromString() method if available from datatype, setContent() otherwise
-                if( method_exists( $field->datatype(), 'fromString' ) )
-                {
-                    $field->fromString( $data );
-                }
-                else
-                {
-                    $field->setAttribute( 'data_text', $data );
-                }
-                
+                $field->fromString( $data );
                 $field->store();
             }
             eZDebug::accumulatorStop( 'sqlicontentpublisher_'.$lang.'_attributes' );

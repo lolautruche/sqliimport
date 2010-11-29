@@ -24,12 +24,7 @@ class SQLIDefaultDiffHandler implements ISQLIDiffHandler
     public static function contentIsModified( $data, eZContentObjectAttribute $attribute )
     {
         $isModified = false;
-        
-        // Use toString() method if available from datatype, data_text otherwise
-        if( method_exists( $attribute->datatype(), 'toString' ) )
-            $attributeValue = $attribute->toString();
-        else
-            $attributeValue = $attribute->attribute( 'data_text' );
+        $attributeValue = SQLIContentField::convertAttributeToString( $attribute );
         
         if( (string)$data != $attributeValue )
             $isModified = true;
