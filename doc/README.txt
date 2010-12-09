@@ -39,6 +39,12 @@ LICENCE
 -------
 This eZ Publish extension is provided *as is*, in GPL v2 (see LICENCE).
 
+CREDITS
+-------
+This extension has been written by `Jérôme Vieilledent <http://share.ez.no/community/profile/11256>`_ and sponsored by `SQLi <http://www.sqli.com/eng>`_.
+
+Oracle adaptation has been made by `Simone Tellini <http://tellini.info/>`_.
+
 .. raw:: pdf
 
    PageBreak oneColumn

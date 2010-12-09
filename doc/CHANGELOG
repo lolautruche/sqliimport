@@ -1,5 +1,6 @@
 1.2.1
 -----------------
+Added Oracle schema (Thanks Simone Tellini !)
 Updated doc about content options and publish options - http://bit.ly/f3f2RI
 Fixed issue : Datatypes fromString() / toString() always appear consistent, even if they are not implemented - http://bit.ly/f3f2RI
 Fixed "Using $this in a non object context in sqlilocation" - http://bit.ly/fzJN8G
