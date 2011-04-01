@@ -72,7 +72,7 @@ class SQLICSVRow implements Iterator
      */
     public function current()
     {
-        return $this->rows[current( $this->iteratorPointer )];
+        return $this->fields[current( $this->iteratorPointer )];
     }
     
     /**
@@ -108,6 +108,6 @@ class SQLICSVRow implements Iterator
      */
     public function valid()
     {
-        return isset( $this->rows[current( $this->iteratorPointer )] );
+        return isset( $this->fields[current( $this->iteratorPointer )] );
     }
 }

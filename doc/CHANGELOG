@@ -6,6 +6,7 @@ Fixed issue : Datatypes fromString() / toString() always appear consistent, even
 Fixed "Using $this in a non object context in sqlilocation" - http://bit.ly/fzJN8G
 Fixed issue with SQLICSVDoc::parse() : Didn't return csv doc object - http://bit.ly/dbphvq
 SQLIContentUtils::getRemoteFile() : Added a parameter indicating whether to allow proxy use or not, allowing to override proxy settings from site.ini
+Fixed issue with csv row iteration, throwing an SQLICSVException (Thanks Edi Modrić !)
 
 1.2.0
 -----------------
