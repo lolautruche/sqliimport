@@ -1083,7 +1083,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
                 $element->setAttribute( 'object_id', $objectID );
                 if ( !eZContentObject::exists( $objectID ))
                 {
-                    $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                    $this->Messages[] = SQLIImportUtils::translate( 'design/standard/ezoe/handler',
                                                 'Object %1 does not exist.',
                                                 false,
                                                 array( $objectID ) );
@@ -1106,7 +1106,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
                     $node = eZContentObjectTreeNode::fetch( $nodeID );
                     if ( !$node instanceOf eZContentObjectTreeNode )
                     {
-                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                        $this->Messages[] = SQLIImportUtils::translate( 'design/standard/ezoe/handler',
                                                     'Node %1 does not exist.',
                                                     false,
                                                     array( $nodeID ) );
@@ -1117,7 +1117,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
                     $node = eZContentObjectTreeNode::fetchByURLPath( $nodePath );
                     if ( !$node instanceOf eZContentObjectTreeNode )
                     {
-                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                        $this->Messages[] = SQLIImportUtils::translate( 'design/standard/ezoe/handler',
                                                     'Node &apos;%1&apos; does not exist.',
                                                     false,
                                                     array( $nodePath ) );
@@ -1170,7 +1170,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
                         {
                             $this->isInputValid = false;
                             if ( $this->errorLevel >= 0 )
-                                $this->Messages[] = ezi18n( 'kernel/classes/datatypes/ezxmltext',
+                                $this->Messages[] = SQLIImportUtils::translate( 'kernel/classes/datatypes/ezxmltext',
                                                             "Invalid e-mail address: '%1'",
                                                             false,
                                                             array( $mailAddr[1] ) );
