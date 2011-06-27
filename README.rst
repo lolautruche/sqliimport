@@ -2,13 +2,11 @@
  SQLIImport for eZ Publish documentation
 =========================================
 
-.. image:: images/sqli_logo.jpg
+.. image:: docs/images/sqli_logo.jpg
 
-:author: Jérôme Vieilledent for SQLi
+:author: Jérôme Vieilledent
 :version: 1.2
 :Date: 2010/09/26
-
-.. header:: ###Title### - ###Section###
 
 .. footer:: Page ###Page### / ###Total###
 
@@ -57,7 +55,7 @@ You can manage your imports via the admin interface. After installing *SQLIImpor
 (you'll need to have access to *sqliimport* module or to simply be administrator to be able to see it from eZ Publish 4.3).
 Click on it to start managing your imports :
 
-.. figure:: images/admin_importlist.jpg
+.. figure:: docs/images/admin_importlist.jpg
    :width: 2000
    
    Imports list
@@ -84,7 +82,7 @@ Scheduled imports will be launched at chosen *start date*.
 They can be one-shot (Frequency = none) or recurring.
 You can add a label to the scheduled import and deactivate it :
 
-.. figure:: images/admin_addscheduled.jpg
+.. figure:: docs/images/admin_addscheduled.jpg
    :width: 1000
    
    Add scheduled import form
