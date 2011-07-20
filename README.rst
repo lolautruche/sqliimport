@@ -192,7 +192,7 @@ Developing an import handler is fairly easy. You just need to create a PHP class
 and implements **ISQLIImportHandler**. You will also need to declare it in an override of **sqliimport.ini** by creating 
 a dedicated section (please read inline INI comments for further details).
 
-.. figure:: uml/ImportHandlers.png
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/uml/ImportHandlers.png
    :width: 2000
    
    UML diagram for import handlers
@@ -284,7 +284,7 @@ For more examples, please check scripts located in the *stubs/* directory.
 
 You can also have a look at the UML diagram below.
 
-.. figure:: uml/SQLIContent.png
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/uml/SQLIContent.png
    :width: 2000
    
    UML diagram for SQLIContent framework
@@ -318,7 +318,7 @@ Source Handlers
   - **SQLIXMLParser** - Catches parse errors and fetches XML string. Transforms PHP errors into exceptions. Works with DOM or SimpleXML (example in *stubs/xml.php*).
   - **SQLICSVDoc** - Set of classes to manage CSV structures as easily as with SimpleXML (example in *stubs/csv.php*).
 
-.. figure:: uml/CSVDoc.png
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/uml/CSVDoc.png
    :width: 2000
    
    UML diagram for CSVDoc classes
