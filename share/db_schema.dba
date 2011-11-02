@@ -1,0 +1,216 @@
+<?php
+// This array contains the database schema
+$schema = array (
+  'sqliimport_item' =>
+  array (
+    'name' => 'sqliimport_item',
+    'fields' =>
+    array (
+      'handler' =>
+      array (
+        'length' => 50,
+        'type' => 'varchar',
+        'default' => NULL,
+      ),
+      'id' =>
+      array (
+        'type' => 'auto_increment',
+        'default' => false,
+      ),
+      'options_serialized' =>
+      array (
+        'type' => 'longtext',
+        'default' => false,
+      ),
+      'percentage_int' =>
+      array (
+        'length' => 6,
+        'type' => 'smallint',
+        'default' => '0',
+      ),
+      'process_time' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => 0,
+      ),
+      'progression_notes' =>
+      array (
+        'type' => 'longtext',
+        'default' => false,
+      ),
+      'requested_time' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => 0,
+      ),
+      'scheduled_id' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => NULL,
+      ),
+      'status' =>
+      array (
+        'length' => 4,
+        'type' => 'tinyint',
+        'default' => '0',
+      ),
+      'type' =>
+      array (
+        'length' => 4,
+        'type' => 'tinyint',
+        'default' => '1',
+      ),
+      'user_id' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => NULL,
+      ),
+    ),
+    'indexes' =>
+    array (
+      'PRIMARY' =>
+      array (
+        'type' => 'primary',
+        'fields' =>
+        array (
+          0 => 'id',
+        ),
+      ),
+      'import_item_handler' =>
+      array (
+        'type' => 'non-unique',
+        'fields' =>
+        array (
+          0 => 'handler',
+        ),
+      ),
+      'import_item_status' =>
+      array (
+        'type' => 'non-unique',
+        'fields' =>
+        array (
+          0 => 'status',
+        ),
+      ),
+      'import_item_user' =>
+      array (
+        'type' => 'non-unique',
+        'fields' =>
+        array (
+          0 => 'user_id',
+        ),
+      ),
+      'import_scheduled_id' =>
+      array (
+        'type' => 'non-unique',
+        'fields' =>
+        array (
+          0 => 'scheduled_id',
+        ),
+      ),
+    ),
+  ),
+  'sqliimport_scheduled' =>
+  array (
+    'name' => 'sqliimport_scheduled',
+    'fields' =>
+    array (
+      'frequency' =>
+      array (
+        'length' => 30,
+        'type' => 'varchar',
+        'not_null' => '1',
+        'default' => '',
+      ),
+      'handler' =>
+      array (
+        'length' => 50,
+        'type' => 'varchar',
+        'default' => NULL,
+      ),
+      'id' =>
+      array (
+        'type' => 'auto_increment',
+        'default' => false,
+      ),
+      'is_active' =>
+      array (
+        'length' => 4,
+        'type' => 'tinyint',
+        'default' => '0',
+      ),
+      'label' =>
+      array (
+        'length' => 255,
+        'type' => 'varchar',
+        'default' => NULL,
+      ),
+      'manual_frequency' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => 0,
+      ),
+      'next' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => 0,
+      ),
+      'options_serialized' =>
+      array (
+        'type' => 'longtext',
+        'default' => false,
+      ),
+      'requested_time' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => NULL,
+      ),
+      'user_id' =>
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => NULL,
+      ),
+    ),
+    'indexes' =>
+    array (
+      'PRIMARY' =>
+      array (
+        'type' => 'primary',
+        'fields' =>
+        array (
+          0 => 'id',
+        ),
+      ),
+      'import_handler' =>
+      array (
+        'type' => 'non-unique',
+        'fields' =>
+        array (
+          0 => 'handler',
+        ),
+      ),
+      'next_import' =>
+      array (
+        'type' => 'non-unique',
+        'fields' =>
+        array (
+          0 => 'next',
+        ),
+      ),
+    ),
+  ),
+  '_info' =>
+  array (
+    'format' => 'generic',
+  ),
+);
+
+?>
