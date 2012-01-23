@@ -18,14 +18,14 @@ class SQLICSVRow implements Iterator
      * @var array()
      */
     protected $fields = array();
-    
+
     /**
      * Internal iterator pointer
      * @internal
      * @var array
      */
     protected $iteratorPointer = array();
-    
+
     /**
      * Constructor
      */
@@ -34,7 +34,7 @@ class SQLICSVRow implements Iterator
         $this->fields = $fields;
         $this->initIterator();
     }
-    
+
     /**
      * Getter. Returns CSV field content identified by its camelized field name
      * @param string $name
@@ -43,7 +43,7 @@ class SQLICSVRow implements Iterator
     public function __get( $name )
     {
         $ret = null;
-        
+
         switch( $name )
         {
             default:
@@ -52,10 +52,20 @@ class SQLICSVRow implements Iterator
                 else
                     throw new SQLICSVException( "Invalid '$name' field for current SQLICSVRow" );
         }
-        
+
         return $ret;
     }
-    
+
+    /**
+     * Magic isset method. Will check if CSV field identified by $name is set or not.
+     * @param string $name Camelized field name
+     * @return bool
+     */
+    public function __isset( $name )
+    {
+        return isset( $this->fields[$name] );
+    }
+
     /**
      * Initializes internal iterator pointer
      * @internal
@@ -65,7 +75,7 @@ class SQLICSVRow implements Iterator
         // Inits iterator pointer from internal data (ie. a property $this->rows)
         $this->iteratorPointer = array_keys( $this->fields );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::current()
@@ -74,7 +84,7 @@ class SQLICSVRow implements Iterator
     {
         return $this->fields[current( $this->iteratorPointer )];
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::key()
@@ -83,7 +93,7 @@ class SQLICSVRow implements Iterator
     {
         return current( $this->iteratorPointer );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::next()
@@ -92,7 +102,7 @@ class SQLICSVRow implements Iterator
     {
         next( $this->iteratorPointer );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::rewind()
@@ -101,7 +111,7 @@ class SQLICSVRow implements Iterator
     {
         reset( $this->iteratorPointer );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::valid()
