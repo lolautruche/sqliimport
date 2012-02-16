@@ -98,8 +98,8 @@ class SQLIContentPublisher
         $db->begin();
         
         $canPublish = false;
-        $version = $this->createNewVersion( $content );
-        
+        $version = null;
+
         // Loop against all fieldsets (by language) and edit attributes
         foreach( $content->fields as $lang => $fieldset )
         {
@@ -108,6 +108,11 @@ class SQLIContentPublisher
                 $msg = 'Content object #'.$contentObject->attribute( 'id' ).' in language '.$lang.' has no need to be modified';
                 eZDebug::writeNotice( $msg, __METHOD__ );
                 continue;
+            }
+            
+            if ( is_null( $version ) ) // Create new $version only if necessary (this is an optimization : $version->removeThis() is very very slow !)
+            {
+                $version = $this->createNewVersion( $content );
             }
             
             eZDebug::accumulatorStart( 'sqlicontentpublisher_'.$lang.'_attributes', 'sqlicontentpublisher', 'Attributes handling for '.$lang );
@@ -152,10 +157,6 @@ class SQLIContentPublisher
                     $this->addLocationToContent( $initialAdditionalLocation , $content);
                 }
             }
-        }
-        else // Publication not allowed (content not modified for ex.). Remove draft
-        {
-            $version->removeThis();
         }
         
         // Now cleaning internal options
