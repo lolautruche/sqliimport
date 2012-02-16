@@ -110,7 +110,8 @@ class SQLIContentPublisher
                 continue;
             }
             
-            if ( is_null( $version ) ) { // Create new $version only if necessary (this is an optimization : $version->removeThis() is very very slow !)
+            if ( is_null( $version ) ) // Create new $version only if necessary (this is an optimization : $version->removeThis() is very very slow !)
+            {
                 $version = $this->createNewVersion( $content );
             }
             
