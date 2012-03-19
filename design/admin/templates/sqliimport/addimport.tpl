@@ -4,7 +4,8 @@
     <p>{$error_message}</p>
 </div>
 {/if}
-<form action={'/sqliimport/addimport'|ezurl} method="post">
+{ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io', 'sqliimportoptions.js' ) )}
+<form action={'/sqliimport/addimport'|ezurl} method="post" data-fallback-to-textarea="{cond( ezini( 'OptionsGUISettings', 'FallbackToTextarea', 'sqliimport.ini' )|eq('enabled'), 'true', 'false' )}">
     <div class="box-header">
         <div class="box-tc">
             <div class="box-ml">
@@ -30,19 +31,22 @@
                         <th>{'Import handler'|i18n( 'extension/sqliimport' )}</th>
                         <td>
                             <select name="ImportHandler" id="ImportHandler">
+                               <option value="">{'-- Select handler --'|i18n( 'extension/sqliimport' )}</option>
                             {foreach $importHandlers as $handlerName => $handler}
                                <option value="{$handler}">{$handlerName}</option>
                             {/foreach}
                             </select>
                         </td>
                     </tr>
-                    <tr class="bgdark">
-                        <td><strong>{'Options (facultative)'|i18n( 'extension/sqliimport' )}</strong></th> 
-                        <td>
-                            <textarea name="ImportOptions" id="ImportOptions" rows="7" cols="70"></textarea>
-                            <p><i>{'One option per line : optionName=optionValue'|i18n( 'extension/sqliimport' )}</i></p>
-                        </td>
-                    </tr>
+                    <tbody id="handlerOptions">
+	                    <tr class="bgdark">
+	                        <td><strong>{'Options (facultative)'|i18n( 'extension/sqliimport' )}</strong></th> 
+	                        <td>
+	                            <textarea name="ImportOptions" id="ImportOptions" rows="7" cols="70"></textarea>
+	                            <p><i>{'One option per line : optionName=optionValue'|i18n( 'extension/sqliimport' )}</i></p>
+	                        </td>
+	                    </tr>
+	                 </tbody>
                 </table>
                 {* DESIGN: Content END *}
             </div>

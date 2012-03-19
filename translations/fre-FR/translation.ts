@@ -12,6 +12,10 @@
         <translation>Pilote d&apos;import</translation>
     </message>
     <message>
+        <source>-- Select handler --</source>
+        <translation>-- Sélectionnez le pilote --</translation>
+    </message>
+    <message>
         <source>Options (facultative)</source>
         <translation>Options (facultatif)</translation>
     </message>

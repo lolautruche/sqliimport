@@ -19,4 +19,25 @@ StreamTimeout=
 # Below you can add your own settings for your source handler
 RSSFeed=http://www.lolart.net/rss/feed/blog
 
+# Import handler options list
+Options[]
+Options[]=sample_string
+Options[]=sample_bool
+Options[]=sample_file
+
+# Options labels. Use alias defined in Options[] as key
+OptionsLabels[sample_string]=String
+OptionsLabels[sample_bool]=Boolean
+OptionsLabels[sample_file]=File
+
+# Options type. Use alias defined in Options[] as key
+# Defaults to string
+# Available types : string|boolean|file
+OptionsTypes[sample_bool]=boolean
+OptionsTypes[sample_file]=file
+
+# Options default values. Empty String if not set
+OptionDefaults[]
+OptionDefaults[sample_string]=Sample
+
 */ ?>

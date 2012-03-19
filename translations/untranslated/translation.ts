@@ -12,6 +12,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>-- Select handler --</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Options (facultative)</source>
         <translation type="unfinished"></translation>
     </message>
