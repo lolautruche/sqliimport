@@ -3,7 +3,22 @@ class SQLIImportJSServerFunctions
 {
     public static function options( $args )
     {
+        $scheduledImport = null;
+        $currentOptions = null;
+
         $handler = $args[0];
+
+            //arg 2 may be a scheduled import id
+        if( count( $args ) > 1 ){
+            $scheduledImport = SQLIScheduledImport::fetch( $args[1] );
+
+            if( !$scheduledImport ){
+                throw new SQLIImportRuntimeException( 'Invalid scheduled import ID ' . $args[1] );
+            }
+
+            $currentOptions = $scheduledImport->attribute( 'options' );
+        }
+
         $tpl = SQLIImportUtils::templateInit();
         $importINI = eZINI::instance( 'sqliimport.ini' );
         $handlerSection = $handler.'-HandlerSettings';
@@ -25,10 +40,20 @@ class SQLIImportJSServerFunctions
 
             foreach( $optionsList as $optionAlias )
             {
+                $value = '';
+                if( $currentOptions && isset( $currentOptions->{$optionAlias} ) )
+                {
+                    $value = $currentOptions->{$optionAlias};
+                }
+                elseif( isset( $optionsDefaults[ $optionAlias ] ) )
+                {
+                    $value = $optionsDefaults[ $optionAlias ];
+                }
+
                 $aHandlerOptions[$optionAlias] = array(
                     'label' => isset( $optionsLabels[ $optionAlias ] ) ? $optionsLabels[ $optionAlias ] : $optionAlias,
                     'type'  => isset( $optionsTypes[ $optionAlias ] ) ? $optionsTypes[ $optionAlias ] : 'string',
-                    'default' => isset( $optionsDefaults[ $optionAlias ] ) ? $optionsDefaults[ $optionAlias ] : '',
+                    'value' => $value,
                 );
             }
 

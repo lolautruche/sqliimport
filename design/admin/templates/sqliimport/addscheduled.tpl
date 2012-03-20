@@ -6,7 +6,12 @@
 </div>
 {/if}
 
-<form action={concat( '/sqliimport/addscheduled/', $import_id )|ezurl} method="post">
+{ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io', 'sqliimportoptions.js' ) )}
+<form action={concat( '/sqliimport/addscheduled/', $import_id )|ezurl} 
+      method="post" 
+      data-scheduled-import-id="{$import_id}"
+      data-fallback-to-textarea="{cond( ezini( 'OptionsGUISettings', 'FallbackToTextarea', 'sqliimport.ini' )|eq('enabled'), 'true', 'false' )}"
+>
     <div class="box-header">
         <div class="box-tc">
             <div class="box-ml">
@@ -35,6 +40,7 @@
 			<h4>{'Import handler'|i18n( 'extension/sqliimport' )}</h4>
 			<p>
 				<select name="ImportHandler" id="ImportHandler">
+				    <option value="">{'-- Select handler --'|i18n( 'extension/sqliimport' )}</option>
                 {foreach $importHandlers as $handlerName => $handler}
                     <option value="{$handler}"{if $handler|eq( $current_import_handler )} selected="selected"{/if}>{$handlerName}</option>
                     
@@ -43,12 +49,16 @@
             </p>
             <p>&nbsp;</p>
             
-            <h4>{'Options (facultative)'|i18n( 'extension/sqliimport' )}</h4>
-            <div>
-                <textarea name="ImportOptions" id="ImportOptions" rows="7" cols="70">{$import_options}</textarea>
-                <p><i>{'One option per line : optionName=optionValue'|i18n( 'extension/sqliimport' )}</i></p>
-            </div>
-            <p>&nbsp;</p>
+            <table class="list cache block" cellspacing="0" style="margin:0;" id="handlerOptions">
+                <tr><td>
+	            <h4>{'Options (facultative)'|i18n( 'extension/sqliimport' )}</h4>
+	            <div>
+	                <textarea name="ImportOptions" id="ImportOptions" rows="7" cols="70">{$import_options}</textarea>
+	                <p><i>{'One option per line : optionName=optionValue'|i18n( 'extension/sqliimport' )}</i></p>
+	            </div>
+	            <p>&nbsp;</p>
+	            </td></tr>
+            </table>
 			
 			<h4>{'Choose a start date (YYYY-mm-dd)'|i18n( 'extension/sqliimport' )}</h4>
 			<p>

@@ -6,7 +6,7 @@
             {include uri=concat( "design:sqliimport/optionwidgets/", $optionDef.type, ".tpl" )
                      option_id=$optionId
                      handler=$handler
-                     value=$optionDef.default
+                     value=$optionDef.value
             }</td>
     </tr>
 {/foreach}
