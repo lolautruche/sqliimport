@@ -37,7 +37,7 @@ OptionsTypes[sample_bool]=boolean
 OptionsTypes[sample_file]=file
 
 # Options default values. Empty String if not set
-OptionDefaults[]
-OptionDefaults[sample_string]=Sample
+OptionsDefaults[]
+OptionsDefaults[sample_string]=Sample
 
 */ ?>
