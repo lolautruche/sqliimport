@@ -3,7 +3,7 @@ YUI( YUI3_config ).use( 'node', 'io-ez', function( Y ){
 	var handlerSelect = Y.one('#ImportHandler'),
 		handlerOptions = Y.one('#handlerOptions'),
 		fallbackOptions = handlerOptions.all( 'tr' ).remove( false ),
-		fallbackToTextarea = Y.one( 'form[data-fallback-to-textarea]' ).get( 'data-fallback-to-textarea' ) === 'true';
+		fallbackToTextarea = Y.one( 'form[data-fallback-to-textarea]' ).getAttribute( 'data-fallback-to-textarea' ) === 'true';
 	
 	
 	/**
@@ -28,12 +28,20 @@ YUI( YUI3_config ).use( 'node', 'io-ez', function( Y ){
 	 */
 	function onOptionsLoaded( id, response ){
 		if( response.responseJSON.error_text ){
+				//alert if server error
 			window.alert( response.responseJSON.error_text );
+			
 		} else if( response.responseJSON.content ) {
+				//show HTML form
 			handlerOptions.setContent( response.responseJSON.content );
+			
 		} else if( fallbackToTextarea ) {
-			//no option : fall back to textarea
+				//no option : fall back to textarea
 			handlerOptions.setContent( fallbackOptions );
+			
+		}else{
+				//no option
+			handlerOptions.setContent( '' );
 		}
 	}
 });
