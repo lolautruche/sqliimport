@@ -77,6 +77,11 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     public function toText()
     {
         $text = '';
+        if( empty( $this->properties ) )
+        {
+            return '';
+        }
+
         foreach( $this->properties as $optionName => $optionValue )
         {
             $text .= $optionName.'='.$optionValue."\n";
