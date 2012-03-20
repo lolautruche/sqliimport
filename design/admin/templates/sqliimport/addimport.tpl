@@ -4,7 +4,7 @@
     <p>{$error_message}</p>
 </div>
 {/if}
-{ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io', 'sqliimportoptions.js' ) )}
+{ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io', 'sqliimport::modules', 'sqliimportoptions.js' ) )}
 <form action={'/sqliimport/addimport'|ezurl} method="post" data-fallback-to-textarea="{cond( ezini( 'OptionsGUISettings', 'FallbackToTextarea', 'sqliimport.ini' )|eq('enabled'), 'true', 'false' )}">
     <div class="box-header">
         <div class="box-tc">

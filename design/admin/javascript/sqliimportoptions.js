@@ -1,4 +1,27 @@
-YUI( YUI3_config ).use( 'node', 'io-ez', function( Y ){
+YUI( YUI3_config ).add( 'sqliimport', function(Y, name){
+	Y.SQLIImport = (function(){
+		
+		var modules = {};
+		
+		return {
+			registerOptionModule: function( name, initFunc ){
+				modules[name] = initFunc;
+			},
+			
+			initOptionModule: function( name, node ){
+				if( modules[name] ){
+					modules[name].call( null, node );
+				}
+			}
+		};
+		
+	})();
+});
+
+YUI( YUI3_config ).use( 'sqliimport', 'node', 'loader', 'io-ez', function( Y ){
+	
+	
+	
 	Y.on("domready", function(){
 		var handlerSelect = Y.one('#ImportHandler'),
 			handlerOptions = Y.one('#handlerOptions'),
@@ -26,7 +49,7 @@ YUI( YUI3_config ).use( 'node', 'io-ez', function( Y ){
 
 				Y.io.ez( url, {
 					on: {
-						success: onOptionsLoaded
+						success: onOptionsFormLoaded
 					}
 				});
 
@@ -36,16 +59,38 @@ YUI( YUI3_config ).use( 'node', 'io-ez', function( Y ){
 		}
 
 		/**
-		 * Replace options with AJAX result 
+		 * Callback for options form loading
+		 * Loads required JS modules  
 		 */
-		function onOptionsLoaded( id, response ){
+		function onOptionsFormLoaded( id, response ){
+			
 			if( response.responseJSON.error_text ){
 					//alert if server error
 				window.alert( response.responseJSON.error_text );
-
-			} else if( response.responseJSON.content ) {
+				return;
+			}
+			
+			if( response.responseJSON.content.modules ){
+				Y.use( response.responseJSON.content.modules, function(){
+					showOptionsForm( response.responseJSON.content.form );
+				} );
+			}
+			else showOptionsForm( response.responseJSON.content.form );
+		}
+		
+		
+		/**
+		 * Replace options with AJAX result 
+		 */
+		function showOptionsForm( form ){
+			if( form ) {
 					//show HTML form
-				handlerOptions.setContent( response.responseJSON.content );
+				handlerOptions.setContent( form );
+					//init modules
+				handlerOptions.all( 'div[data-module]' ).each( function( node ){
+					Y.SQLIImport.initOptionModule( node.getAttribute( 'data-module' ), node );
+				});
+				
 
 			} else if( fallbackToTextarea ) {
 					//no option : fall back to textarea
