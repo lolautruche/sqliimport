@@ -1,1 +1,1 @@
-<input type="text" name="ImportOptions[{$option_id}]" value="{$value|wash}" />
+<input type="text" name="ImportOption_{$option_id}" value="{$value|wash}" />

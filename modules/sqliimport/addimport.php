@@ -32,8 +32,19 @@ try
             'handler'               => $Module->actionParameter( 'ImportHandler' ),
             'user_id'               => eZUser::currentUserID()
         ) );
+
         if( $importOptions )
-            $pendingImport->setAttribute( 'options', SQLIImportHandlerOptions::fromText( $importOptions ) );
+        {
+            if( is_array( $importOptions ) )
+            {
+                $pendingImport->setAttribute( 'options', SQLIImportHandlerOptions::fromHTTPInput( $importOptions ) );
+            }
+            else
+            {
+                //backwards compatibility mode : options are set in a textarea
+                $pendingImport->setAttribute( 'options', SQLIImportHandlerOptions::fromText( $importOptions ) );
+            }
+        }
         $pendingImport->store();
         $Module->redirectToView( 'list' );
     }

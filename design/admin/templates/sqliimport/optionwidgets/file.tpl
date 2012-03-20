@@ -1,2 +1,2 @@
-<input type="hidden" name="ImportOptions[{$option_id}]" value="" />
+<input type="hidden" name="ImportOption_{$option_id}" value="test.csv" />
 <input type="button" class="file-upload" data-handler="{$handler}" data-option="{$option_id}" value="{"Select file"|i18n( 'extension/sqliimport' )}" />
