@@ -1,0 +1,114 @@
+[1mdiff --git a/classes/sqliimportjsserverfunctions.php b/classes/sqliimportjsserverfunctions.php[m
+[1mindex 43399f4..3535a76 100644[m
+[1m--- a/classes/sqliimportjsserverfunctions.php[m
+[1m+++ b/classes/sqliimportjsserverfunctions.php[m
+[36m@@ -1,6 +1,12 @@[m
+ <?php[m
+[31m-class SQLIImportJSServerFunctions[m
+[32m+[m[32mclass SQLIImportJSServerFunctions extends ezjscServerFunctions[m
+ {[m
+[32m+[m[32m    /**[m
+[32m+[m[32m     * Returns options form and js modules list for handler[m
+[32m+[m[32m     * @param array $args First value: handler id, optional second value: scheduled import id[m
+[32m+[m[32m     * @throws SQLIImportRuntimeException[m
+[32m+[m[32m     * @return array[m
+[32m+[m[32m     */[m
+     public static function options( $args )[m
+     {[m
+         $scheduledImport = null;[m
+[36m@@ -72,7 +78,8 @@[m [mclass SQLIImportJSServerFunctions[m
+ [m
+     /**[m
+      * Returns YUI3 configuration extension for custom option modules[m
+[31m-     * @param unknown_type $args[m
+[32m+[m[32m     * @param array $args Not used[m
+[32m+[m[32m     * @return string JS code declaring YUI3 modules[m
+      */[m
+     public static function modules( $args )[m
+     {[m
+[36m@@ -93,4 +100,22 @@[m [mclass SQLIImportJSServerFunctions[m
+ [m
+         return '';[m
+     }[m
+[32m+[m
+[32m+[m[32m    /**[m
+[32m+[m[32m     * Saves a file for import option[m
+[32m+[m[32m     * @param array $args First value: handler id, second value: option id[m
+[32m+[m[32m     * @return string saved file name[m
+[32m+[m[32m     */[m
+[32m+[m[32m    public static function fileupload( $args )[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $http = eZHTTPTool::instance();[m
+[32m+[m[32m        $handler = $http->postVariable( 'handler' );[m
+[32m+[m[32m        $option = $http->postVariable( 'option' );[m
+[32m+[m
+[32m+[m[32m        return array([m
+[32m+[m[32m            'handler' => $handler,[m
+[32m+[m[32m            'option' => $option,[m
+[32m+[m[32m            'files' => $_FILES[m
+[32m+[m[32m        );[m
+[32m+[m[32m    }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/design/admin/javascript/sqliimportfileupload.js b/design/admin/javascript/sqliimportfileupload.js[m
+[1mindex afab83f..c5aa140 100644[m
+[1m--- a/design/admin/javascript/sqliimportfileupload.js[m
+[1m+++ b/design/admin/javascript/sqliimportfileupload.js[m
+[36m@@ -4,6 +4,10 @@[m [mYUI.add( 'sqliimportfileupload', function( Y, name ){[m
+ 		[m
+ 		this.handler = node.getAttribute( 'data-handler' );[m
+ 		this.option = node.getAttribute( 'data-option' );[m
+[32m+[m[41m		[m
+[32m+[m		[32mthis.UPLOAD_URL = this.UPLOAD_URL.replace( '_handler_', this.handler )[m
+[32m+[m										[32m .replace( '_option_', this.option );[m
+[32m+[m[41m		[m
+ 		this.field = node.one( '.sqliimport-option-fileupload-field' );[m
+ 		this.progressBar = node.one( '.sqliimport-option-fileupload-progress' );[m
+ 		this.progressMeter = node.one( '.sqliimport-option-fileupload-progress-meter' );[m
+[36m@@ -27,7 +31,8 @@[m [mYUI.add( 'sqliimportfileupload', function( Y, name ){[m
+ 			});[m
+ 			[m
+ 			this.uploader  = new Y.Uploader({[m
+[31m-				boundingBox: overlay[m
+[32m+[m				[32mboundingBox: overlay,[m
+[32m+[m				[32mswfURL: node.getAttribute( 'data-swf-url' )[m
+ 			});[m
+ 			[m
+ 			this.uploader.on( "uploaderReady", this.setupUploader, this );[m
+[36m@@ -36,6 +41,8 @@[m [mYUI.add( 'sqliimportfileupload', function( Y, name ){[m
+ 	}[m
+ 	[m
+ 	Y.SQLIImport.FileUpload.prototype = {[m
+[32m+[m		[32mUPLOAD_URL: '/ezjscore/call/sqliimport::fileupload::_handler_::_option_?ContentType=json',[m
+[32m+[m[41m		[m
+ 		handler: '',[m
+ 		option: '',[m
+ 		field: null,[m
+[36m@@ -44,11 +51,25 @@[m [mYUI.add( 'sqliimportfileupload', function( Y, name ){[m
+ 		[m
+ 		setupUploader: function(){[m
+ 			this.uploader.on( 'fileselect', this.uploadSelectedFile, this );[m
+[32m+[m			[32mthis.uploader.on( 'uploadprogress', this.uploadProgess, this );[m
+[32m+[m			[32mthis.uploader.on( 'uploadcompletedata', this.uploadCompleteData, this );[m
+[32m+[m[41m			[m
+ 		},[m
+ 		[m
+ 		uploadSelectedFile: function( event ){[m
+[31m-			console.log( event );[m
+[31m-			//this.uploader.upload()[m
+[32m+[m			[32mthis.uploader.upload( "file0", this.UPLOAD_URL );[m
+[32m+[m			[32mthis.progressBar.show();[m
+[32m+[m		[32m},[m
+[32m+[m[41m		[m
+[32m+[m		[32muploadProgess: function( event ){[m
+[32m+[m			[32mvar percent = Math.round( event.bytesLoaded / event.bytesTotal * 100 );[m
+[32m+[m			[32mthis.progressMeter.setStyle( 'width', percent + '%' );[m
+[32m+[m		[32m},[m
+[32m+[m[41m		[m
+[32m+[m		[32muploadCompleteData: function( event ){[m
+[32m+[m			[32mconsole.log( event.data );[m
+[32m+[m			[32mthis.field.set( 'value', event.data );[m
+[32m+[m			[32mthis.progressBar.hide();[m
+ 		}[m
+ 		[m
+ 	};[m

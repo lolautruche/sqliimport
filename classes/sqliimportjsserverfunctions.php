@@ -1,6 +1,12 @@
 <?php
-class SQLIImportJSServerFunctions
+class SQLIImportJSServerFunctions extends ezjscServerFunctions
 {
+    /**
+     * Returns options form and js modules list for handler
+     * @param array $args First value: handler id, optional second value: scheduled import id
+     * @throws SQLIImportRuntimeException
+     * @return array
+     */
     public static function options( $args )
     {
         $scheduledImport = null;
@@ -72,7 +78,8 @@ class SQLIImportJSServerFunctions
 
     /**
      * Returns YUI3 configuration extension for custom option modules
-     * @param unknown_type $args
+     * @param array $args Not used
+     * @return string JS code declaring YUI3 modules
      */
     public static function modules( $args )
     {
@@ -92,5 +99,23 @@ class SQLIImportJSServerFunctions
         }
 
         return '';
+    }
+
+    /**
+     * Saves a file for import option
+     * @param array $args First value: handler id, second value: option id
+     * @return string saved file name
+     */
+    public static function fileupload( $args )
+    {
+        $http = eZHTTPTool::instance();
+        $handler = $http->postVariable( 'handler' );
+        $option = $http->postVariable( 'option' );
+
+        return array(
+            'handler' => $handler,
+            'option' => $option,
+            'files' => $_FILES
+        );
     }
 }

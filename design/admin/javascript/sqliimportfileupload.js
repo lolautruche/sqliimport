@@ -4,6 +4,10 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		
 		this.handler = node.getAttribute( 'data-handler' );
 		this.option = node.getAttribute( 'data-option' );
+		
+		this.UPLOAD_URL = this.UPLOAD_URL.replace( '_handler_', this.handler )
+										 .replace( '_option_', this.option );
+		
 		this.field = node.one( '.sqliimport-option-fileupload-field' );
 		this.progressBar = node.one( '.sqliimport-option-fileupload-progress' );
 		this.progressMeter = node.one( '.sqliimport-option-fileupload-progress-meter' );
@@ -27,7 +31,8 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 			});
 			
 			this.uploader  = new Y.Uploader({
-				boundingBox: overlay
+				boundingBox: overlay,
+				swfURL: node.getAttribute( 'data-swf-url' )
 			});
 			
 			this.uploader.on( "uploaderReady", this.setupUploader, this );
@@ -36,6 +41,8 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 	}
 	
 	Y.SQLIImport.FileUpload.prototype = {
+		UPLOAD_URL: '/ezjscore/call/sqliimport::fileupload::_handler_::_option_?ContentType=json',
+		
 		handler: '',
 		option: '',
 		field: null,
@@ -44,11 +51,25 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		
 		setupUploader: function(){
 			this.uploader.on( 'fileselect', this.uploadSelectedFile, this );
+			this.uploader.on( 'uploadprogress', this.uploadProgess, this );
+			this.uploader.on( 'uploadcompletedata', this.uploadCompleteData, this );
+			
 		},
 		
 		uploadSelectedFile: function( event ){
-			console.log( event );
-			//this.uploader.upload()
+			this.uploader.upload( "file0", this.UPLOAD_URL );
+			this.progressBar.show();
+		},
+		
+		uploadProgess: function( event ){
+			var percent = Math.round( event.bytesLoaded / event.bytesTotal * 100 );
+			this.progressMeter.setStyle( 'width', percent + '%' );
+		},
+		
+		uploadCompleteData: function( event ){
+			console.log( event.data );
+			this.field.set( 'value', event.data );
+			this.progressBar.hide();
 		}
 		
 	};
