@@ -5,7 +5,13 @@
 </div>
 {/if}
 {ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io', 'sqliimport::modules', 'sqliimportoptions.js' ) )}
-<form action={'/sqliimport/addimport'|ezurl} method="post" data-fallback-to-textarea="{cond( ezini( 'OptionsGUISettings', 'FallbackToTextarea', 'sqliimport.ini' )|eq('enabled'), 'true', 'false' )}">
+<form action={'/sqliimport/addimport'|ezurl}
+      method="post"
+      data-fallback-to-textarea="{cond( ezini( 'OptionsGUISettings', 'FallbackToTextarea', 'sqliimport.ini' )|eq('enabled'), 'true', 'false' )}"
+      data-session-name="{$session_name}"
+      data-session-id="{$session_id}"
+      data-user-session-hash="{$user_session_hash}"
+>
     <div class="box-header">
         <div class="box-tc">
             <div class="box-ml">

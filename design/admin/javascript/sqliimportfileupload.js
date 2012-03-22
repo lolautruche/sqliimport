@@ -8,6 +8,9 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		this.UPLOAD_URL = this.UPLOAD_URL.replace( '_handler_', this.handler )
 										 .replace( '_option_', this.option );
 		
+		this.uploadVars[Y.SQLIImport.sessionData.sessionName] = Y.SQLIImport.sessionData.sessionId;
+		this.uploadVars.UserSessionHash = Y.SQLIImport.sessionData.userSessionHash;
+
 		this.field = node.one( '.sqliimport-option-fileupload-field' );
 		this.progressBar = node.one( '.sqliimport-option-fileupload-progress' );
 		this.progressMeter = node.one( '.sqliimport-option-fileupload-progress-meter' );
@@ -43,6 +46,11 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 	Y.SQLIImport.FileUpload.prototype = {
 		UPLOAD_URL: '/ezjscore/call/sqliimport::fileupload::_handler_::_option_?ContentType=json',
 		
+		uploadVars: {
+			UserSessionHash: '',
+			ezxform_token: '@$ezxFormToken@'
+		},
+
 		handler: '',
 		option: '',
 		field: null,
@@ -57,7 +65,7 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		},
 		
 		uploadSelectedFile: function( event ){
-			this.uploader.upload( "file0", this.UPLOAD_URL );
+			this.uploader.upload( "file0", this.UPLOAD_URL, 'POST', this.uploadVars );
 			this.progressBar.show();
 		},
 		

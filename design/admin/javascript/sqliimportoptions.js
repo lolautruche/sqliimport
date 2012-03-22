@@ -12,6 +12,12 @@ YUI( YUI3_config ).add( 'sqliimport', function(Y, name){
 				if( modules[name] ){
 					modules[name].call( null, node );
 				}
+			},
+
+			sessionData: {
+				sessionName: '',
+				sessionId: '',
+				userSessionHash: ''
 			}
 		};
 		
@@ -30,6 +36,9 @@ YUI( YUI3_config ).use( 'sqliimport', 'node', 'loader', 'io-ez', function( Y ){
 			fallbackToTextarea = form.getAttribute( 'data-fallback-to-textarea' ) === 'true',
 			scheduledImportID = form.getAttribute( 'data-scheduled-import-id' );
 
+		Y.SQLIImport.sessionData.sessionName = form.getAttribute( 'data-session-name' );
+		Y.SQLIImport.sessionData.sessionId = form.getAttribute( 'data-session-id' );
+		Y.SQLIImport.sessionData.userSessionHash = form.getAttribute( 'data-user-session-hash' );
 
 		handlerSelect.on( 'change', getHandlerOptionsForm );
 

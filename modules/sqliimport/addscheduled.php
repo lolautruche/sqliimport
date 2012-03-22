@@ -158,6 +158,11 @@ foreach( $importHandlers as $handler )
 
 $tpl->setVariable( 'importHandlers', $aValidHandlers );
 
+//session vars used by file uploader
+$tpl->setVariable( 'session_id', session_id() );
+$tpl->setVariable( 'session_name', session_name() );
+$tpl->setVariable( 'user_session_hash', eZSession::getUserSessionHash() );
+
 $Result['path'] = array(
     array(
         'url'       => false,
