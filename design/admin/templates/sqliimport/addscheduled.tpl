@@ -6,7 +6,7 @@
 </div>
 {/if}
 
-{ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io', 'sqliimportoptions.js' ) )}
+{ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io', 'sqliimport::modules', 'sqliimportoptions.js' ) )}
 <form action={concat( '/sqliimport/addscheduled/', $import_id )|ezurl} 
       method="post" 
       data-scheduled-import-id="{$import_id}"

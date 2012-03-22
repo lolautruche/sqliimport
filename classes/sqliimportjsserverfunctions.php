@@ -105,17 +105,49 @@ class SQLIImportJSServerFunctions extends ezjscServerFunctions
      * Saves a file for import option
      * @param array $args First value: handler id, second value: option id
      * @return string saved file name
+     * @throws SQLIImportRuntimeException
      */
     public static function fileupload( $args )
     {
-        $http = eZHTTPTool::instance();
-        $handler = $http->postVariable( 'handler' );
-        $option = $http->postVariable( 'option' );
+        if( count( $args ) !== 2 )
+        {
+            throw new SQLIImportRuntimeException( 'Invalid arguments' );
+        }
 
-        return array(
-            'handler' => $handler,
-            'option' => $option,
-            'files' => $_FILES
-        );
+        $handler = $args[0];
+        $option = $args[1];
+
+        $importINI = eZINI::instance( 'sqliimport.ini' );
+        $handlerSection = $handler.'-HandlerSettings';
+        if( !$importINI->hasSection( $handlerSection ) )
+        {
+            throw new SQLIImportRuntimeException( 'No config for handler ' . $handler );
+        }
+
+        $options = $importINI->variable( $handlerSection, 'Options' );
+        if( !in_array( $option, $options ) )
+        {
+            throw new SQLIImportRuntimeException( 'Invalid option ' . $option );
+        }
+
+        $returnCode = eZHTTPFile::canFetch( 'Filedata', 0 );
+        if( $returnCode !== eZHTTPFile::UPLOADEDFILE_OK && $returnCode !== true )
+        {
+            throw new SQLIImportRuntimeException( 'Invalid uploaded file' );
+        }
+
+        $file = eZHTTPFile::fetch( 'Filedata' );
+        if( !$file instanceof eZHTTPFile )
+        {
+            throw new SQLIImportRuntimeException( 'Invalid uploaded file' );
+        }
+
+        $dir = $importINI->variable( 'OptionsGUISettings', 'UploadedFilesDir' ) . DIRECTORY_SEPARATOR .
+                    $handler . DIRECTORY_SEPARATOR .
+                    $option;
+
+        $file->store( $dir );
+
+        return $file->attribute( 'filename' );
     }
 }

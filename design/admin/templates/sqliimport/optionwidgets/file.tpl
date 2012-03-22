@@ -6,8 +6,9 @@
     <div class="sqliimport-option-fileupload-progress" style="width: 300px; height: 10px; border: 1px gray solid;">
         <div class="sqliimport-option-fileupload-progress-meter" style="background-color: red; height: 10px; width: 0%;"></div>
     </div>
-    <input type="text"   class="sqliimport-option-fileupload-field" name="ImportOption_{$option_id}" value="" disabled="disabled" />
+    <input type="hidden" class="sqliimport-option-fileupload-field" name="ImportOption_{$option_id}" value="" />
     <span class="sqliimport-option-fileupload-overlay"></span>
     <input type="button" class="sqliimport-option-fileupload-button" value="{"Select file"|i18n( 'extension/sqliimport' )}" />
+    <p class="sqliimport-option-fileupload-filename"></p>
 </div>
 {set $jsModules = $jsModules|merge( array( 'uploader', 'sqliimportfileupload' ) )}

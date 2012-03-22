@@ -12,6 +12,7 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		this.uploadVars.UserSessionHash = Y.SQLIImport.sessionData.userSessionHash;
 
 		this.field = node.one( '.sqliimport-option-fileupload-field' );
+		this.filenameContainer = node.one( '.sqliimport-option-fileupload-filename' );
 		this.progressBar = node.one( '.sqliimport-option-fileupload-progress' );
 		this.progressMeter = node.one( '.sqliimport-option-fileupload-progress-meter' );
 		
@@ -54,6 +55,7 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		handler: '',
 		option: '',
 		field: null,
+		filenameContainer: null,
 		
 		uploader: null,
 		
@@ -76,7 +78,15 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		
 		uploadCompleteData: function( event ){
 			console.log( event.data );
-			this.field.set( 'value', event.data );
+			var data = Y.JSON.parse( event.data );
+			if( data.error_text ){
+				this.field.set( 'value', "" );
+				this.filenameContainer.setContent( "" );
+				window.alert( data.error_text );
+			} else {
+				this.field.set( 'value', data.content );
+				this.filenameContainer.setContent( data.content );
+			}
 			this.progressBar.hide();
 		}
 		
@@ -89,5 +99,5 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 	
 	
 }, '0.0.1', {
-	requires: [ 'sqliimport', 'uploader' ]
+	requires: [ 'sqliimport', 'uploader', 'json-parse' ]
 });
