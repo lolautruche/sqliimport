@@ -206,10 +206,9 @@ class SQLIUsersImportHandler extends SQLIImportAbstractHandler implements ISQLIF
             throw new SQLIImportInvalidFileFormatException(
                 SQLIImportUtils::translate(
                 	'sqliimport/usershandler',
-                	"File must contain the following columns:%linebreak%required%linebreakSent columns are:%linebreak%sent",
+                	"File must contain the following columns: %required Sent columns are: %sent",
                 	'',
                     array(
-                        '%linebreak' => chr(10),
                         '%required' => implode( $csvOptions->delimiter, $requiredHeaders ),
                         '%sent'		=> implode( $csvOptions->delimiter, $sentHeaders ),
                     )

@@ -293,8 +293,8 @@
 <context>
     <name>sqliimport/usershandler</name>
     <message>
-        <source>File must contain the following columns:%linebreak%required%linebreakSent columns are:%linebreak%sent</source>
-        <translation>Le fichier doit contenir les colonnes suivantes :%linebreak%required%linebreakLes Les colonnes envoyées sont :%linebreak%sent</translation>
+        <source>File must contain the following columns: %required Sent columns are: %sent</source>
+        <translation>Le fichier doit contenir les colonnes suivantes : %required Les colonnes envoyées sont : %sent</translation>
     </message>
 </context>
 </TS>

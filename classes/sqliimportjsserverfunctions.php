@@ -142,12 +142,69 @@ class SQLIImportJSServerFunctions extends ezjscServerFunctions
             throw new SQLIImportRuntimeException( 'Invalid uploaded file' );
         }
 
-        $dir = $importINI->variable( 'OptionsGUISettings', 'UploadedFilesDir' ) . DIRECTORY_SEPARATOR .
-                    $handler . DIRECTORY_SEPARATOR .
-                    $option;
+        if( self::checkFileFormat( $handler, $option, $file ) )
+        {
 
-        $file->store( $dir );
+            $dir = $importINI->variable( 'OptionsGUISettings', 'UploadedFilesDir' ) . DIRECTORY_SEPARATOR .
+                        $handler . DIRECTORY_SEPARATOR .
+                        $option;
 
-        return $file->attribute( 'filename' );
+            $file->store( $dir );
+
+            return $file->attribute( 'filename' );
+        }
+    }
+
+    /**
+     * Tries to validate uploaded file format through handler
+     *
+     * @param string $handler
+     * @param string $option
+     * @param eZHTTPFile $file
+     * @return boolean	true if file validates or if no validator is defined
+     */
+    protected static function checkFileFormat( $handler, $option, eZHTTPFile $file )
+    {
+        //Handler instantiation code copied from SQLIImportFactory::runImport
+        //TODO : refactoring handler instantiation ?
+        $importINI = eZINI::instance( 'sqliimport.ini' );
+        $handlerSection = $handler.'-HandlerSettings';
+        if( !$importINI->hasSection( $handlerSection ) ) // Check INI Section
+            throw new ezcConfigurationNoConfigException( 'Error : Handler "'.$handler.'" does not have proper config section in sqliimport.ini !' );
+
+        if( !$importINI->hasVariable( $handlerSection, 'ClassName' ) ) // Check if ClassName is properly defined
+            throw new ezcConfigurationNoConfigException( 'Error : ClassName not defined for "'.$handler.'" in sqliimport.ini !' );
+
+        // Default values
+        $handlerClassName = $importINI->variable( $handlerSection, 'ClassName' );
+        $handlerEnabled = true;
+        $debug = false;
+        $defaultParentNodeID = $importINI->variable( 'ImportSettings', 'DefaultParentNodeID' );
+        $streamTimeout = $importINI->variable( 'ImportSettings', 'StreamTimeout' );
+
+        if( $importINI->hasVariable( $handlerSection, 'Enabled' ) )
+            $handlerEnabled = $importINI->variable( $handlerSection, 'Enabled' ) === 'true';
+
+        if( $importINI->hasVariable( $handlerSection, 'Debug' ) )
+            $debug = $importINI->variable( $handlerSection, 'Debug' ) === 'enabled';
+
+        if( $importINI->hasVariable( $handlerSection, 'DefaultParentNodeID' ) )
+        {
+            $localParentNodeID = $importINI->variable( $handlerSection, 'DefaultParentNodeID' );
+            $defaultParentNodeID = is_int( $localParentNodeID ) ? (int)$localParentNode : $defaultParentNodeID;
+        }
+
+        // Check handler class validity
+        if( !class_exists( $handlerClassName ) )
+            throw new SQLIImportRuntimeException( 'Error : invalid handler class "'.$handlerClassName.'". Did you regenerate autolads ?' );
+
+        $handlerOptions = new SQLIImportHandlerOptions( array() );
+        $importHandler = new $handlerClassName( $handlerOptions );
+        if( !$importHandler instanceof ISQLIFileImportHandler )
+            return true;
+
+        $importHandler->handlerConfArray = $importINI->group( $handlerSection );
+
+        return $importHandler->validateFile( $option, $file->attribute( 'filename' ) );
     }
 }
