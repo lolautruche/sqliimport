@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    
+
     {* DESIGN: Content START *}
     <div class="box-ml">
         <div class="box-mr">
@@ -45,8 +45,8 @@
                         </td>
                     </tr>
                     <tbody id="handlerOptions">
-	                    <tr class="bgdark">
-	                        <td><strong>{'Options (facultative)'|i18n( 'extension/sqliimport' )}</strong></th> 
+	                    <tr class="bgdark" style="display:none;">
+	                        <td><strong>{'Options (facultative)'|i18n( 'extension/sqliimport' )}</strong></th>
 	                        <td>
 	                            <textarea name="ImportOptions" id="ImportOptions" rows="7" cols="70"></textarea>
 	                            <p><i>{'One option per line : optionName=optionValue'|i18n( 'extension/sqliimport' )}</i></p>
@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-                            
+
     {* Buttons. *}
     <div class="controlbar">
     {* DESIGN: Control bar START *}

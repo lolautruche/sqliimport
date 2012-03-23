@@ -31,7 +31,7 @@ YUI( YUI3_config ).use( 'sqliimport', 'node', 'loader', 'io-ez', function( Y ){
 	Y.on("domready", function(){
 		var handlerSelect = Y.one('#ImportHandler'),
 			handlerOptions = Y.one('#handlerOptions'),
-			fallbackOptions = handlerOptions.all( 'tr' ).remove( false ),
+			fallbackOptions = handlerOptions.all( 'tr' ).remove( false ).show(),
 			form = Y.one( 'form[data-fallback-to-textarea]' ),
 			fallbackToTextarea = form.getAttribute( 'data-fallback-to-textarea' ) === 'true',
 			scheduledImportID = form.getAttribute( 'data-scheduled-import-id' );
