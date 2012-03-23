@@ -89,9 +89,10 @@ class SQLIImportJSServerFunctions extends ezjscServerFunctions
         if( count( $modules ) )
         {
             $js = 'YUI3_config = YUI3_config || { modules: {}}'.chr(10);
+            $tpl = SQLIImportUtils::templateInit();
             foreach( $modules as $name => $path )
             {
-                eZURI::transformURI( $path, false, 'full' );
+                $path = eZURLOperator::eZDesign( $tpl, $path, 'ezdesign' );
                 $js .= 'YUI3_config.modules.' . $name . ' = { fullpath: "' . $path . '" };'.chr(10);
             }
 
