@@ -9,13 +9,6 @@
  */
 interface ISQLIFileImportHandler extends ISQLIImportHandler
 {
-    /**
-     * Returns allowed file types for $option
-     * @param string $option File option alias
-     * @return array <type name> => <extension list>
-     * @example array(  'Images' => '*.jpg;*.gif;*.png' )
-     */
-    public function allowedFileTypes( $option );
 
     /**
      * Checks if file is in a valid format for $option

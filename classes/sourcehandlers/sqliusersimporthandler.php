@@ -147,17 +147,6 @@ class SQLIUsersImportHandler extends SQLIImportAbstractHandler implements ISQLIF
     }
 
     /**
-     * Returns allowed file types for $option
-     * @param string $option File option alias
-     * @return array <type name> => <extension list>
-     * @example array(  'Images' => '*.jpg;*.gif;*.png' )
-     */
-    public function allowedFileTypes( $option )
-    {
-        return array( 'CSV' => '*.csv;*.CSV' );
-    }
-
-    /**
      * Checks if file is in a valid format for $option
      * Returns true or throws an SQLIImportInvalidFileFormatException
      *

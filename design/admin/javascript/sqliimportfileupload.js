@@ -39,6 +39,8 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 				swfURL: node.getAttribute( 'data-swf-url' )
 			});
 			
+			this.uploader.set("fileFilters", this.getFileFilters( node.getAttribute( 'data-allowed-file-types' ) ) );
+
 			this.uploader.on( "uploaderReady", this.setupUploader, this );
 			
 		}
@@ -59,6 +61,24 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		
 		uploader: null,
 		
+		getFileFilters: function( allowedTypesString ){
+			var fileFilters = [],
+				typeStrings = allowedTypesString.split( '|' ),
+				typesNum = typeStrings.length,
+				typeInfo;
+
+			for( var i = 0; i < typesNum; i++ ){
+				typeInfo = typeStrings[i].split(':');
+				fileFilters.push({
+					description: typeInfo[0],
+					extensions: typeInfo[1]
+				});
+			}
+
+			return fileFilters;
+
+		},
+
 		setupUploader: function(){
 			this.uploader.on( 'fileselect', this.uploadSelectedFile, this );
 			this.uploader.on( 'uploadprogress', this.uploadProgess, this );
@@ -77,7 +97,6 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		},
 		
 		uploadCompleteData: function( event ){
-			console.log( event.data );
 			var data = Y.JSON.parse( event.data );
 			if( data.error_text ){
 				this.field.set( 'value', "" );

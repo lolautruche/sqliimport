@@ -56,4 +56,8 @@ OptionsTypes[file]=file
 OptionsDefaults[]
 OptionsDefaults[default_password]=ezpasswd
 
+# Allowed file types for options
+# Format: <label1>:<filext1>;<fileextN>|<label2>:<fileext3>;<fileextN>
+FileOptionsAllowedFileTypes[]
+FileOptionsAllowedFileTypes[file]=CSV Files:*.csv;*.CSV
 */ ?>
