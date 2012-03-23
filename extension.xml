@@ -7,4 +7,9 @@
 		<license>GNU General Public License v2.0</license>
 		<info_url>http://projects.ez.no/sqliimport</info_url>
 	</metadata>
+	<dependencies>
+        <requires>
+            <extension name="ezjscore" />
+        </requires>
+    </dependencies>
 </software>
