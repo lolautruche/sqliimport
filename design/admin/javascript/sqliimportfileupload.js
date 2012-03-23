@@ -97,7 +97,18 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		},
 		
 		uploadCompleteData: function( event ){
-			var data = Y.JSON.parse( event.data );
+			var data;
+
+			try{
+				data = Y.JSON.parse( event.data );
+			}
+			catch( e ){
+				data = {
+					error_text: e.message,
+					content: ""
+				};
+			}
+
 			if( data.error_text ){
 				this.field.set( 'value', "" );
 				this.filenameContainer.setContent( "" );
