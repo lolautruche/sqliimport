@@ -290,4 +290,11 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>sqliimport/usershandler</name>
+    <message>
+        <source>File must contain the following columns:%linebreak%required%linebreakSent columns are:%linebreak%sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
