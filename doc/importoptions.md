@@ -6,7 +6,8 @@ Under the hood, when the user selects a source handler, an AJAX call is made ret
 ## A Note on backwards compatibility
 New options implementation is fully compatible with previous behaviour (options string defined in a single textarea). 
 If you wish to keep it old school, do not define any option and set the following value in `sqliimport.ini` :
-<pre><code>[OptionsGUISettings]
+<pre><code>
+[OptionsGUISettings]
 FallbackToTextarea=enabled
 </code></pre>
 
@@ -19,7 +20,8 @@ Each option must have :
 * a label
 * a type
 
-<pre><code>[myhandler-HandlerSettings]
+<pre><code>
+[myhandler-HandlerSettings]
 Options[]
 Options[]=myoption
 OptionsLabels[myoption]=My custom option
@@ -73,7 +75,8 @@ A few rules though :
 For example:
 
 *settings/sqliimport.ini.append.php:*
-<pre><code>[myhandler-HandlerSettings]
+<pre><code>
+[myhandler-HandlerSettings]
 Options[]
 Options[]=myoption
 OptionsLabels[myoption]=Select one:
@@ -81,10 +84,13 @@ OptionsType[myoption]=mycustomtype
 </code></pre>
 
 *design/admin/templates/sqliimport/optionwidgets/mycustomtype.tpl:*
-<pre><code><select name="ImportOption_{$option_id}">
+<pre><code>
+```
+<select name="ImportOption_{$option_id}">
 	<option value="foo"{if $value|eq('foo')} selected{/if}>Foo</option>
 	<option value="bar"{if $value|eq('bar')} selected{/if}>Bar</option>
 </select>
+```
 </code></pre>
 
 
@@ -96,18 +102,22 @@ Boilerplate code for such a module is available in `design/admin/javascript/sqli
 
 You then have to declare the JS module in `sqliimport.ini` :
 
-<pre><code>[OptionsGUISettings]
+<pre><code>
+[OptionsGUISettings]
 YUI3Modules[mycustommodulename]=javascript/mycustommodule.js
 </code></pre>
 
 Finally you have to declare in your template which modules it requires and which div DOM node constitutes your UI:
-<pre><code><div data-module="mycustommodulename">
+<pre><code>
+```
+<div data-module="mycustommodulename">
 	<!--your module must fill in this field-->
 	<input type="hidden" name="ImportOption_{$option_id}" value="" />
 	<!--your custom UI-->
 	...
 </div>
 {set $jsModules = $jsModules|merge( array( 'mycustommodulename' ) )}
+```
 </code></pre>
 
 ### Sequence of events
