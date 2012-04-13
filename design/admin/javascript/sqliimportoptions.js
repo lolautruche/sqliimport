@@ -1,3 +1,11 @@
+/**
+ * Main YUI3 module for options GUI
+ * @copyright Copyright (C) 2010 - SQLi Agency. All rights reserved
+ * @licence http://www.gnu.org/licenses/gpl-2.0.txt GNU GPLv2
+ * @author Benjamin Choquet <benjamin.choquet@heliopsis.net>
+ * @version @@@VERSION@@@
+ * @package sqliimport
+ */
 YUI( YUI3_config ).add( 'sqliimport', function(Y, name){
 	Y.SQLIImport = (function(){
 		

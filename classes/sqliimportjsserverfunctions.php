@@ -1,4 +1,12 @@
 <?php
+/**
+ * Server functions for AJAX calls
+ * @copyright Copyright (C) 2010 - SQLi Agency. All rights reserved
+ * @licence http://www.gnu.org/licenses/gpl-2.0.txt GNU GPLv2
+ * @author Benjamin Choquet <benjamin.choquet@heliopsis.net>
+ * @version @@@VERSION@@@
+ * @package sqliimport
+**/
 class SQLIImportJSServerFunctions extends ezjscServerFunctions
 {
     /**
@@ -15,10 +23,12 @@ class SQLIImportJSServerFunctions extends ezjscServerFunctions
         $handler = $args[0];
 
             //arg 2 may be a scheduled import id
-        if( count( $args ) > 1 ){
+        if( count( $args ) > 1 )
+        {
             $scheduledImport = SQLIScheduledImport::fetch( $args[1] );
 
-            if( !$scheduledImport ){
+            if( !$scheduledImport )
+            {
                 throw new SQLIImportRuntimeException( 'Invalid scheduled import ID ' . $args[1] );
             }
 

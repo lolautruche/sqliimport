@@ -1,3 +1,12 @@
+/**
+ * YUI3 module handling file options
+ * Handles AJAX upload and sets uploaded file path to option value
+ * @copyright Copyright (C) 2010 - SQLi Agency. All rights reserved
+ * @licence http://www.gnu.org/licenses/gpl-2.0.txt GNU GPLv2
+ * @author Benjamin Choquet <benjamin.choquet@heliopsis.net>
+ * @version @@@VERSION@@@
+ * @package sqliimport
+ */
 YUI.add( 'sqliimportfileupload', function( Y, name ){
 	Y.SQLIImport._fileUploaders = [];
 	Y.SQLIImport.FileUpload = function( node ){
