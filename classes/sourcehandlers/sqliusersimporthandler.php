@@ -15,15 +15,16 @@ class SQLIUsersImportHandler extends SQLIImportAbstractHandler implements ISQLIF
             throw new SQLIImportConfigException( 'No file to import!' );
         }
 
-        if( !file_exists( $this->options->file ) )
+        $clusterFilePath = eZClusterFileHandler::instance()->fileFetch( $this->options->file );
+        if( !$clusterFilePath )
         {
             throw new SQLIImportConfigException( $this->options->file . ' could not be found' );
         }
 
-        $this->validateFile( 'file', $this->options->file );
+        $this->validateFile( 'file', $clusterFilePath );
 
         $this->csv = new SQLICSVDoc( new SQLICSVOptions( array(
-            'csv_path' => $this->options->file
+            'csv_path' => $clusterFilePath
         ) ) );
         $this->csv->parse();
     }
@@ -151,7 +152,7 @@ class SQLIUsersImportHandler extends SQLIImportAbstractHandler implements ISQLIF
      * Returns true or throws an SQLIImportInvalidFileFormatException
      *
      * @param string $option 	File option alias
-     * @param string $filePath	File to validate
+     * @param string $filePath	File to validate. Must be a valid local file (fetched from cluster if needed)
      * @return boolean
      * @throws SQLIImportInvalidFileFormatException
      * @throws SQLIImportConfigException if $option is not right

@@ -160,7 +160,9 @@ class SQLIImportJSServerFunctions extends ezjscServerFunctions
                         $handler . DIRECTORY_SEPARATOR .
                         $option;
 
+            //temporarily store uploaded file before clusterizing it
             $file->store( $dir );
+            eZClusterFileHandler::instance()->fileStore( $file->attribute( 'filename' ), false, true );
 
             return $file->attribute( 'filename' );
         }

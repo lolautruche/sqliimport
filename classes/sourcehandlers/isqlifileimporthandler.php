@@ -17,7 +17,7 @@ interface ISQLIFileImportHandler extends ISQLIImportHandler
      * Returns true or throws an SQLIImportInvalidFileFormatException
      *
      * @param string $option 	File option alias
-     * @param string $filePath	File to validate
+     * @param string $filePath	File to validate. Must be a valid local file (fetched from cluster if needed)
      * @return boolean
      * @throws SQLIImportInvalidFileFormatException
      */
