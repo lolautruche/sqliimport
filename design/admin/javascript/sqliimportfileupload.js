@@ -40,7 +40,7 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 				paddingTop: button.getStyle( 'paddingTop' ),
 				paddingBottom: button.getStyle( 'paddingBottom' ),
 				paddingLeft: button.getStyle( 'paddingLeft' ),
-				paddingRight: button.getStyle( 'paddingRight' ),
+				paddingRight: button.getStyle( 'paddingRight' )
 			});
 			
 			this.uploader  = new Y.Uploader({
