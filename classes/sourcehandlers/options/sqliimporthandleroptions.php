@@ -63,7 +63,7 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
         foreach( $aOptionsLines as $optionLine )
         {
             $optionLine = trim( $optionLine );
-            list( $optionName, $optionValue ) = explode( '=', $optionLine );
+            list( $optionName, $optionValue ) = explode( '=', $optionLine, 2 );
             $aOptions[$optionName] = $optionValue;
         }
         
