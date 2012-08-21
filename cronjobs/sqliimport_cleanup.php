@@ -15,8 +15,8 @@ SQLIImportUtils::viewCacheClear();
 
 // Indexing will be trigerred by indexcontent cronjob
 
-$cli->notice( 'Cleanup is over :)' );
+$cli->output( 'Cleanup is over :)' );
     
 $memoryMax = memory_get_peak_usage(); // Result is in bytes
 $memoryMax = round( $memoryMax / 1024 / 1024, 2 ); // Convert in Megabytes
-$cli->notice( 'Peak memory usage : '.$memoryMax.'M' );
+$cli->output( 'Peak memory usage : '.$memoryMax.'M' );

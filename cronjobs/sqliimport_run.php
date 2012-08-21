@@ -23,7 +23,7 @@ try
     $aImmediateImports = SQLIImportItem::fetchPendingList();
     if( count( $aImmediateImports ) > 0 )
     {
-        $cli->warning( 'Now handling immediate imports' );
+        $cli->output( 'Now handling immediate imports' );
         $importFactory = SQLIImportFactory::instance();
         $importFactory->runImport( $aImmediateImports );
         $importFactory->cleanup();
@@ -51,7 +51,7 @@ try
     // Then create a pending SQLIImportItem for each scheduled import
     if( count( $aScheduledImports ) > 0  )
     {
-        $cli->warning( 'Now handling scheduled imports' );
+        $cli->output( 'Now handling scheduled imports' );
         $aImportItems = array();
         foreach( $aScheduledImports as $scheduledImport )
         {
@@ -70,11 +70,11 @@ try
     // ##### End Scheduled imports
     // ##########
     
-    $cli->notice( 'Import is over :)' );
+    $cli->output( 'Import is over :)' );
     
     $memoryMax = memory_get_peak_usage(); // Result is in bytes
     $memoryMax = round( $memoryMax / 1024 / 1024, 2 ); // Convert in Megabytes
-    $cli->notice( 'Peak memory usage : '.$memoryMax.'M' );
+    $cli->output( 'Peak memory usage : '.$memoryMax.'M' );
     
 }
 catch( Exception $e )
