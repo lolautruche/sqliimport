@@ -25,32 +25,30 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		this.progressMeter = node.one( '.sqliimport-option-fileupload-progress-meter' );
 		
 		var button = node.one( '.sqliimport-option-fileupload-button' ),
-			overlay = node.one( '.sqliimport-option-fileupload-overlay' );
+			container = node.one( '.sqliimport-option-fileupload-button-container' );
 		
 		this.progressBar.hide();
 		
-		if( overlay && button && this.field ){
-			
-			overlay.setStyles({
-				position: 'absolute',
-				zIndex: 2,
-				width: button.getStyle( 'width' ),
-				height: button.getStyle( 'height' ),
-				paddingTop: button.getStyle( 'paddingTop' ),
-				paddingBottom: button.getStyle( 'paddingBottom' ),
-				paddingLeft: button.getStyle( 'paddingLeft' ),
-				paddingRight: button.getStyle( 'paddingRight' )
-			});
+		if( container && button && this.field ){
 			
 			this.uploader  = new Y.Uploader({
-				boundingBox: overlay,
-				swfURL: node.getAttribute( 'data-swf-url' )
+				selectButtonLabel: button.getAttribute( 'value' )
 			});
 			
-			this.uploader.set("fileFilters", this.getFileFilters( node.getAttribute( 'data-allowed-file-types' ) ) );
-
-			this.uploader.on( "uploaderReady", this.setupUploader, this );
+			if( Y.Uploader.TYPE === "flash" ){
+				this.uploader.set("fileFilters", this.getFileFilters( node.getAttribute( 'data-allowed-file-types' ) ) );
+				this.uploader.set("swfURL", node.getAttribute( 'data-swf-url' ) );
+			}
 			
+			if (Y.Uploader.TYPE != "none") {
+				this.uploader.on( 'fileselect', this.uploadSelectedFile, this );
+				this.uploader.on( 'uploadprogress', this.uploadProgress, this );
+				this.uploader.on( 'uploadcomplete', this.uploadCompleteData, this );
+				
+				
+				button.remove();
+				this.uploader.render( '.sqliimport-option-fileupload-button-container' );
+			}
 		}
 	}
 	
@@ -86,19 +84,14 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 
 		},
 
-		setupUploader: function(){
-			this.uploader.on( 'fileselect', this.uploadSelectedFile, this );
-			this.uploader.on( 'uploadprogress', this.uploadProgess, this );
-			this.uploader.on( 'uploadcompletedata', this.uploadCompleteData, this );
-			
-		},
-		
 		uploadSelectedFile: function( event ){
-			this.uploader.upload( "file0", this.UPLOAD_URL, 'POST', this.uploadVars );
-			this.progressBar.show();
+			if( event.fileList.length > 0 ){
+				this.uploader.upload( event.fileList[0], this.UPLOAD_URL, 'POST', this.uploadVars );
+				this.progressBar.show();
+			}
 		},
 		
-		uploadProgess: function( event ){
+		uploadProgress: function( event ){
 			var percent = Math.round( event.bytesLoaded / event.bytesTotal * 100 );
 			this.progressMeter.setStyle( 'width', percent + '%' );
 		},
