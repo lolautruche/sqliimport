@@ -18,7 +18,6 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 										 .replace( '_option_', this.option );
 		
 		this.uploadVars[Y.SQLIImport.sessionData.sessionName] = Y.SQLIImport.sessionData.sessionId;
-		this.uploadVars.UserSessionHash = Y.SQLIImport.sessionData.userSessionHash;
 
 		this.field = node.one( '.sqliimport-option-fileupload-field' );
 		this.filenameContainer = node.one( '.sqliimport-option-fileupload-filename' );
@@ -59,7 +58,6 @@ YUI.add( 'sqliimportfileupload', function( Y, name ){
 		UPLOAD_URL: '/ezjscore/call/sqliimport::fileupload::_handler_::_option_?ContentType=json',
 		
 		uploadVars: {
-			UserSessionHash: '',
 			ezxform_token: '@$ezxFormToken@'
 		},
 

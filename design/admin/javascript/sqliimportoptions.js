@@ -24,8 +24,7 @@ YUI( YUI3_config ).add( 'sqliimport', function(Y, name){
 
 			sessionData: {
 				sessionName: '',
-				sessionId: '',
-				userSessionHash: ''
+				sessionId: ''
 			}
 		};
 		
@@ -46,7 +45,6 @@ YUI( YUI3_config ).use( 'sqliimport', 'node', 'loader', 'io-ez', function( Y ){
 
 		Y.SQLIImport.sessionData.sessionName = form.getAttribute( 'data-session-name' );
 		Y.SQLIImport.sessionData.sessionId = form.getAttribute( 'data-session-id' );
-		Y.SQLIImport.sessionData.userSessionHash = form.getAttribute( 'data-user-session-hash' );
 
 		handlerSelect.on( 'change', getHandlerOptionsForm );
 

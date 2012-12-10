@@ -10,7 +10,6 @@
       data-fallback-to-textarea="{cond( ezini( 'OptionsGUISettings', 'FallbackToTextarea', 'sqliimport.ini' )|eq('enabled'), 'true', 'false' )}"
       data-session-name="{$session_name}"
       data-session-id="{$session_id}"
-      data-user-session-hash="{$user_session_hash}"
 >
     <div class="box-header">
         <div class="box-tc">
