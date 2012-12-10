@@ -12,6 +12,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>-- Select handler --</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Options (facultative)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,6 +287,13 @@
     <message>
         <source>Import management</source>
         <comment>Navigation part</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sqliimport/usershandler</name>
+    <message>
+        <source>File must contain the following columns: %required Sent columns are: %sent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

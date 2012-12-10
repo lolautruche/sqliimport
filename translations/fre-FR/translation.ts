@@ -12,6 +12,10 @@
         <translation>Pilote d&apos;import</translation>
     </message>
     <message>
+        <source>-- Select handler --</source>
+        <translation>-- Sélectionnez le pilote --</translation>
+    </message>
+    <message>
         <source>Options (facultative)</source>
         <translation>Options (facultatif)</translation>
     </message>
@@ -284,6 +288,13 @@
         <source>Import management</source>
         <comment>Navigation part</comment>
         <translation>Gestion des imports</translation>
+    </message>
+</context>
+<context>
+    <name>sqliimport/usershandler</name>
+    <message>
+        <source>File must contain the following columns: %required Sent columns are: %sent</source>
+        <translation>Le fichier doit contenir les colonnes suivantes : %required Les colonnes envoyées sont : %sent</translation>
     </message>
 </context>
 </TS>

@@ -17,6 +17,8 @@
  */
 abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
 {
+    protected $properties = array();
+
     /**
      * Setter. Default values must be set in constructor
      * @see lib/ezc/Base/src/ezcBaseOptions::__set()
@@ -25,10 +27,10 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         if( !array_key_exists( $optionName, $this->properties ) )
             throw new ezcBasePropertyNotFoundException( $optionName );
-            
+
         $this->properties[$optionName] = $optionValue;
     }
-    
+
     /**
      * eZ Compatible getter
      * @param $attributeName
@@ -38,7 +40,7 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         return $this->__get( $attrName );
     }
-    
+
     /**
      * Checks if provided attribute exists.
      * eZ Publish implementation
@@ -49,7 +51,7 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         return $this->__isset( $attrName );
     }
-    
+
     /**
      * Returns all available attributes
      * @return array
@@ -58,7 +60,7 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         return array_keys( $this->properties );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::current()
@@ -67,7 +69,7 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         return current( $this->properties );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::key()
@@ -76,7 +78,7 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         return key( $this->properties );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::next()
@@ -85,7 +87,7 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         next( $this->properties );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::rewind()
@@ -94,7 +96,7 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     {
         reset( $this->properties );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Iterator::valid()

@@ -18,12 +18,12 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     const OPTION_HANDLER_DELIMITER = '|',
           OPTION_VALUE_DELIMITER = ',',
           OPTION_HANDLERNAME_DELIMITER = '::';
-    
+
     public function __construct( array $options = array() )
     {
         parent::__construct( $options );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see extension/sqliimport/classes/options/SQLIImportOptions::__set()
@@ -32,7 +32,7 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     {
         $this->properties[$name] = $value;
     }
-    
+
     /**
      * Generic toString method
      */
@@ -46,10 +46,10 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
                 $aReturn[] = $name.' : '.(string)$value;
             }
         }
-        
+
         return implode( "\n", $aReturn );
     }
-    
+
     /**
      * Initializes an SQLIImportHandlerOptions object from text.
      * One option per line (optionName=optionValue)
@@ -66,10 +66,10 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
             list( $optionName, $optionValue ) = explode( '=', $optionLine, 2 );
             $aOptions[$optionName] = $optionValue;
         }
-        
+
         return new self( $aOptions );
     }
-    
+
     /**
      * Returns a string representation of options, as used in forms
      * @return string
@@ -77,15 +77,20 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     public function toText()
     {
         $text = '';
+        if( empty( $this->properties ) )
+        {
+            return '';
+        }
+
         foreach( $this->properties as $optionName => $optionValue )
         {
             $text .= $optionName.'='.$optionValue."\n";
         }
-        
+
         $text = trim( $text );
         return $text;
     }
-    
+
     /**
      * Decodes handlers options provided from the command line.
      * Returns an associative array with handler name as the key and an instance of SQLIImportHandlerOptions as value
@@ -96,11 +101,11 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     public static function decodeHandlerOptionLine( $optionLine )
     {
         $aFinalOptions = array();
-        
+
         if( $optionLine )
         {
             $aHandlersOption = explode( self::OPTION_HANDLER_DELIMITER, $optionLine );
-            
+
             foreach( $aHandlersOption as $handlerOption )
             {
                 list( $handlerName, $options ) = explode( self::OPTION_HANDLERNAME_DELIMITER, $handlerOption );
@@ -111,11 +116,32 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
                     list( $paramName, $paramValue ) = explode( '=', $option );
                     $aParams[$paramName] = $paramValue;
                 }
-                
+
                 $aFinalOptions[$handlerName] = new self( $aParams );
             }
         }
-        
+
         return $aFinalOptions;
+    }
+
+    /**
+     * Fetches options values from HTTP input
+     * Values will be looked for in $_POST[<$httpVarBaseName><option_id>]
+     * @param array 	$optionList			Option IDs
+     * @param string 	$httpVarBaseName	Base name for option values
+     * @return SQLIImportHandlerOptions
+     */
+    public static function fromHTTPInput( $optionList, $httpVarBaseName = 'ImportOption_' )
+    {
+        $http = eZHTTPTool::instance();
+        $aParams = array();
+        foreach( $optionList as $option )
+        {
+            if( $http->hasPostVariable( $httpVarBaseName . $option ) )
+            {
+                $aParams[$option] = $http->postVariable( $httpVarBaseName . $option );
+            }
+        }
+        return new self( $aParams );
     }
 }

@@ -29,7 +29,7 @@ try
     $importLabel = null;
     $importIsActive = true;
     $manualFrequency = 0;
-    
+
     if( $Module->isCurrentAction( 'RequestScheduledImport' ) )
     {
         // Check if user has access to handler alteration
@@ -38,20 +38,20 @@ try
         $hasAccess = SQLIImportUtils::hasAccessToLimitation( $Module->currentModule(), 'manageimports', $aLimitation );
         if( !$hasAccess )
             return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
-        
+
         $importID = (int)$Params['ScheduledImportID'];
         $importOptions = $Module->actionParameter( 'ImportOptions' );
         $importFrequency = $Module->actionParameter( 'ScheduledFrequency' );
         $importLabel = $Module->actionParameter( 'ScheduledLabel' );
         $importIsActive = $Module->actionParameter( 'ScheduledActive' ) ? 1 : 0;
-        
+
         $aImportDate = explode( '-', $Module->actionParameter( 'ScheduledDate' ) );
         $importHour = (int)$Module->actionParameter( 'ScheduledHour' );
         $importMinute = (int)$Module->actionParameter( 'ScheduledMinute' );
         $nextDate = mktime( $importHour, $importMinute, 0, $aImportDate[1], $aImportDate[2], $aImportDate[0] );
         if( $nextDate == -1 ) // Bad date entered
             throw new SQLIImportBaseException( SQLIImportUtils::translate( 'extension/sqliimport/error', 'Please choose a correct date' ) );
-        
+
         $row = array(
             'handler'               => $currentImportHandler,
             'user_id'               => eZUser::currentUserID(),
@@ -60,26 +60,35 @@ try
             'next'                  => $nextDate,
             'is_active'             => $importIsActive
         );
-        
+
         // Handle frequency
         if( $importFrequency == SQLIScheduledImport::FREQUENCY_MANUAL )
         {
             $manualFrequency = (int)$Module->actionParameter( 'ManualScheduledFrequency' );
             if( $manualFrequency < 5 )
                 throw new SQLIImportBaseException( SQLIImportUtils::translate( 'extension/sqliimport/error', 'Please choose a frequency greater than 5min' ) );
-                
+
             $row['manual_frequency'] = $manualFrequency;
         }
-            
+
         $scheduledImport = SQLIScheduledImport::fetch( $importID );
         if ( !$scheduledImport instanceof SQLIScheduledImport )
             $scheduledImport = new SQLIScheduledImport( $row );
         else
             $scheduledImport->fromArray( $row );
-        
+
         if( $importOptions )
-            $scheduledImport->setAttribute( 'options', SQLIImportHandlerOptions::fromText( $importOptions ) );
-        
+        {
+            if( is_array( $importOptions ) )
+            {
+                $scheduledImport->setAttribute( 'options', SQLIImportHandlerOptions::fromHTTPInput( $importOptions ) );
+            }
+            else
+            {
+                //backwards compatibility mode : options are set in a textarea
+                $scheduledImport->setAttribute( 'options', SQLIImportHandlerOptions::fromText( $importOptions ) );
+            }
+        }
         $scheduledImport->store();
         $Module->redirectToView( 'scheduledlist' );
     }
@@ -88,13 +97,13 @@ try
         $scheduledImport = SQLIScheduledImport::fetch( $Params['ScheduledImportID'] );
         $importID = $Params['ScheduledImportID'];
         $currentImportHandler = $scheduledImport->attribute( 'handler' );
-        
+
         // Check if user has access to handler alteration
         $aLimitation = array( 'SQLIImport_Type' => $currentImportHandler );
         $hasAccess = SQLIImportUtils::hasAccessToLimitation( $Module->currentModule(), 'manageimports', $aLimitation );
         if( !$hasAccess )
             return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
-        
+
         $importOptions = $scheduledImport->attribute( 'options' )->toText();
         $nextTime = $scheduledImport->attribute( 'next' );
         if( !$nextTime )
@@ -107,7 +116,7 @@ try
         $importIsActive = $scheduledImport->attribute( 'is_active' );
         $manualFrequency = $scheduledImport->attribute( 'manual_frequency' );
     }
-    
+
 }
 catch( Exception $e )
 {
@@ -148,6 +157,10 @@ foreach( $importHandlers as $handler )
 }
 
 $tpl->setVariable( 'importHandlers', $aValidHandlers );
+
+//session vars used by file uploader
+$tpl->setVariable( 'session_id', session_id() );
+$tpl->setVariable( 'session_name', session_name() );
 
 $Result['path'] = array(
     array(
