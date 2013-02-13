@@ -2,7 +2,7 @@
  SQLIImport for eZ Publish documentation
 =========================================
 
-.. image:: https://github.com/lolautruche/SQLIImport/tree/master/doc/images/sqli_logo.jpg
+.. image:: https://github.com/lolautruche/SQLIImport/raw/master/doc/images/sqli_logo.jpg
 
 :author: Jérôme Vieilledent
 :version: 1.2
@@ -55,7 +55,7 @@ You can manage your imports via the admin interface. After installing *SQLIImpor
 (you'll need to have access to *sqliimport* module or to simply be administrator to be able to see it from eZ Publish 4.3).
 Click on it to start managing your imports :
 
-.. figure:: https://github.com/lolautruche/SQLIImport/tree/master/doc/images/admin_importlist.jpg
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/images/admin_importlist.jpg
    :width: 2000
    
    Imports list
@@ -82,7 +82,7 @@ Scheduled imports will be launched at chosen *start date*.
 They can be one-shot (Frequency = none) or recurring.
 You can add a label to the scheduled import and deactivate it :
 
-.. figure:: https://github.com/lolautruche/SQLIImport/tree/master/doc/images/admin_addscheduled.jpg
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/images/admin_addscheduled.jpg
    :width: 1000
    
    Add scheduled import form
@@ -192,7 +192,7 @@ Developing an import handler is fairly easy. You just need to create a PHP class
 and implements **ISQLIImportHandler**. You will also need to declare it in an override of **sqliimport.ini** by creating 
 a dedicated section (please read inline INI comments for further details).
 
-.. figure:: uml/ImportHandlers.png
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/uml/ImportHandlers.png
    :width: 2000
    
    UML diagram for import handlers
@@ -284,7 +284,7 @@ For more examples, please check scripts located in the *stubs/* directory.
 
 You can also have a look at the UML diagram below.
 
-.. figure:: uml/SQLIContent.png
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/uml/SQLIContent.png
    :width: 2000
    
    UML diagram for SQLIContent framework
@@ -318,7 +318,7 @@ Source Handlers
   - **SQLIXMLParser** - Catches parse errors and fetches XML string. Transforms PHP errors into exceptions. Works with DOM or SimpleXML (example in *stubs/xml.php*).
   - **SQLICSVDoc** - Set of classes to manage CSV structures as easily as with SimpleXML (example in *stubs/csv.php*).
 
-.. figure:: uml/CSVDoc.png
+.. figure:: https://github.com/lolautruche/SQLIImport/raw/master/doc/uml/CSVDoc.png
    :width: 2000
    
    UML diagram for CSVDoc classes
