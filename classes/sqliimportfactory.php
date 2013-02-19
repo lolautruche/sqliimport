@@ -223,9 +223,12 @@ final class SQLIImportFactory
                 $importHandler->initialize();
                 // Get process length to calculate advancement percentage to track advancement
                 $processLength = $importHandler->getProcessLength();
-                if ($processLength > 0) {
+                if( $processLength > 0 )
+                {
                     $percentageAdvancementStep = 100 / $processLength;
-                } else {
+                }
+                else
+                {
                     $percentageAdvancementStep = 0;
                 }
                 $handlerName = $importHandler->getHandlerName();
