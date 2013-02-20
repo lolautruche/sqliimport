@@ -1164,7 +1164,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
                     }
  
                     // Check mail address validity
-                    if ( preg_match( "/^mailto:(.*)/i" , $url, $mailAddr ) )
+                    if ( preg_match( "/^mailto:([^\?]*)(?:\?.*)?/i" , $url, $mailAddr ) )
                     {
                         if ( !eZMail::validate( $mailAddr[1] ) )
                         {
