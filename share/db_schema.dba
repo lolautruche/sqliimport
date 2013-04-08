@@ -39,6 +39,11 @@ $schema = array (
         'type' => 'longtext',
         'default' => false,
       ),
+      'running_log' =>
+      array (
+        'type' => 'longtext',
+        'default' => false,
+      ),
       'requested_time' =>
       array (
         'length' => 11,
