@@ -24,7 +24,6 @@ CREATE TABLE `sqliimport_item` (
   `percentage_int` smallint(6) DEFAULT '0',
   `type` tinyint(4) DEFAULT '1',
   `progression_notes` longtext,
-  `running_log` longtext,
   `process_time` int(11) unsigned DEFAULT '0',
   `scheduled_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),

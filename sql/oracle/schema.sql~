@@ -22,7 +22,6 @@ CREATE TABLE sqliimport_item (
   percentage_int smallint DEFAULT 0,
   type smallint DEFAULT 1,
   progression_notes clob,
-  running_log clob,
   process_time int DEFAULT 0,
   scheduled_id int,
   PRIMARY KEY (id)
