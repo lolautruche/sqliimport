@@ -1,0 +1,10 @@
+.running_log .notice {
+    color: green;
+    display: none
+}
+.running_log .warning {
+    color: orange
+}
+.running_log .error {
+    color: red
+}
