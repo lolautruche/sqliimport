@@ -92,6 +92,11 @@ class SQLIImportItem extends eZPersistentObject
                                                                                'default'  => null,
                                                                                'required' => false ),
         
+                                               'running_log'   =>       array( 'name'     => 'running_log',
+                                                                               'datatype' => 'string',
+                                                                               'default'  => null,
+                                                                               'required' => false ),
+        
                                                'process_time'        => array( 'name'     => 'process_time',
                                                                                'datatype' => 'integer',
                                                                                'default'  => 0,
@@ -115,7 +120,8 @@ class SQLIImportItem extends eZPersistentObject
                                                        'type_string'                => 'getTypeString',
                                                        'user_has_access'            => 'userHasAccess',
                                                        'process_time_formated'      => 'getFormatedProcessTime',
-                                                       'scheduled_import'			=> 'getScheduledImport' ),
+                                                       'scheduled_import'			=> 'getScheduledImport',
+                                                       'running_log_messages'       => 'getRunningLogMessages' ),
                       'set_functions'        => array( 'options'        => 'setOptions',
                                                        'user'           => 'setUser',
                                                        'percentage'     => 'setPercentage' )
@@ -320,6 +326,7 @@ class SQLIImportItem extends eZPersistentObject
         $percentage = $this->attribute( 'percentage' ) + $progressPercentage;
         $this->setAttribute( 'percentage', $percentage );
         $this->setAttribute( 'progression_notes', $progressionNotes );
+        $this->setAttribute( 'running_log', SQLIImportLogger::serializeMessages() );
         $this->store( array( 'percentage_int', 'progression_notes' ) ); // Only stores those fields in order not to overwrite others (like 'status')
     }
     
@@ -453,5 +460,9 @@ class SQLIImportItem extends eZPersistentObject
         }
         
         return $scheduledImport;
+    }
+    
+    public function getRunningLogMessages() {
+        return unserialize( $this->attribute( 'running_log' ) );
     }
 }
