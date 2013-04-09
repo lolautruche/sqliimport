@@ -179,6 +179,9 @@
     <message>
         <source>Import management list</source>
         <translation type="unfinished"></translation>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
