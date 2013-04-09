@@ -180,6 +180,10 @@
         <source>Import management list</source>
         <translation>Liste des imports</translation>
     </message>
+    <message>
+        <source>Details</source>
+        <translation>Détails</translation>
+    </message>
 </context>
 <context>
     <name>extension/sqliimport/schedulefrequency</name>
