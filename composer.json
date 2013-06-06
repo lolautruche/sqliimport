@@ -1,6 +1,7 @@
 {
     "name": "lolautruche/sqliimport",
     "description": "eZ Publish legacy extension for importing external content",
+    "type": "ezpublish-legacy-extension",
     "license": "GPL-2.0",
     "authors": [
         {
