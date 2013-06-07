@@ -11,6 +11,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "ezsystems/ezpublish-legacy-extension-installer": "*"
+        "ezsystems/ezpublish-legacy-installer": "*"
     }
 }
