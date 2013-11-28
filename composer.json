@@ -9,7 +9,6 @@
             "email": "lolautruche@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "ezsystems/ezpublish-legacy-installer": "*"
     }
