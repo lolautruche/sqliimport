@@ -106,7 +106,7 @@
                                     {$import.progression_notes}
                                 {elseif $import.running_log_messages|count()}
                                     <div class="running_log">
-                                        <a href="#" class="detail_link">{'Details'i18n( 'extension/sqliimport' )}</a>
+                                        <a href="#" class="detail_link">{'Details'|i18n( 'extension/sqliimport' )}</a>
                                        {foreach $import.running_log_messages as $message}
                                            <div class="{$message.level}">
                                                {$message.message}
