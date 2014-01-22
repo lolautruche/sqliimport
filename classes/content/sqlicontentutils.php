@@ -58,7 +58,7 @@ class SQLIContentUtils
             $password = $ini->variable( 'ProxySettings', 'Password' );
             if ( $userName )
             {
-                curl_setopt( $ch, CURLOPT_PROXYUSERPWD, "$username:$password" );
+                curl_setopt( $ch, CURLOPT_PROXYUSERPWD, "$userName:$password" );
             }
         }
         

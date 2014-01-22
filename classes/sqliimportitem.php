@@ -132,12 +132,12 @@ class SQLIImportItem extends eZPersistentObject
         foreach( $attributes as $attrName => $attrValue )
         {
             if( isset( $this->attributesHolder[$attrName] ) )
-                $this->attributesHolder[$name] = $value;
+                $this->attributesHolder[$attrName] = $attrValue;
             else
                 throw new SQLIImportRuntimeException( SQLIImportUtils::translate( 'extension/sqliimport/error',
                                                                                   'SQLIPendingImport : Unknown attribute "%attribute"',
                                                                                    null,
-                                                                                   $name ) );
+                                                                                   $attrName ) );
         }
     }
     
