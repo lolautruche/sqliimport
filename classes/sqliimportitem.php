@@ -462,7 +462,8 @@ class SQLIImportItem extends eZPersistentObject
         return $scheduledImport;
     }
     
-    public function getRunningLogMessages() {
+    public function getRunningLogMessages() 
+	{
         return unserialize( $this->attribute( 'running_log' ) );
     }
 }
