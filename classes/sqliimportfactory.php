@@ -193,7 +193,7 @@ final class SQLIImportFactory
                 if( $this->importINI->hasVariable( $handlerSection, 'DefaultParentNodeID' ) )
                 {
                     $localParentNodeID = $this->importINI->variable( $handlerSection, 'DefaultParentNodeID' );
-                    $defaultParentNodeID = is_int( $localParentNodeID ) ? (int)$localParentNode : $defaultParentNodeID;
+                    $defaultParentNodeID = is_int( $localParentNodeID ) ? (int)$localParentNodeID : $defaultParentNodeID;
                 }
                     
                 if( $this->importINI->hasVariable( $handlerSection, 'StreamTimeout' ) )
