@@ -9,15 +9,16 @@
  * @package sqliimport
  */
 
-class SQLIImportLogger {
-    const NOTICELOG = 'notice', 
-          ERRORLOG = 'error', 
+class SQLIImportLogger
+{
+    const NOTICELOG = 'notice',
+          ERRORLOG = 'error',
           WARNINGLOG = 'warning';
-
-    const ERRORLOG_FILE = 'sqliimport-error.log', 
-          WARNINGLOG_FILE = 'sqliimport-warning.log', 
+          
+    const ERRORLOG_FILE = 'sqliimport-error.log',
+          WARNINGLOG_FILE = 'sqliimport-warning.log',
           NOTICELOG_FILE = 'sqliimport-notice.log';
-
+          
     /**
      * Instance of eZCLI
      *
@@ -30,19 +31,25 @@ class SQLIImportLogger {
      *
      * @var array
      */
-    protected $messages = array( );
+    protected $messages = array();
+	
+	/**
+     * Object Instance
+     * @var SQLIImportLogger
+     */
+    private static $_instance;
 
     /**
      * Returns a shared instance of the SQLIImportLogger class.
      *
      * @return SQLIImportLogger
      */
-    static function instance( ) {
-        if( !isset( $GLOBALS['SQLIImportLoggerInstance'] ) || !($GLOBALS['SQLIImportLoggerInstance'] instanceof SQLIImportLogger) ) {
-            $GLOBALS['SQLIImportLoggerInstance'] = new SQLIImportLogger( );
-        }
-
-        return $GLOBALS['SQLIImportLoggerInstance'];
+    public static function instance() 
+	{
+		if( !self::$_instance instanceof SQLIImportLogger )
+            self::$_instance = new self();
+            
+        return self::$_instance;
     }
 
     /**
@@ -52,8 +59,10 @@ class SQLIImportLogger {
      * @param bool $bPrintMsg
      * @param string $logType
      */
-    public static function logMessage( $msg, $bPrintMsg = true, $logType = self::NOTICELOG ) {
-        switch( $logType ) {
+    public static function logMessage( $msg, $bPrintMsg = true, $logType = self::NOTICELOG ) 
+	{
+        switch( $logType ) 
+		{
             case self::ERRORLOG :
                 $logFile = self::ERRORLOG_FILE;
                 if( $bPrintMsg )
@@ -73,7 +82,7 @@ class SQLIImportLogger {
                     self::writeNotice( $msg );
                 break;
         }
-        $logger = self::instance( );
+        $logger = self::instance();
         $logger->messages[] = array(
             'level' => $logType,
             'message' => $msg
@@ -87,7 +96,8 @@ class SQLIImportLogger {
      * @param string $msg
      * @param bool $bPrintMsg Display the message on the current ouput (cli or web) ?
      */
-    public static function logNotice( $msg, $bPrintMsg = true ) {
+    public static function logNotice( $msg, $bPrintMsg = true ) 
+	{
         self::logMessage( $msg, $bPrintMsg, self::NOTICELOG );
     }
 
@@ -97,7 +107,8 @@ class SQLIImportLogger {
      * @param string $msg
      * @param bool $bPrintMsg Display the message on the current ouput (cli or web) ?
      */
-    public static function logWarning( $msg, $bPrintMsg = true ) {
+    public static function logWarning( $msg, $bPrintMsg = true ) 
+	{
         self::logMessage( $msg, $bPrintMsg, self::WARNINGLOG );
     }
 
@@ -107,7 +118,8 @@ class SQLIImportLogger {
      * @param string $msg
      * @param bool $bPrintMsg Display the message on the current ouput (cli or web) ?
      */
-    public static function logError( $msg, $bPrintMsg = true ) {
+    public static function logError( $msg, $bPrintMsg = true ) 
+	{
         self::logMessage( $msg, $bPrintMsg, self::ERRORLOG );
     }
 
@@ -117,10 +129,12 @@ class SQLIImportLogger {
      * @param string $msg
      * @param string $logType
      */
-    public static function writeMessage( $msg, $logType = self::NOTICELOG ) {
-        self::$cli = eZCLI::instance( );
-        $isWebOutput = self::$cli->isWebOutput( );
-        switch( $logType ) {
+    public static function writeMessage( $msg, $logType = self::NOTICELOG ) 
+	{
+        self::$cli = eZCLI::instance();
+        $isWebOutput = self::$cli->isWebOutput();
+        switch( $logType ) 
+		{
             case self::ERRORLOG :
                 if( !$isWebOutput )
                     self::$cli->error( $msg );
@@ -149,7 +163,8 @@ class SQLIImportLogger {
      * Displays an error message on the appropriate output (cli or eZDebug)
      * @param string $msg
      */
-    public static function writeError( $msg ) {
+    public static function writeError( $msg ) 
+	{
         self::writeMessage( $msg, self::ERRORLOG );
     }
 
@@ -157,7 +172,8 @@ class SQLIImportLogger {
      * Displays a warning message on the appropriate output (cli or eZDebug)
      * @param string $msg
      */
-    public static function writeWarning( $msg ) {
+    public static function writeWarning( $msg ) 
+	{
         self::writeMessage( $msg, self::WARNINGLOG );
     }
 
@@ -165,12 +181,14 @@ class SQLIImportLogger {
      * Displays a notice message on the appropriate output (cli or eZDebug)
      * @param string $msg
      */
-    public static function writeNotice( $msg ) {
+    public static function writeNotice( $msg ) 
+	{
         self::writeMessage( $msg, self::NOTICELOG );
     }
 
-    public static function serializeMessages( ) {
-        $logger = self::instance( );
+    public static function serializeMessages() 
+	{
+        $logger = self::instance();
         return serialize( $logger->messages );
     }
 
