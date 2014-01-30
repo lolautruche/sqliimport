@@ -231,7 +231,7 @@ A framework is provided to manage eZ Publish content without hassle (please read
     $comment->fields->author = 'Moi !';
     $comment->fields->message = 'Le commentaire de la mort';
     
-    $comment->addTranslation( 'eng-MS' );
+    $comment->addTranslation( 'eng-US' );
     $comment->fields['eng-US']->subject = 'My great subject';
     $comment->fields['eng-US']->author = 'Batman';
     $comment->fields['eng-US']->message = 'Death comment';
