@@ -244,7 +244,7 @@ final class SQLIImportFactory
                 $this->cli->warning( 'Now processing "'.$handlerName.'" handler.' );
 
                 if (extension_loaded('newrelic')) {
-                    newrelic_name_transaction('sqliimport - ' . $handlerName);
+                    newrelic_name_transaction('sqliimport - '.$handlerName);
                 }
 
                 $isInterrupted = false;
