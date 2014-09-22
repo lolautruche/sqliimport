@@ -269,6 +269,7 @@ class SQLIImportUtils
             }
             unset( $aObjectsToClear );
             eZContentObject::clearCache();
+            eZStaticCache::executeActions();
         }
         while( $i < $count );
         
