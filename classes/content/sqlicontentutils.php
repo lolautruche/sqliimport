@@ -79,14 +79,14 @@ class SQLIContentUtils
             $error = curl_error( $ch );
             $errorNum = curl_errno( $ch );
             curl_close( $ch );
-            throw new SQLIContentException( "Failed downloading remote file '$url'. $error", $errorNum);
+            throw new SQLIContentException( "Failed downloading remote file '$url'. $error", $errorNum );
         }
         
         curl_close( $ch );
         fclose( $fp );
 
             
-        return trim($localPath);
+        return trim( $localPath );
     }
     
     /**
