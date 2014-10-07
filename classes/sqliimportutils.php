@@ -269,7 +269,17 @@ class SQLIImportUtils
             }
             unset( $aObjectsToClear );
             eZContentObject::clearCache();
-            eZStaticCache::executeActions();
+
+            if ( eZINI::instance( 'site.ini' )->variable( 'ContentSettings', 'StaticCache' ) == 'enabled' )
+            {
+                $optionArray = array( 'iniFile' => 'site.ini',
+                                      'iniSection' => 'ContentSettings',
+                                      'iniVariable' => 'StaticCacheHandler' );
+
+                $options = new ezpExtensionOptions( $optionArray );
+                $staticCacheHandler = eZExtension::getHandlerClass( $options );
+                $staticCacheHandler::executeActions();
+            }
         }
         while( $i < $count );
         
