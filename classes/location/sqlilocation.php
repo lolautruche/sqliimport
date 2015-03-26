@@ -43,11 +43,12 @@ class SQLILocation
         $location->nodeID = $node->attribute( 'node_id' );
         return $location;
     }
-    
+
     /**
      * Initializes a location from NodeID
      * @param int $nodeID
      * @return SQLILocation
+     * @throws SQLILocationException If the requested node could not be found
      */
     public static function fromNodeID( $nodeID )
     {
@@ -120,6 +121,7 @@ class SQLILocation
      * Check if given attribute exists.
      * All "classic" attributes can be used (See {@link eZContentObjectTreeNode::definition()}).
      * @param $name
+     * @return bool
      */
     public function __isset( $name )
     {

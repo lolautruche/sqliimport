@@ -14,7 +14,7 @@ class SQLILocationSet implements ArrayAccess, Iterator
     /**
      * Locations.
      * Array of SQLILocation, indexed by NodeID
-     * @var array( SQLILocation )
+     * @var SQLILocation[]
      */
     protected $locations = array();
         
@@ -32,7 +32,7 @@ class SQLILocationSet implements ArrayAccess, Iterator
     {
         
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see ArrayAccess::offsetExists()
@@ -41,7 +41,7 @@ class SQLILocationSet implements ArrayAccess, Iterator
     {
         return isset( $this->locations[$offset] );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see ArrayAccess::offsetGet()
@@ -53,7 +53,7 @@ class SQLILocationSet implements ArrayAccess, Iterator
         
         return $this->locations[$offset];
     }
-    
+
     /**
      * Fieldsets are readonly. Will throw an exception when trying to directly assign a value
      * @see ArrayAccess::offsetSet()
@@ -62,10 +62,12 @@ class SQLILocationSet implements ArrayAccess, Iterator
     {
         throw new SQLILocationException( __METHOD__.' => Fieldset direct value assignment not allowed' );
     }
-    
+
     /**
      * Systematically throws an exception. Fieldset unset is not allowed
      * @see ArrayAccess::offsetUnset()
+     * @param mixed $offset
+     * @throws SQLILocationException
      */
     public function offsetUnset( $offset )
     {

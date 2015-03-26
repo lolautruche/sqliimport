@@ -28,6 +28,7 @@ class SQLICSVRow implements Iterator
 
     /**
      * Constructor
+     * @param array $fields
      */
     public function __construct( array $fields = array() )
     {
@@ -39,6 +40,7 @@ class SQLICSVRow implements Iterator
      * Getter. Returns CSV field content identified by its camelized field name
      * @param string $name
      * @return string
+     * @throws SQLICSVException if the requested field is invalid
      */
     public function __get( $name )
     {

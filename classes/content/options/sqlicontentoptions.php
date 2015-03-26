@@ -29,7 +29,7 @@ class SQLIContentOptions extends SQLIImportOptions
         
         parent::__construct( $options );
     }
-    
+
     /**
      * Sets the option $optionName to $optionValue.
      * Supported options for content are :
@@ -39,6 +39,9 @@ class SQLIContentOptions extends SQLIImportOptions
      *  - creator_id => Object creator UserID
      *  - language => Language for object
      * @see lib/ezc/Base/src/ezcBaseOptions::__set()
+     * @param string $optionName
+     * @param mixed $optionValue
+     * @throws ezcBasePropertyNotFoundException
      */
     public function __set( $optionName, $optionValue )
     {

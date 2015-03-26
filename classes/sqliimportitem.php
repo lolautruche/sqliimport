@@ -44,7 +44,7 @@ class SQLIImportItem extends eZPersistentObject
      * @var eZUser
      */
     protected $user;
-    
+
     public static function definition()
     {
         return array( 'fields'       => array( 'id'                   => array( 'name'     => 'id',
@@ -121,11 +121,12 @@ class SQLIImportItem extends eZPersistentObject
                                                        'percentage'     => 'setPercentage' )
         );
     }
-    
+
     /**
      * Sets attributes directly from an associative array.
      * Key is the attribute name
      * @param array $attributes
+     * @throws SQLIImportRuntimeException if a target attribute is not available
      */
     public function fromArray( array $attributes )
     {
@@ -143,7 +144,8 @@ class SQLIImportItem extends eZPersistentObject
     
     /**
      * Universal getter
-     * @param $name
+     * @param string $name
+     * @return mixed
      */
     public function __get( $name )
     {
@@ -213,7 +215,7 @@ class SQLIImportItem extends eZPersistentObject
     
     /**
      * Fetches pending imports
-     * @return array( SQLIImportItem )
+     * @return SQLIImportItem[]
      */
     public static function fetchPendingList()
     {
@@ -231,7 +233,7 @@ class SQLIImportItem extends eZPersistentObject
      * @param int $offset Offset. Default is 0.
      * @param int $limit Limit. Default is null. If null, all imports items will be returned
      * @param array $conds Additional conditions for fetch. See {@link eZPersistentObject::fetchObjectList()}. Default is null
-     * @return array( SQLIImportItem )
+     * @return SQLIImportItem[]
      */
     public static function fetchList( $offset = 0, $limit = 0, $conds = null )
     {
@@ -249,16 +251,18 @@ class SQLIImportItem extends eZPersistentObject
     /**
      * Fetches an Import Item by its ID
      * @param int $importID
+     * @return SQLIImportItem
      */
     public static function fetch( $importID )
     {
         $import = self::fetchObject( self::definition(), null, array( 'id' => $importID ) );
         return $import;
     }
-    
+
     /**
      * Fetches all running imports
-     * @return array( SQLIImportItem )
+     * @param mixed $handlerIdentifier
+     * @return SQLIImportItem[]
      */
     public static function fetchRunning( $handlerIdentifier = null )
     {
@@ -311,9 +315,9 @@ class SQLIImportItem extends eZPersistentObject
     
     /**
      * Updates import progress
-     * @param float $advancement Percentage of advancement
-     * @param string $progressionNotes Notes for import item progression. Can be anything (an ID, a reference...)
-     *                                 Can be for example ID of row your import handler has just processed
+     * @param float  $progressPercentage Percentage of advancement
+     * @param string $progressionNotes   Notes for import item progression. Can be anything (an ID, a reference...)
+     *                                   Can be for example ID of row your import handler has just processed
      */
     public function updateProgress( $progressPercentage, $progressionNotes )
     {
@@ -369,6 +373,7 @@ class SQLIImportItem extends eZPersistentObject
     /**
      * Creates a new pending import from a scheduled one
      * @param SQLIScheduledImport $scheduledImport
+     * @return SQLIImportItem
      */
     public static function fromScheduledImport( SQLIScheduledImport $scheduledImport )
     {
@@ -429,7 +434,12 @@ class SQLIImportItem extends eZPersistentObject
         
         return $userHasAccess;
     }
-    
+
+    /**
+     * Returns the process time as an array with hours, minutes and seconds as values
+     *
+     * @return array
+     */
     public function getFormatedProcessTime()
     {
         $aTime = array(

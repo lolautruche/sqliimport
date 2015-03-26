@@ -34,10 +34,11 @@ class SQLIXMLParser
      * @var bool
      */
     protected $isHTTP;
-    
+
     /**
      * Constructor
      * @param SQLIXMLOptions $options
+     * @throws SQLIXMLException If a required option is not set
      */
     public function __construct( SQLIXMLOptions $options )
     {

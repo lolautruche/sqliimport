@@ -18,12 +18,12 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     const OPTION_HANDLER_DELIMITER = '|',
           OPTION_VALUE_DELIMITER = ',',
           OPTION_HANDLERNAME_DELIMITER = '::';
-    
+
     public function __construct( array $options = array() )
     {
         parent::__construct( $options );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see extension/sqliimport/classes/options/SQLIImportOptions::__set()
@@ -89,9 +89,9 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
     /**
      * Decodes handlers options provided from the command line.
      * Returns an associative array with handler name as the key and an instance of SQLIImportHandlerOptions as value
-     * @param string $sOption Raw options for import handlers.
-     *                        Should be something like --options="handler1::foo=bar,foo2=baz|handler2::someoption=biz"
-     * @return array( SQLIImportHandlerOptions )
+     * @param string $optionLine Raw options for import handlers.
+     *                           Should be something like --options="handler1::foo=bar,foo2=baz|handler2::someoption=biz"
+     * @return SQLIImportHandlerOptions[]
      */
     public static function decodeHandlerOptionLine( $optionLine )
     {

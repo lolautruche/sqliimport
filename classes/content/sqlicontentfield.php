@@ -76,8 +76,9 @@ class SQLIContentField
     /**
      * Check if given attribute exists.
      * All "classic" attributes can be used (See {@link eZContentObjectAttribute::definition()}).
-     * @param $name
+     * @param string $name
      * @return bool
+     * @throws SQLIContentException if no content object attribute has beeen assigned to this content field
      */
     public function __isset( $name )
     {
@@ -318,11 +319,12 @@ class SQLIContentField
     {
         return self::convertAttributeToString( $this->attribute );
     }
-    
+
     /**
      * Generic method wrapping datatype's toString() method if implemented
      * Checks if toString() is implemented in the field's datatype
      * If not, data_text will be used by default
+     * @param eZContentObjectAttribute $attribute
      * @return string
      */
     public static function convertAttributeToString( eZContentObjectAttribute $attribute )

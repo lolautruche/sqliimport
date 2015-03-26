@@ -20,6 +20,9 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     /**
      * Setter. Default values must be set in constructor
      * @see lib/ezc/Base/src/ezcBaseOptions::__set()
+     * @param string $optionName
+     * @param mixed $optionValue
+     * @throws ezcBasePropertyNotFoundException
      */
     public function __set( $optionName, $optionValue )
     {
@@ -28,11 +31,12 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
             
         $this->properties[$optionName] = $optionValue;
     }
-    
+
     /**
      * eZ Compatible getter
-     * @param $attributeName
-     * @see self::__get()
+     * @param string $attrName
+     * @see __get()
+     * @return mixed
      */
     public function attribute( $attrName )
     {
@@ -42,8 +46,9 @@ abstract class SQLIImportOptions extends ezcBaseOptions implements Iterator
     /**
      * Checks if provided attribute exists.
      * eZ Publish implementation
-     * @param $attrName
-     * @see self::__isset()
+     * @param string $attrName
+     * @see __isset()
+     * @return bool
      */
     public function hasAttribute( $attrName )
     {
