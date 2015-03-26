@@ -273,7 +273,7 @@ class SQLIScheduledImport extends eZPersistentObject
                     break;
     
                 default :
-                    return false;
+                    return;
                     break;
             }
             
