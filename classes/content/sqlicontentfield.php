@@ -126,8 +126,8 @@ class SQLIContentField
      * Sets value to an attribute for the content object attribute.
      * All "classic" attributes can be used (See {@link eZContentObjectAttribute::definition()}).
      * If attribute doesn't exist, will throw an exception
-     * @param $name Attribute name
-     * @param $value Attribute value
+     * @param string $name Attribute name
+     * @param mixed $value Attribute value
      * @throws ezcBasePropertyNotFoundException
      * @return void
      */
@@ -167,8 +167,8 @@ class SQLIContentField
     /**
      * Generic method for calling current attribute methods
      * If method isn't implemented, will throw an exception
-     * @param $method Method name
-     * @param $arguments
+     * @param string $method Method name
+     * @param array $arguments
      * @throws ezcBasePropertyNotFoundException
      * @return mixed
      */

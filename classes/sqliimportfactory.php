@@ -13,7 +13,7 @@ final class SQLIImportFactory
 {
     /**
      * Object Instance
-     * @var SQLIImport
+     * @var SQLIImportFactory
      */
     private static $_instance;
     

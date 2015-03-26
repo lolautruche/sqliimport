@@ -100,8 +100,8 @@ class SQLILocation
      * Sets value to an attribute for the content node.
      * All "classic" attributes can be used (See {@link eZContentObjectTreeNode::definition()}).
      * If attribute doesn't exist, will throw an exception
-     * @param $name Attribute name
-     * @param $value Attribute value
+     * @param string $name Attribute name
+     * @param mixed $value Attribute value
      * @throws ezcBasePropertyNotFoundException
      * @return void
      */
@@ -133,8 +133,8 @@ class SQLILocation
     /**
      * Generic method for calling current content node methods.
      * If method isn't implemented, will throw an exception
-     * @param $method Method name
-     * @param $arguments
+     * @param string $method Method name
+     * @param array $arguments
      * @throws ezcBasePropertyNotFoundException
      * @return mixed
      */

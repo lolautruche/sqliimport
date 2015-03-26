@@ -48,7 +48,7 @@
  * $article->fields->body = $xmlContent;
  * </code>
  *
- * @property-read SQLILocationFieldset $locations Available locations for this content
+ * @property-read SQLILocationSet $locations Available locations for this content
  * @property mixed All "attributes" available from eZContentObject (See {@link eZContentObject::definition()}).
  */
 class SQLIContent
@@ -62,7 +62,7 @@ class SQLIContent
 
     /**
      * Fieldset Holder
-     * @var SQLIFieldsetHolder
+     * @var SQLIContentFieldsetHolder
      */
     public $fields;
     
@@ -452,8 +452,8 @@ class SQLIContent
      * Sets value to an attribute for the content object.
      * All "classic" attributes can be used (See {@link eZContentObject::definition()}).
      * If attribute doesn't exist, will throw an exception
-     * @param $name Attribute name
-     * @param $value Attribute value
+     * @param string $name Attribute name
+     * @param mixed $value Attribute value
      * @throws ezcBasePropertyNotFoundException
      * @return void
      */

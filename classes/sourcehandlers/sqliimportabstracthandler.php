@@ -59,7 +59,7 @@ abstract class SQLIImportAbstractHandler
     
     /**
      * Data source (CSV, XML...)
-     * @var SQLICSVDoc|DOMDoc|SimpleXMLIterator
+     * @var SQLICSVDoc|DOMDocument|SimpleXMLIterator
      */
     protected $dataSource;
     
