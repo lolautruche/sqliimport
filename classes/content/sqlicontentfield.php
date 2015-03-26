@@ -110,6 +110,7 @@ class SQLIContentField
                 break;
             case 'identifier':
                 $ret = $this->identifier;
+                break;
             default:
                 if ( $this->attribute->hasAttribute( $name ) )
                     $ret = $this->attribute->attribute( $name );
