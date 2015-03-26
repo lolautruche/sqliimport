@@ -1,6 +1,6 @@
 <?php
 
-include( 'extension/sqliimport/stubs/scriptinit.php' );
+include __DIR__ . '/scriptinit.php';
 eZINI::instance()->setVariable( 'ContentSettings', 'ViewCaching', 'disabled' );
 eZINI::instance()->setVariable( 'SearchSettings', 'DelayedIndexing', 'enabled' );
 

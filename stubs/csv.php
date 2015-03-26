@@ -1,5 +1,5 @@
 <?php
-include( 'extension/sqliimport/stubs/scriptinit.php' );
+include __DIR__ . '/scriptinit.php';
 
 $csvFile = 'extension/sqliimport/stubs/example.csv';
 $cli->notice( 'Processing CSV test file '.$csvFile );
