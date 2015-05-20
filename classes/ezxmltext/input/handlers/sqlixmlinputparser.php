@@ -533,7 +533,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
      * seesm to be doing nothing
      *
      * @param DOMElement $element
-     * @param array $param parameters for xml element
+     * @param array $params parameters for xml element
      * @return bool|null
      */
     function initHandlerCustom( $element, &$params )
@@ -550,7 +550,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
      * sets anchor as attribute if setting is enabled
      *
      * @param DOMElement $element
-     * @param array $param parameters for xml element
+     * @param array $params parameters for xml element
      * @return bool|null
      */
     function initHandlerHeader( $element, &$params )
@@ -1064,7 +1064,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
      * Publish handler for link element, converts href to [object|node|link]_id.
      *
      * @param DOMElement $element
-     * @param array $param parameters for xml element
+     * @param array $params parameters for xml element
      * @return null|array changes structure if it contains 'result' key
      */
     function publishHandlerLink( $element, &$params )
@@ -1208,7 +1208,7 @@ class SQLIXMLInputParser extends eZXMLInputParser
      * fixes align=middle value (if embed was image) and tries to map css to attributes
      *
      * @param DOMElement $element
-     * @param array $param parameters for xml element
+     * @param array $params parameters for xml element
      * @return null|array changes structure if it contains 'result' key
      */
     function publishHandlerEmbed( $element, &$params )
@@ -1284,19 +1284,29 @@ class SQLIXMLInputParser extends eZXMLInputParser
         parent::processAttributesBySchema( $element );
     }
  
-    /*
+    /**
      * Misc internally (by this and main xml handler) used functions
+     */
+
+    /**
+     * @return array
      */
     function getUrlIDArray()
     {
         return $this->urlIDArray;
     }
- 
+
+    /**
+     * @return array
+     */
     function getEmbeddedObjectIDArray()
     {
         return $this->embeddedObjectIDArray;
     }
- 
+
+    /**
+     * @return array
+     */
     function getLinkedObjectIDArray()
     {
         return $this->linkedObjectIDArray;

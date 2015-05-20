@@ -1,5 +1,5 @@
 <?php
-include( 'extension/sqliimport/stubs/scriptinit.php' );
+include __DIR__ . '/scriptinit.php';
 eZINI::instance()->setVariable( 'ContentSettings', 'ViewCaching', 'disabled' );
 
 $cli->notice( 'Creation of a new "comment" object' );

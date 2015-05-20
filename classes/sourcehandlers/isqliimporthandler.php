@@ -12,6 +12,7 @@ interface ISQLIImportHandler
 {
     /**
      * Constructor
+     * @param SQLIImportHandlerOptions $options
      */
     public function __construct( SQLIImportHandlerOptions $options = null );
     

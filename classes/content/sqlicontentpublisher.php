@@ -69,10 +69,11 @@ class SQLIContentPublisher
     {
         $this->options = $options;
     }
-    
+
     /**
      * Publishes provided content
      * @param SQLIContent $content
+     * @throws SQLIContentException if the initial location or parent node have not been defined
      */
     public function publish( SQLIContent $content )
     {
@@ -196,7 +197,7 @@ class SQLIContentPublisher
         eZDebug::accumulatorStop( 'sqlicontentpublisher_checkmodification' );
         return $contentIsModified;
     }
-    
+
     /**
      * Checks if publication is "allowed" for provided content in provided language.
      * Publication will be allowed if content has been modified (a diff is operated) or if modification check has
@@ -204,6 +205,7 @@ class SQLIContentPublisher
      * If language is not provided, the function will take {@link SQLIContent::getActiveLanguage() content active language}
      * @param SQLIContent $content
      * @param string $language Language to check modification for. Must be a valid locale (xxx-XX)
+     * @return bool
      */
     protected function publicationAllowed( SQLIContent $content, $language = null )
     {
@@ -272,12 +274,13 @@ class SQLIContentPublisher
         
         return $version;
     }
-    
+
     /**
      * Adds a location to provided content.
      * Prefer using SQLIContent::addLocation() instead of calling this method directly
      * @param SQLILocation $location
      * @param SQLIContent $content
+     * @throws SQLIContentException
      * @internal
      */
     public function addLocationToContent( SQLILocation $location, SQLIContent $content )

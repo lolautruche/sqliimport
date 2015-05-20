@@ -14,7 +14,7 @@ class SQLIContentFieldsetHolder implements ArrayAccess, Iterator
     /**
      * Reference to the known children field sets
      * Indexed by locale: xxx-XX => SQLIContentFieldset
-     * @var array( SQLIContentFieldset )
+     * @var SQLIContentFieldset[]
      */
     protected $fieldsets = array();
     
@@ -40,6 +40,7 @@ class SQLIContentFieldsetHolder implements ArrayAccess, Iterator
      * Checks if locale is registered for current SQLIContent
      * offsetExists from ArrayAccess interface
      * @param $offset
+     * @return bool
      */
     public function offsetExists( $offset )
     {
@@ -50,6 +51,7 @@ class SQLIContentFieldsetHolder implements ArrayAccess, Iterator
      * Returns SQLIContentFieldset for requested language
      * offsetGet from ArrayAccess interface
      * @param $offset
+     * @return SQLIContentFieldset
      */
     public function offsetGet( $offset )
     {
@@ -67,6 +69,7 @@ class SQLIContentFieldsetHolder implements ArrayAccess, Iterator
      * Fieldsets are readonly. Will throw an exception when trying to directly assign a value
      * @param $offset
      * @param $value
+     * @throws SQLIContentException
      */
     public function offsetSet( $offset, $value )
     {
@@ -236,7 +239,7 @@ class SQLIContentFieldsetHolder implements ArrayAccess, Iterator
     /**
      * Returns current draft for current content object.
      * If there is no current draft, a new one will be created in provided language.
-     * @param string $lang Valid locale xxx-XX. If not provided, default edit language will be used
+     * @param string|bool $lang Valid locale xxx-XX. If not provided, default edit language will be used
      * @see eZContentObject::createNewVersionIn()
      * @return eZContentObjectVersion
      */

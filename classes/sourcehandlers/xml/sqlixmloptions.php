@@ -38,7 +38,7 @@ class SQLIXMLOptions extends SQLIImportOptions
         
         parent::__construct( $options );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see extension/sqliimport/classes/options/SQLIImportOptions::__set()

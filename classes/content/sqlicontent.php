@@ -48,7 +48,7 @@
  * $article->fields->body = $xmlContent;
  * </code>
  *
- * @property-read SQLILocationFieldset $locations Available locations for this content
+ * @property-read SQLILocationSet $locations Available locations for this content
  * @property mixed All "attributes" available from eZContentObject (See {@link eZContentObject::definition()}).
  */
 class SQLIContent
@@ -62,7 +62,7 @@ class SQLIContent
 
     /**
      * Fieldset Holder
-     * @var SQLIFieldsetHolder
+     * @var SQLIContentFieldsetHolder
      */
     public $fields;
     
@@ -135,6 +135,8 @@ class SQLIContent
      * @param SQLIContentOptions $options See {@link SQLIContentOptions::__set()} to see available options.
      *                                    Mandatory parameters are :
      *                                      - class_identifier
+     * @return SQLIContent
+     * @throws SQLIContentException If a required option has not been set
      */
     public static function create( SQLIContentOptions $options )
     {
@@ -200,11 +202,12 @@ class SQLIContent
         
         return $content;
     }
-    
+
     /**
      * Initializes an object from ContentObjectID
      * @param int $objectID
      * @return SQLIContent
+     * @throws SQLIContentException if the requested content object has not been found
      */
     public static function fromContentObjectID( $objectID )
     {
@@ -236,6 +239,7 @@ class SQLIContent
      * Initializes an object from a nodeID
      * @param int $nodeID
      * @throws SQLIContentException
+     * @return SQLIContent
      */
     public static function fromNodeID( $nodeID )
     {
@@ -385,13 +389,14 @@ class SQLIContent
     {
         return $this->fields->getCurrentDraft( $this->activeLanguage );
     }
-    
+
     /**
      * Generic method for calling current content object methods.
      * If method isn't implemented, will throw an exception
-     * @param $method Method name
+     * @param string $method Method name
      * @param $arguments
-     * @throws ezcBasePropertyNotFoundException
+     * @return mixed
+     * @throws ezcBasePropertyNotFoundException if the requested method is not implemented
      */
     public function __call( $method, $arguments )
     {
@@ -400,13 +405,14 @@ class SQLIContent
         else
             throw new ezcBasePropertyNotFoundException( $method );
     }
-    
+
     /**
      * Getter
      * Returns given attribute for current content object if it exists (ie. main_node_id).
      * Will throw an exception otherwise.
      * All "classic" attributes can be used (See {@link eZContentObject::definition()}).
-     * @param $name
+     * @param string $name
+     * @return SQLILocation|SQLILocationSet|mixed
      * @throws ezcBasePropertyNotFoundException
      */
     public function __get( $name )
@@ -446,8 +452,8 @@ class SQLIContent
      * Sets value to an attribute for the content object.
      * All "classic" attributes can be used (See {@link eZContentObject::definition()}).
      * If attribute doesn't exist, will throw an exception
-     * @param $name Attribute name
-     * @param $value Attribute value
+     * @param string $name Attribute name
+     * @param mixed $value Attribute value
      * @throws ezcBasePropertyNotFoundException
      * @return void
      */
@@ -490,12 +496,13 @@ class SQLIContent
         $this->doRemove( $aNodesID, $moveToTrash );
         $this->flush();
     }
-    
+
     /**
      * Removes only one location for content object.
      * Location is identified by $nodeID
      * @param int $nodeID A valid node ID
      * @param bool $moveToTrash Indicates if we move content to trash or not. True by default
+     * @throws SQLIContentException if the requested node could not be fetched
      */
     public function removeLocation( $nodeID, $moveToTrash = true )
     {

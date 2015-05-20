@@ -59,7 +59,7 @@ abstract class SQLIImportAbstractHandler
     
     /**
      * Data source (CSV, XML...)
-     * @var SQLICSVDoc|DOMDoc|SimpleXMLIterator
+     * @var SQLICSVDoc|DOMDocument|SimpleXMLIterator
      */
     protected $dataSource;
     
@@ -75,9 +75,10 @@ abstract class SQLIImportAbstractHandler
      * @var string
      */
     protected $progressionNotes;
-    
+
     /**
      * Constructor
+     * @param SQLIImportHandlerOptions $options
      */
     public function __construct( SQLIImportHandlerOptions $options = null )
     {

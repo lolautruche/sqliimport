@@ -114,7 +114,8 @@ class SQLIScheduledImport extends eZPersistentObject
     
     /**
      * Universal getter
-     * @param $name
+     * @param string $name
+     * @return mixed
      */
     public function __get( $name )
     {
@@ -193,7 +194,7 @@ class SQLIScheduledImport extends eZPersistentObject
      * @param int $offset Offset. Default is 0.
      * @param int $limit Limit. Default is null. If null, all imports items will be returned
      * @param array $conds Additional conditions for fetch. See {@link eZPersistentObject::fetchObjectList()}. Default is null
-     * @return array( SQLIScheduledImport )
+     * @return SQLIScheduledImport[]
      */
     public static function fetchList( $offset = 0, $limit = null, $conds = null )
     {
@@ -211,6 +212,7 @@ class SQLIScheduledImport extends eZPersistentObject
     /**
      * Fetches a scheduled import by its ID
      * @param int $importID
+     * @return SQLIScheduledImport
      */
     public static function fetch( $importID )
     {
@@ -271,7 +273,7 @@ class SQLIScheduledImport extends eZPersistentObject
                     break;
     
                 default :
-                    return false;
+                    return;
                     break;
             }
             

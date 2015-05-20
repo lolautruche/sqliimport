@@ -1,5 +1,5 @@
 <?php
-include( 'extension/sqliimport/stubs/scriptinit.php' );
+include __DIR__ . '/scriptinit.php';
 
 $xmlFile = 'http://www.lolart.net/rss/feed/blog'; // RSS feed
 

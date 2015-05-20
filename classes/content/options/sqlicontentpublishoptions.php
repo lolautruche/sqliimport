@@ -27,7 +27,7 @@ class SQLIContentPublishOptions extends SQLIImportOptions
         
         parent::__construct( $options );
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see lib/ezc/Base/src/ezcBaseOptions::__set()

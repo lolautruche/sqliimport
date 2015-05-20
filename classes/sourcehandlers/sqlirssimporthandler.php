@@ -16,9 +16,10 @@ class SQLIRSSImportHandler extends SQLIImportAbstractHandler implements ISQLIImp
     protected $rowCount;
     
     protected $currentGUID;
-    
+
     /**
      * Constructor
+     * @param SQLIImportHandlerOptions $options
      */
     public function __construct( SQLIImportHandlerOptions $options = null )
     {
@@ -73,7 +74,7 @@ class SQLIRSSImportHandler extends SQLIImportAbstractHandler implements ISQLIImp
         
         return $row;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see extension/sqliimport/classes/sourcehandlers/ISQLIImportHandler::process()

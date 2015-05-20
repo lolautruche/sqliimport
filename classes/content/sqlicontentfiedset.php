@@ -20,7 +20,7 @@ class SQLIContentFieldset implements Iterator
     /**
      * Reference to the fields of this fieldset
      * Array indexed by attribute identifier
-     * @var array( SQLIContentField )
+     * @var SQLIContentField[]
      */
     protected $fields = array();
     
@@ -33,8 +33,9 @@ class SQLIContentFieldset implements Iterator
 
     /**
      * Getter. Returns given field
-     * @param $name Attribute identifier
+     * @param string $name Attribute identifier
      * @return SQLIContentField
+     * @throws SQLIContentException if the requested field does not exist.
      */
     public function __get( $name )
     {
@@ -51,6 +52,7 @@ class SQLIContentFieldset implements Iterator
      * Best results when datatype implements fromString() method (@see eZDataType::fromString())
      * @param string $name Field name
      * @param string $value Field string value
+     * @throws SQLIContentException if the requested field does not exist.
      */
     public function __set( $name, $value )
     {
