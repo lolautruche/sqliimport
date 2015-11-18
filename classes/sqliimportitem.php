@@ -163,8 +163,9 @@ class SQLIImportItem extends eZPersistentObject
     public function getOptions()
     {
         if ( !$this->options instanceof SQLIImportHandlerOptions && $this->attribute( 'options_serialized' ) )
-            $this->options = unserialize( $this->attribute( 'options_serialized' ) );
-            
+        {
+            $this->options = SQLIImportUtils::safeUnserialize( $this->attribute( 'options_serialized' ) );
+        }
         return $this->options;
     }
     
@@ -175,7 +176,8 @@ class SQLIImportItem extends eZPersistentObject
     public function setOptions( SQLIImportHandlerOptions $options )
     {
         $this->options = $options;
-        $this->setAttribute( 'options_serialized', serialize( $options ) );
+        $optionSerialized = SQLIImportUtils::safeSerialize( $options );
+        $this->setAttribute( 'options_serialized', $optionSerialized );
     }
     
     /**

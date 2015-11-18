@@ -290,4 +290,23 @@ class SQLIImportUtils
             $output->outputLine();
         }
     }
+
+    public static function safeSerialize( $data )
+    {
+        $dataSerialized = serialize( $data );
+        if ( eZINI::instance()->variable( 'DatabaseSettings', 'DatabaseImplementation' ) == 'ezpostgresql' )
+        {
+            $dataSerialized = str_replace( "\0", "~~NULL_BYTE~~", $dataSerialized );
+        }
+        return $dataSerialized;
+    }
+
+    public static function safeUnserialize( $dataSerialized )
+    {
+        if ( eZINI::instance()->variable( 'DatabaseSettings', 'DatabaseImplementation' ) == 'ezpostgresql' )
+        {
+            $dataSerialized = str_replace( "~~NULL_BYTE~~", "\0", $dataSerialized );
+        }
+        return unserialize( $dataSerialized );
+    }
 }
