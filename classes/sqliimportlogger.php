@@ -107,14 +107,14 @@ class SQLIImportLogger
         {
             case self::ERRORLOG:
                 if( !$isWebOutput )
-                    self::$cli->error( $msg );
+                    self::$cli->output( self::$cli->stylize( 'error', $msg ) );
                 else
                     eZDebug::writeError( $msg, 'SQLIImport' );
             break;
             
             case self::WARNINGLOG:
                 if( !$isWebOutput )
-                    self::$cli->warning( $msg );
+                    self::$cli->output( self::$cli->stylize( 'warning', $msg ) );
                 else
                     eZDebug::writeWarning( $msg, 'SQLIImport' );
             break;
@@ -122,7 +122,7 @@ class SQLIImportLogger
             case self::NOTICELOG:
             default:
                 if( !$isWebOutput )
-                    self::$cli->notice( $msg );
+                    self::$cli->output( self::$cli->stylize( 'notice', $msg ) );
                 else
                     eZDebug::writeNotice( $msg, 'SQLIImport' );
             break;
