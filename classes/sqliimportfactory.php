@@ -241,7 +241,7 @@ final class SQLIImportFactory
                 );
                 $progressBar = new ezcConsoleProgressbar( $this->output, $processLength, $progressBarOptions );
                 $progressBar->start();
-                $this->cli->warning( 'Now processing "'.$handlerName.'" handler.' );
+                $this->cli->output( $this->cli->stylize( 'warning', 'Now processing "'.$handlerName.'" handler.' ) );
                 
                 $isInterrupted = false;
                 while( $row = $importHandler->getNextRow() )
@@ -269,7 +269,7 @@ final class SQLIImportFactory
                     // Interruption handling
                     if( $aImportItems[$i]->isInterrupted() )
                     {
-                        $this->cli->notice();
+                        $this->cli->output();
                         SQLIImportLogger::logNotice( 'Interruption has been requested for current import ! Cleaning and aborting process...' );
                         $isInterrupted = true;
                         break;
@@ -278,7 +278,7 @@ final class SQLIImportFactory
                 
                 $importHandler->cleanup();
                 $progressBar->finish();
-                $this->cli->notice();
+                $this->cli->output();
                 unset( $importHandler );
                 
                 
