@@ -1,3 +1,7 @@
+<style type="text/css">
+    @import url({'stylesheets/sqiimport.css'|ezdesign});
+</style>
+<script type="text/javascript" src={'javascript/sqiimport.js'|ezdesign}></script>
 <div class="context-block">
     <div class="box-header">
         <div class="box-tc">
@@ -98,7 +102,18 @@
                             {/if}
                             </td>
                             <td>{$import.percentage}%</td>
-                            <td>{$import.progression_notes}</td>
+                            <td>{if $import.status|lt(2)}
+                                    {$import.progression_notes}
+                                {elseif $import.running_log_messages|count()}
+                                    <div class="running_log">
+                                        <a href="#" class="detail_link">{'Details'|i18n( 'extension/sqliimport' )}</a>
+                                       {foreach $import.running_log_messages as $message}
+                                           <div class="{$message.level}">
+                                               {$message.message}
+                                           </div>
+                                       {/foreach}
+                                    </div>
+                                {/if}</td>
                             <td>{$import.process_time_formated.hour}h {$import.process_time_formated.minute}min {$import.process_time_formated.second}sec</td>
                         </tr>
                         {/foreach}
