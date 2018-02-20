@@ -233,61 +233,76 @@ class SQLIImportUtils
             'length'    => 50
         );
         $count = (int)eZPersistentObject::count( eZPendingActions::definition(), $conds );
-        
-        if( $isCli && $count > 0 )
+
+        if( eZContentCache::inCleanupThresholdRange( $count ) )
         {
-            // Progress bar implementation
-            $output = new ezcConsoleOutput();
-            $output->outputLine( 'Starting to clear view cache for imported objects...' );
-            $progressBarOptions = array(
-                'emptyChar'         => ' ',
-                'barChar'           => '='
-            );
-            $progressBar = new ezcConsoleProgressbar( $output, $count, $progressBarOptions );
-            $progressBar->start();
-        }
         
-        /*
-         * To avoid fatal errors due to memory exhaustion, pending actions are fetched by packets
-         */
-        do
-        {
-            $aObjectsToClear = eZPendingActions::fetchObjectList( eZPendingActions::definition(), null, $conds, null, $limit );
-            $jMax = count( $aObjectsToClear );
-            if( $jMax > 0 )
+            if( $isCli && $count > 0 )
             {
-                for( $j=0; $j<$jMax; ++$j )
+                // Progress bar implementation
+                $output = new ezcConsoleOutput();
+                $output->outputLine( 'Starting to clear view cache for imported objects...' );
+                $progressBarOptions = array(
+                    'emptyChar'         => ' ',
+                    'barChar'           => '='
+                );
+                $progressBar = new ezcConsoleProgressbar( $output, $count, $progressBarOptions );
+                $progressBar->start();
+            }
+            
+            /*
+             * To avoid fatal errors due to memory exhaustion, pending actions are fetched by packets
+             */
+            do
+            {
+                $aObjectsToClear = eZPendingActions::fetchObjectList( eZPendingActions::definition(), null, $conds, null, $limit );
+                $jMax = count( $aObjectsToClear );
+                if( $jMax > 0 )
                 {
-                    if( $isCli )
-                        $progressBar->advance();
-                    
-                    $db->begin();
-                    eZContentCacheManager::clearContentCacheIfNeeded( (int)$aObjectsToClear[$j]->attribute( 'param' ) );
-                    $aObjectsToClear[$j]->remove();
-                    $db->commit();
-                    $i++;
+                    for( $j=0; $j<$jMax; ++$j )
+                    {
+                        if( $isCli )
+                            $progressBar->advance();
+                        
+                        $db->begin();
+                        eZContentCacheManager::clearContentCacheIfNeeded( (int)$aObjectsToClear[$j]->attribute( 'param' ) );
+                        $aObjectsToClear[$j]->remove();
+                        $db->commit();
+                        $i++;
+                    }
+                }
+                unset( $aObjectsToClear );
+                eZContentObject::clearCache();
+
+                if ( eZINI::instance( 'site.ini' )->variable( 'ContentSettings', 'StaticCache' ) == 'enabled' )
+                {
+                    $optionArray = array( 'iniFile' => 'site.ini',
+                                          'iniSection' => 'ContentSettings',
+                                          'iniVariable' => 'StaticCacheHandler' );
+
+                    $options = new ezpExtensionOptions( $optionArray );
+                    $staticCacheHandler = eZExtension::getHandlerClass( $options );
+                    $staticCacheHandler::executeActions();
                 }
             }
-            unset( $aObjectsToClear );
-            eZContentObject::clearCache();
-
-            if ( eZINI::instance( 'site.ini' )->variable( 'ContentSettings', 'StaticCache' ) == 'enabled' )
+            while( $i < $count );
+            
+            if( $isCli && $count > 0 )
             {
-                $optionArray = array( 'iniFile' => 'site.ini',
-                                      'iniSection' => 'ContentSettings',
-                                      'iniVariable' => 'StaticCacheHandler' );
-
-                $options = new ezpExtensionOptions( $optionArray );
-                $staticCacheHandler = eZExtension::getHandlerClass( $options );
-                $staticCacheHandler::executeActions();
+                $progressBar->finish();
+                $output->outputLine();
             }
         }
-        while( $i < $count );
-        
-        if( $isCli && $count > 0 )
+        else
         {
-            $progressBar->finish();
-            $output->outputLine();
+            if( $isCli )
+            {
+                $output = new ezcConsoleOutput();
+                $output->outputLine( "Expiring all view cache since list of nodes({$count}) exceeds site.ini\[ContentSettings]\CacheThreshold" );
+            }
+            ezpEvent::getInstance()->notify( 'content/cache/all' );
+            eZContentObject::expireAllViewCache();
+            eZPendingActions::removeByAction(SQLIContent::ACTION_CLEAR_CACHE);
         }
     }
 
